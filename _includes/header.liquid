@@ -47,14 +47,19 @@
           {% endfor %}
 
           <!-- About -->
-          <li class="nav-item {% if page.permalink == '/' %}active{% endif %}">
+          {% comment %}
+            note that, if page.exclude does not exist, then page.exclude == nil, which
+            is a falsy value. Therefore, the following code won't execute when page.ex
+            See https://shopify.github.io/liquid/basics/types/#nil for details.
+          {% endcomment %}
+          {% comment %} <li class="nav-item {% if page.permalink == '/' %} %}active{% endif %}">
             <a class="nav-link" href="{{ '/' | relative_url }}">
               {{- about_title }}
               {% if page.permalink == '/' %}
                 <span class="sr-only">(current)</span>
               {% endif %}
             </a>
-          </li>
+          </li> {% endcomment %}
 
           <!-- Other pages -->
           {% assign sorted_pages = site.pages | sort: 'nav_order' %}
