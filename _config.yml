@@ -76,7 +76,7 @@ facebook_id: # your facebook id
 flickr_id: # your flickr id
 github_username: mhdadk # your GitHub user name
 gitlab_username: # your GitLab user name
-ieee_id: 37089185009 # your ieeexplore.ieee.org/author/id
+ieee_id: #37089185009 # your ieeexplore.ieee.org/author/id
 instagram_id: # your instagram id
 kaggle_id: # your kaggle id
 keybase_username: # your keybase user name
@@ -85,7 +85,7 @@ lattes_id: # your ID on Lattes (Brazilian Lattes CV)
 linkedin_username: mhdadk # your LinkedIn user name
 mastodon_username: # your mastodon instance+username in the format instance.tld/@username
 medium_username: # your Medium username
-orcid_id: 0000-0003-1013-8145 # your ORCID ID
+orcid_id: #0000-0003-1013-8145 # your ORCID ID
 osf_id: # your OSF ID
 pinterest_id: # your pinterest id
 publons_id: # your ID on Publons
@@ -95,7 +95,7 @@ scholar_userid: T5rLincAAAAJ # your Google Scholar ID
 scopus_id: # your profile on Scopus
 semanticscholar_id: # your Semantic Scholar ID
 spotify_id: # your spotify id
-stackoverflow_id: 13809128 # your stackoverflow id
+stackoverflow_id: #13809128 # your stackoverflow id
 telegram_username: # your Telegram user name
 unsplash_id: # your unsplash id
 wechat_qr: # filename of your wechat qr-code saved as an image (e.g., wechat-qr.png if saved to assets/img/wechat-qr.png)
