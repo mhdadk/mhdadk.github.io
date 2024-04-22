@@ -33,7 +33,7 @@ the "blog" page -->
 {% if site.display_tags or site.display_categories %}
 
   <div class="tag-category-list">
-    <i>{{ Posts can be filtered by the tags below. }}</i>
+    <span><i>{{ Posts can be filtered by the tags below. }}</i></span>
     <ul class="p-0 m-0">
       {% for tag in site.display_tags %}
         <li>
