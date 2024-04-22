@@ -29,6 +29,6 @@ I'm a PhD student at North Carolina State University, studying practical problem
 optimal control theory.
 
 I regularly post explanations of different concepts in optimization theory,
-probability theory, and linear algebra on my [blog](blog.md). A list of my
-publications can be found [here](publications.md), and links to my social profiles can
+probability theory, and linear algebra on my [blog](/blog/). A list of my
+publications can be found [here](/publications/), and links to my social profiles can
 be found at the bottom of this page.
