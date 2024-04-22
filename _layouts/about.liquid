@@ -68,7 +68,9 @@ layout: default
     {% if page.social %}
       <div class="social">
         <div class="contact-icons">{% include social.liquid %}</div>
-
+        {% if page.stackexchange_flair %}
+          <a href="https://stackexchange.com/users/9073934/mhdadk"><img src="https://stackexchange.com/users/flair/9073934.png" width="208" height="58" alt="profile for mhdadk on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for mhdadk on Stack Exchange, a network of free, community-driven Q&amp;A sites" /></a>
+        {% endif %}
         <div class="contact-note">{{ site.contact_note }}</div>
       </div>
     {% endif %}
