@@ -31,10 +31,9 @@ the "blog" page -->
 {% endif %} -->
 
 {% if site.display_tags or site.display_categories %}
-
   <div class="tag-category-list">
-    <span><i>{{ Posts can be filtered by the tags below. }}</i></span>
     <ul class="p-0 m-0">
+      <span><i>{{ Posts can be filtered by the tags below. }}</i></span>
       {% for tag in site.display_tags %}
         <li>
           <i class="fa-solid fa-hashtag fa-sm"></i> <a href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}">{{ tag }}</a>
@@ -56,7 +55,7 @@ the "blog" page -->
       {% endfor %}
     </ul>
   </div>
-  {% endif %}
+{% endif %}
 
 {% assign featured_posts = site.posts | where: "featured", "true" %}
 {% if featured_posts.size > 0 %}
