@@ -111,16 +111,14 @@
                     snippet below includes the link corresponding to each page as long
                     as "nav" is set to "true". However, this also includes the "about"
                     page, which is why we introduced the if statement
-                    "{% if p.title != about_title %}" to skip the about page.
+                    "if p.title != about_title" to skip the about page.
                   {% endcomment %}
-                  {% comment %} {% if p.title != about_title %} {% endcomment %}
                     <a class="nav-link" href="{{ url | relative_url }}">
                       {{- p.title }}
                       {% if page.url contains p.url %}
                         <span class="sr-only">(current)</span>
                       {% endif %}
                     </a>
-                  {% comment %} {% endif %} {% endcomment %}
                 </li>
               {% endif %}
             {% endif %}
