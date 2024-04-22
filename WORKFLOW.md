@@ -5,7 +5,7 @@ A typical workflow for editing the website and then deploying it proceeds as fol
 directory, and so on.
 2. These changes are then saved, committed locally, and then pushed to the remote
 repository corresponding to the website.
-3. On GitHub, go to the `master` branch repository that corresponds to the website. You should then
+3. On GitHub, go to the `master` branch in the repository that corresponds to the website. You should then
 see an orange dot next to the latest pushed commit to the repository, as shown in
 Fig. 1 below. Click on this orange dot.
 
