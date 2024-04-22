@@ -1,3 +1,7 @@
+This branch is a backup of the `master` branch at https://alshedivat.github.io/al-folio/, with some slight modifications of my own.
+
+---
+
 # al-folio
 
 <div align="center">
