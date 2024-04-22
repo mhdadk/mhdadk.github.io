@@ -103,16 +103,6 @@
               {% elsif if p.title != about_title %}
                 <li class="nav-item {% if page.url contains p.permalink %}active{% endif %}">
                   {% if p.permalink contains '/blog/' %}{% assign url = '/blog/' %} {% else %}{% assign url = p.url %}{% endif %}
-                  {% comment %}
-                    add the following if statement to remove the "about" link in the
-                    navigation bar on all pages. Note that the for loop
-                    "{% for p in sorted_pages %}" above iterates through all pages under
-                    the "_pages" directory, which includes the "about.md" page. The
-                    snippet below includes the link corresponding to each page as long
-                    as "nav" is set to "true". However, this also includes the "about"
-                    page, which is why we introduced the if statement
-                    "if p.title != about_title" to skip the about page.
-                  {% endcomment %}
                     <a class="nav-link" href="{{ url | relative_url }}">
                       {{- p.title }}
                       {% if page.url contains p.url %}
