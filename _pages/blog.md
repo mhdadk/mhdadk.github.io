@@ -31,9 +31,9 @@ the "blog" page -->
 {% endif %} -->
 
 {% if site.display_tags or site.display_categories %}
+  <p><i>{{ Posts can be filtered by the tags below. }}</i></p>
   <div class="tag-category-list">
     <ul class="p-0 m-0">
-      <span><i>{{ Posts can be filtered by the tags below. }}</i></span>
       {% for tag in site.display_tags %}
         <li>
           <i class="fa-solid fa-hashtag fa-sm"></i> <a href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}">{{ tag }}</a>
