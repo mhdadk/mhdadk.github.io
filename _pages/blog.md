@@ -31,7 +31,7 @@ the "blog" page -->
 {% endif %} -->
 
 {% if site.display_tags or site.display_categories %}
-  <p><i>{{ Posts can be filtered by the tags below. }}</i></p>
+  <i>Posts can be filtered by the tags below.</i>
   <div class="tag-category-list">
     <ul class="p-0 m-0">
       {% for tag in site.display_tags %}
