@@ -1,7 +1,9 @@
 ---
 permalink: /robots.txt
 ---
+# https://developers.google.com/search/docs/crawling-indexing/robots/create-robots-txt#create_rules
+# useful debugging tool: https://support.google.com/webmasters/answer/6062598
 User-agent: *
-Disallow:
+Allow: /
 
 Sitemap: {{ site.baseurl | prepend: site.url }}/sitemap.xml
