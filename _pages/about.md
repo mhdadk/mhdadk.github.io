@@ -26,7 +26,7 @@ Put your address / P.O. box / other info right below your picture. You can also 
 Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them. -->
 
 I'm a PhD student at North Carolina State University, studying practical problems in
-optimal control theory.
+optimal control theory. test
 
 I regularly post explanations of different concepts in optimization theory,
 probability theory, and linear algebra on my [blog](/blog/). A list of my
