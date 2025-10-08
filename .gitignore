@@ -1,2 +1,37 @@
+# Jekyll build output
 _site/
+.sass-cache/
 .jekyll-cache/
+
+# Dependency directories
+.bundle/
+vendor/bundle/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+.idea/
+.vscode/
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Mac OS
+.AppleDouble
+.LSOverride
+
+# Node.js dependencies if you use any
+node_modules/
+
+# Optional: environment variables file
+.env
+
+# Optional: Gemfile.lock if you want to ignore it (usually keep it for GitHub Pages)
+# Gemfile.lock
