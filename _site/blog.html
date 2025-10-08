@@ -12,6 +12,8 @@
     <meta name="author" content="Mahmoud Abdelkhalek">
 
     <link rel="stylesheet" href="assets/css/tufte.css" />
+    <link rel="alternate" type="application/rss+xml" title="" href="/%20/feed.xml">
+
 </head>
 
 <body>
@@ -21,16 +23,12 @@
         Home
     </a>
     
-    <a href="/about.html" class="nav-link">
-        About
-    </a>
-    
     <a href="/blog.html" class="nav-link">
         Blog
     </a>
     
-    <a href="/staff.html" class="nav-link">
-        Staff
+    <a href="/feed.xml" class="nav-link">
+        RSS
     </a>
     
 </nav>
@@ -47,6 +45,7 @@
     
     <div class="post" data-tags="geometry">
         <h2><a href="/2018/08/22/kiwifruit.html">Kiwifruit</a></h2>
+        <p class="post-date">August 22, 2018</p>
         <p><p>Kiwifruit (often abbreviated as kiwi), or Chinese gooseberry is the
 edible berry of several species of woody vines in the genus Actinidia.</p>
 </p>
@@ -59,6 +58,7 @@ edible berry of several species of woody vines in the genus Actinidia.</p>
     
     <div class="post" data-tags="math">
         <h2><a href="/2018/08/21/apples.html">Apples</a></h2>
+        <p class="post-date">August 21, 2018</p>
         <p><p>An apple is a sweet, edible fruit produced by an apple tree.</p>
 </p>
         <p class="tags">
@@ -70,6 +70,7 @@ edible berry of several species of woody vines in the genus Actinidia.</p>
     
     <div class="post" data-tags="algebra">
         <h2><a href="/2018/08/20/bananas.html">Bananas</a></h2>
+        <p class="post-date">August 20, 2018</p>
         <p><p>A banana is an edible fruit – botanically a berry – produced by several
 kinds of large herbaceous flowering plants in the genus Musa.</p>
 </p>
@@ -138,7 +139,13 @@ kinds of large herbaceous flowering plants in the genus Musa.</p>
         display: inline-block;
         margin-right: 0.3em;
         font-size: 0.85em;
-        color: #555;
+        color: #a2a1a1;
+    }
+
+    .post-date {
+        font-size: 1em;
+        color: #a2a1a1;
+        margin-bottom: 0.5em;
     }
 </style>
 
@@ -159,7 +166,7 @@ kinds of large herbaceous flowering plants in the genus Musa.</p>
 
         // --- Create "Show All" reset button ---
         const resetBtn = document.createElement("button");
-        resetBtn.textContent = "Show All";
+        resetBtn.textContent = "Show all";
         resetBtn.className = "tag-button reset";
         resetBtn.addEventListener("click", () => {
             activeTags.clear();
