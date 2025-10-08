@@ -14,10 +14,41 @@
     <link rel="stylesheet" href="assets/css/tufte.css" />
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ " /feed.xml" | relative_url }}">
 
+    <style>
+        html {
+            scrollbar-gutter: stable;
+            /* Reserve space for scrollbar */
+        }
+
+        .container,
+        .wrapper,
+        main,
+        body {
+            max-width: 800px;
+            /* Adjust this value as needed */
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* For mobile responsiveness */
+        @media (max-width: 840px) {
+
+            .container,
+            .wrapper,
+            main,
+            body {
+                max-width: 100%;
+                padding: 0 15px;
+            }
+        }
+    </style>
+
 </head>
 
 <body>
+    {% if page.navigation %}
     {% include navigation.html %}
+    {% endif %}
     {{ content }}
 </body>
 
