@@ -8,7 +8,7 @@ tags:
 We describe the fencepost error, what it is, and how to avoid it. More details on the fencepost error can be found [here](https://betterexplained.com/articles/learning-how-to-count-avoiding-the-fencepost-problem/).
 
 ## Formal explanation
-Consider the integers $a$ and $b$ such that $b > a$. What is the length of the sequence $a, \dots, b$? The length of this sequence can be determined by finding a bijection between this sequence and the sequence $1,\dots,x$ of natural numbers, where $x \in \mathbb N$ is the length of the sequence and $x > 1$, as follows:
+Consider the integers $a$ and $b$ such that $b > a$. What is the length of the sequence $a, \dots, b$? The length of this sequence can be determined by finding a bijection between this sequence and the sequence $1,\dots,x$ of natural numbers, where $x \in \mathbb N$ is the length of the sequence and $x > 1$, as follows $\frac{3}{4}$:
 
 $$
 \begin{align}
