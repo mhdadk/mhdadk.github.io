@@ -1,7 +1,13 @@
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-seo-tag
 feed:
   path: feed.xml
   posts_limit: 10
   categories: []
+
+# stop Jekyll's Markdown processor from automatically adding MathJax delimiters around
+# ('$', '$') and ('$$', '$$')
+kramdown:
+  math_engine: null

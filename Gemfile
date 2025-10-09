@@ -3,7 +3,8 @@
 source "https://rubygems.org"
 
 gem "jekyll"
-gem "jekyll-feed", "~> 0.16"
+gem "jekyll-feed"
 gem "logger"
 gem "fiddle"
 gem "jekyll-sitemap"
+gem "jekyll-seo-tag"

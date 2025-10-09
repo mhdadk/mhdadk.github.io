@@ -6,8 +6,10 @@ tags:
   - combinatorics
 ---
 We describe the fencepost error, what it is, and how to avoid it. More details on the fencepost error can be found [here](https://betterexplained.com/articles/learning-how-to-count-avoiding-the-fencepost-problem/).
+
 ## Formal explanation
 Consider the integers $a$ and $b$ such that $b > a$. What is the length of the sequence $a, \dots, b$? The length of this sequence can be determined by finding a bijection between this sequence and the sequence $1,\dots,x$ of natural numbers, where $x \in \mathbb N$ is the length of the sequence and $x > 1$, as follows:
+
 $$
 \begin{align}
 &a,\dots,b \\
@@ -15,6 +17,7 @@ $$
 &1,\dots,(b-a) + 1
 \end{align}
 $$
+
 Hence, the length of the sequence $a,\dots,b$ is $(b-a) + 1$.
 
 Similarly, consider the integers $a$ and $b$ such that $b > a$ and $a \neq 0$. Suppose that we want to compute $\frac{b}{a}$, but we wanted to include the dividend $b$ in the calculation as an extra "post" (see the informal explanation in the next section). This is equivalent to computing the length of the sequence $r, 1 \cdot a + r, 2 \cdot a + r, \dots, q \cdot a + r$, where
@@ -23,6 +26,7 @@ Similarly, consider the integers $a$ and $b$ such that $b > a$ and $a \neq 0$. S
 * $q \cdot a + r = b$.
 
 As done above, to compute the length of this sequence, we transform it into the sequence $1,\dots,x$ of natural numbers, where $x \in \mathbb N$ is the length of the sequence and $x > 1$, as follows:
+
 $$
 \begin{align}
 &r, 1 \cdot a + r, 2 \cdot a + r, \dots, q \cdot a + r \\
@@ -31,6 +35,7 @@ $$
 &1, 2, 3, \dots, q + 1
 \end{align}
 $$
+
 Hence, the length of the sequence $r, 1 \cdot a + r, 2 \cdot a + r, \dots, q \cdot a + r$ is $q + 1$. Because $q \cdot a + r = b$, we can also write $q + 1$ as $\frac{b-r}{a} + 1$.
 ## Informal explanation
 Consider the sequence of numbers $2,3,4,5$. What is the length of this sequence? The answer depends on how "length" is defined. If the length of a sequence is defined as the amount of numbers in the sequence, then the answer is $4$. This is equivalent to $5 - 2 + 1 = 4$.
