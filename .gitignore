@@ -34,4 +34,4 @@ node_modules/
 .env
 
 # Optional: Gemfile.lock if you want to ignore it (usually keep it for GitHub Pages)
-# Gemfile.lock
+Gemfile.lock
