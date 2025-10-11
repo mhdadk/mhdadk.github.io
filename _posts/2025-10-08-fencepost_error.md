@@ -12,6 +12,19 @@ Consider the integers $a$ and $b$ such that $b > a$. What is the length of the s
 
 $$
 \begin{align}
+p(X_i = x_i \mid Z_i = 0) &= \begin{cases} p(X_i = 1 \mid Z_i = 0), &x_i = 1 \\ 1 - p(X_i = 1 \mid Z_i = 0), &x_i = 0\end{cases} \\
+&= p(X_i = 1 \mid Z_i = 0)^{x_i} \cdot (1 - p(X_i = 1 \mid Z_i = 0))^{1-x_i} \\
+p(X_i = x_i \mid Z_i = 1) &= \begin{cases} p(X_i = 1 \mid Z_i = 1), &x_i = 1 \\ 1 - p(X_i = 1 \mid Z_i = 1), &x_i = 0\end{cases} \\
+&= p(X_i = 1 \mid Z_i = 1)^{x_i} \cdot (1 - p(X_i = 1 \mid Z_i = 1))^{1-x_i} \\
+p(Z_i = z_i) &= \begin{cases} p(Z_i = 1), &z_i = 1 \\ 1 - p(Z_i = 1), &z_i = 0\end{cases} \\
+&= p(Z_i = 1)^{z_i} \cdot (1 - p(Z_i = 1))^{1-z_i} \\
+\end{align}
+$$
+
+csdcssdcsdcs
+
+$$
+\begin{align}
 &a,\dots,b \\
 &0,\dots,(b-a) \\
 &1,\dots,(b-a) + 1

@@ -232,12 +232,28 @@ figure.fullwidth figcaption {
     margin-right: 24%;
 }
 
+/* Configure MathJax display math blocks to have a larger font */
+.kdmath {
+    font-size: 140%;
+    /* or 1.3em, 20px, etc. */
+}
+
 a:link,
 a:visited {
     color: inherit;
     text-decoration: none;
     /* text-underline-offset: 0.1em;
     text-decoration-thickness: 0.05em; */
+}
+
+/* Links inside posts only */
+.post-content a:link,
+.post-content a:visited {
+    color: gray;
+    /* your link color */
+    text-decoration: underline;
+    /* underline */
+    text-underline-offset: 0.1em;
 }
 
 /* Sidenotes, margin notes, figures, captions */
