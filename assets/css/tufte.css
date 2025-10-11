@@ -232,10 +232,16 @@ figure.fullwidth figcaption {
     margin-right: 24%;
 }
 
-/* Configure MathJax display math blocks to have a larger font */
+/*
+After setting "math_engine: null" under the kramdown section in "_config.yml", kramdown
+no longer adds the delimiters \( and \) and \[ and \] around math expressions.
+
+However, it will still add the div <div class="kdmath"></div> around display math
+blocks. We make use of this fact to selectively increase the font size of the display
+math blocks while keeping the font size of inline math intact.
+*/
 .kdmath {
     font-size: 140%;
-    /* or 1.3em, 20px, etc. */
 }
 
 a:link,
