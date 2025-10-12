@@ -3,7 +3,7 @@ This repository contains all the code needed to generate the website at https://
 To build this website using Jekyll, run the following commands:
 ```sh
 git clone git@github.com:mhdadk/mhdadk.github.io.git
-cd mhdadk.github.io.git
+cd mhdadk.github.io
 bundle install
 bundle exec jekyll serve
 ```
