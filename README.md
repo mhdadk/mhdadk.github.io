@@ -1,4 +1,4 @@
-This repository contains all the code needed to generate the website at https://mhdadk.github.io/.
+This repository contains all the code needed to generate the website at https://www.mhdadk.com/.
 
 To build this website using Jekyll, run the following commands:
 ```sh
