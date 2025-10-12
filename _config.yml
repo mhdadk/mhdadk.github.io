@@ -11,3 +11,5 @@ feed:
 # ('$', '$') and ('$$', '$$')
 kramdown:
   math_engine: null
+
+highlighter: rouge
