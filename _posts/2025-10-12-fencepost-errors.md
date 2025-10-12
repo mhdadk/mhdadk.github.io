@@ -6,7 +6,6 @@ tags:
 ---
 We describe what fencepost errors are, how to avoid them, and provide a precise derivation for why they occur.
 
-# Motivation
 Suppose that you're working on a large codebase in your favorite editor and suppose that you want to find out how many lines of code a particular class in this codebase takes up.
 
 To do this, you find the first line of code that the class starts on, say line $7$, and then you find the last line of code that the class ends on, say line $373$. You then compute $373 - 7 = 366$ and conclude that this class takes up $366$ lines of code.
@@ -19,8 +18,7 @@ This is an example of a *fencepost* error. The word "fencepost" comes from one o
 
 If we divide $10$ feet of fence by $1$ foot per fence section, then we obtain $10$ fence sections. However, each fence section consists of $2$ posts, so while there will be $10$ fence sections, there will be $11$ posts.
 
-# Generalization
-Consider the integers $a$ and $b$ such that $b > a$. What is the length of the sequence $a, \dots, b$? That is, how many integers are there in this sequence?
+More formally, consider the integers $a$ and $b$ such that $b > a$. What is the length of the sequence $a, \dots, b$? That is, how many integers are there in this sequence?
 
 The length of this sequence can be determined by finding a bijection between this sequence and the sequence $1,\dots,c$, where $c \in \mathbb N$ is the length of the sequence and $c > 1$, as follows:
 
@@ -71,8 +69,7 @@ Hence, the length of this sequence is $q + 1$. Because $q \cdot a + r = b$, we c
 
 In the numerical simulation over time example above, we let $b = T, r = 0,$ and $a = \Delta t$ to get $\frac{T-0}{\Delta t} + 1 = \frac{T}{\Delta t} + 1$.
 
-# Summary
-To correctly compute the correct number of objects and avoid fencepost errors, do the following:
+To summarize, to compute the correct number of objects and avoid fencepost errors, do the following:
 1. Given the end-points of the sequence of objects, write down the full sequence of objects that you would like to count. Be sure to avoid including any objects that you do not want to count.
 2. Transform the sequence from step 1 into the canonical sequence $1,\dots,c$, where $c \in \mathbb N$ and $c > 1$.
 3. The desired number of objects is $c$.
