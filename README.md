@@ -1,4 +1,4 @@
-This repository contains all the code needed to generate the website at https://www.mhdadk.com/.
+This repository contains all the code needed to generate the website at https://www.mhdadk.com/. The style of this website is inspired by https://gregorygundersen.com/.
 
 To build this website using Jekyll, run the following commands:
 ```sh
@@ -8,7 +8,7 @@ bundle install
 bundle exec jekyll serve
 ```
 To see this website in action, open the `Server address` shown in the output of the
-`bundle exec jekyll serve`, which is usually `http://127.0.0.1:4000`, in a web browser.
+`bundle exec jekyll serve` command, which is usually `http://127.0.0.1:4000`, in a web browser.
 
 After building the website, two directories should appear in the root directory of the
 repository: `_site` and `.jekyll-cache`.
