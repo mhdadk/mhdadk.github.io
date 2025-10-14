@@ -6,13 +6,20 @@
             displayMath: [['$$', '$$']],
             processEscapes: true,
             processEnvironments: true,
-            packages: { '[+]': ['ams'] },  // Include AMS extensions for align, etc.
-            tags: 'all'
+            packages: { '[+]': ['ams'] }  // Include AMS extensions for align, etc.
+            // tags: 'all'
         },
         // https://docs.mathjax.org/en/v4.0/options/output/index.html#options-common-to-all-output-processors
         output: {
             displayOverflow: 'scroll'
-        }
+        },
+        // startup: {
+        //     ready: () => {
+        //         MathJax.typesetClear();          // clear previous renders
+        //         // MathJax.typeset();               // render math now
+        //         MathJax.startup.defaultReady();  // initialize MathJax normally
+        //     }
+        // }
     };
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"></script>

@@ -21,16 +21,16 @@ If we divide $10$ feet of fence by $1$ foot per fence section, then we obtain $1
 We can resolve the fencepost error in the example above by writing down the sequence of lines of code as
 
 $$
-7, 8, \dots, 373 \label{loc_seq}
+7, 8, \dots, 373 
 $$
 
-Then, [because](https://en.wikipedia.org/wiki/Cardinality#Equinumerosity) two sequences have the same length if there exists a bijection between them, we can determine the length $N$ of $\eqref{loc_seq}$ by finding a bijection between it and the sequence $1,\dots,N$. We do as follows:
+Then, [because](https://en.wikipedia.org/wiki/Cardinality#Equinumerosity) two sequences have the same length if there exists a bijection between them, we can determine the length $N$ of  by finding a bijection between it and the sequence $1,\dots,N$. We do as follows:
 
 $$
 \begin{align}
-&7, 8, \dots, 373 \label{bij_seq1} \\
-&0, 1, \dots, 366 \label{bij_seq2} \\
-&0, 1, \dots, 366 \label{bij_seq3} \\
+&7, 8, \dots, 373  \\
+&0, 1, \dots, 366  \\
+&0, 1, \dots, 366 \\
 \end{align}
 $$
 

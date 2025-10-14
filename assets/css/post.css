@@ -14,11 +14,11 @@ However, it will still add the div <div class="kdmath"></div> around display mat
 blocks. We make use of this fact to selectively increase the font size of the display
 math blocks while keeping the font size of inline math intact.
 */
-.kdmath {
-    font-size: 140%;
-}
+/* .kdmath {
+    font-size: 1.4rem;
+    /* 1.4em; */
 
-a:link,
+*/ a:link,
 a:visited {
     color: inherit;
     text-decoration: none;
