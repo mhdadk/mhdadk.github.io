@@ -6,11 +6,11 @@ tags:
 ---
 We describe what fencepost errors are, how to avoid them, and provide a precise derivation for why they occur.
 
-Suppose that you're working on a large codebase in your favorite editor and suppose that you want to find out how many lines of code a particular class in this codebase takes up.
+Suppose that you're working on a large codebase in your favorite editor. Suppose that you want to find out how many lines of code a particular class in this codebase takes up.
 
 To do this, you find the first line of code that the class starts on, say line $7$, and then you find the last line of code that the class ends on, say line $373$. You then compute $373 - 7 = 366$ and conclude that this class takes up $366$ lines of code.
 
-However, this answer is incorrect. The class actually takes up $367$ lines of code, since the last line, line $373$, was not counted in the original answer.
+However, this answer is actually $367$ lines of code, since the last line, line $373$, was not counted in the original answer.
 
 This is an example of a *fencepost* error. The word "fencepost" comes from one of the simplest examples where fencepost errors occur:
 
@@ -18,15 +18,31 @@ This is an example of a *fencepost* error. The word "fencepost" comes from one o
 
 If we divide $10$ feet of fence by $1$ foot per fence section, then we obtain $10$ fence sections. However, each fence section consists of $2$ posts, so while there will be $10$ fence sections, there will be $11$ posts.
 
+We can resolve the fencepost error in the example above by writing down the sequence of lines of code as
+
+$$
+7, 8, \dots, 373 \label{loc_seq}
+$$
+
+Then, [because](https://en.wikipedia.org/wiki/Cardinality#Equinumerosity) two sequences have the same length if there exists a bijection between them, we can determine the length $N$ of $\eqref{loc_seq}$ by finding a bijection between it and the sequence $1,\dots,N$. We do as follows:
+
+$$
+\begin{align}
+&7, 8, \dots, 373 \label{bij_seq1} \\
+&0, 1, \dots, 366 \label{bij_seq2} \\
+&0, 1, \dots, 366 \label{bij_seq3} \\
+\end{align}
+$$
+
 More formally, consider the integers $a$ and $b$ such that $b > a$. What is the length of the sequence $a, \dots, b$? That is, how many integers are there in this sequence?
 
 The length of this sequence can be determined by finding a bijection between this sequence and the sequence $1,\dots,c$, where $c \in \mathbb N$ is the length of the sequence and $c > 1$, as follows:
 
 $$
 \begin{align}
-&a,\dots,b \tag{1.1} \\
-&0,\dots,(b-a) \tag{1.2} \\
-&1,\dots,(b-a) + 1 \tag{1.3}
+&a,\dots,b \\
+&0,\dots,(b-a) \\
+&1,\dots,(b-a) + 1
 \end{align}
 $$
 
