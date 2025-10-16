@@ -6,11 +6,11 @@ tags:
 ---
 We describe what fencepost errors are, how to avoid them, and provide a precise derivation for why they occur.
 
-Suppose that you're working on a large codebase in your favorite editor. Suppose that you want to find out how many lines of code a particular class in this codebase takes up.
+Suppose that you're working on a large codebase in your favorite editor, and suppose that you want to find out how many lines of code a particular class in this codebase takes up.
 
 To do this, you find the first line of code that the class starts on, say line $7$, and then you find the last line of code that the class ends on, say line $373$. You then compute $373 - 7 = 366$ and conclude that this class takes up $366$ lines of code.
 
-However, this answer is actually $367$ lines of code, since the last line, line $373$, was not counted in the original answer.
+However, the correct answer is actually $367$ lines of code, since the last line, line $373$, was not counted in the original answer.
 
 This is an example of a *fencepost* error. The word "fencepost" comes from one of the simplest examples where fencepost errors occur:
 
@@ -21,36 +21,62 @@ If we divide $10$ feet of fence by $1$ foot per fence section, then we obtain $1
 We can resolve the fencepost error in the example above by writing down the sequence of lines of code as
 
 $$
-7, 8, \dots, 373 
+\begin{equation}
+7, 8, \dots, 373 \label{loc_seq}
+\end{equation}
 $$
 
-Then, [because](https://en.wikipedia.org/wiki/Cardinality#Equinumerosity) two sequences have the same length if there exists a bijection between them, we can determine the length $N$ of  by finding a bijection between it and the sequence $1,\dots,N$. We do as follows:
+Then, [because](https://en.wikipedia.org/wiki/Cardinality#Equinumerosity) two sequences have the same length if there exists a bijection between them, we can determine the length $N$ of $\eqref{loc_seq}$ by finding a bijection between it and the sequence $1,2,\dots,N$ as follows,
 
 $$
-\begin{align}
-&7, 8, \dots, 373  \\
-&0, 1, \dots, 366  \\
+\begin{align*}
+&7, 8, \dots, 373 \\
 &0, 1, \dots, 366 \\
-\end{align}
+&1, 2, \dots, 367
+\end{align*}
 $$
 
-More formally, consider the integers $a$ and $b$ such that $b > a$. What is the length of the sequence $a, \dots, b$? That is, how many integers are there in this sequence?
+Hence, the length $N$ of $\eqref{loc_seq}$ is $367$. 
 
-The length of this sequence can be determined by finding a bijection between this sequence and the sequence $1,\dots,c$, where $c \in \mathbb N$ is the length of the sequence and $c > 1$, as follows:
+More formally, consider the integers $r$ and $a$ such that $a > r$. What is the length of the sequence $r, r+1, r+2, \dots, a$? That is, how many integers are there in this sequence?
+
+As done above, the length of this sequence can be determined by finding a bijection between this sequence and the sequence $1,2,\dots,N$, where $N \in \mathbb N$ is the length of the sequence and $N > 1$, as follows,
 
 $$
 \begin{align}
-&a,\dots,b \\
-&0,\dots,(b-a) \\
-&1,\dots,(b-a) + 1
+&r,r+1,r+2,\dots,a \label{gen_seq1} \\
+&0,1,2,\dots,(a-r) \label{gen_seq2} \\
+&1,2,3,\dots,(a-r) + 1 \label{gen_seq3}
 \end{align}
 $$
 
-where $(1.2)$ is obtained from $(1.1)$ by subtracting $a$ from each element in the sequence and $(1.3)$ is obtained from $(1.2)$ by adding $1$ to each element in the sequence. Hence, the length of the sequence $a,\dots,b$ is $(b-a) + 1$.
+where $\eqref{gen_seq2}$ is obtained from $\eqref{gen_seq1}$ by subtracting $r$ from each element in $\eqref{gen_seq2}$ and $\eqref{gen_seq3}$ is obtained from $\eqref{gen_seq2}$ by adding $1$ to each element in $\eqref{gen_seq2}$. Hence, the length of the sequence $r,r+1,r+2,\dots,a$ is $(a-r) + 1$.
 
-If we let $a = 7$ and $b = 373$, then we see that the length of the sequence $7, \dots, 373$ is $(373 - 7) + 1 = 367$ lines of code.
+We can generalize this reasoning to the more general sequence $r,r+b,r+2b,\dots,a$, such that
 
-Next, suppose that you are trying to run a numerical simulation over time. You have the desired total simulation time $T > 0$ and a fixed time step size $\Delta t > 0$. Given this information, you would like to compute the points in time that the simulation will step through, denoted $n$.
+* $r \in \mathbb N \cup \{0\}$,
+* $b \in \mathbb Z \setminus \{0\}$,
+* the difference between consecutive elements in the sequence is $k \in \mathbb N$, not $1$, and
+* $a = r + q \cdot b$ for some $q \in \mathbb Z$.
+
+The length of this more general sequence can be obtained as follows,
+
+$$
+\begin{align*}
+&r,r+b,r+2b,\dots,a \\
+&0,b,2b,\dots,(a-r) \\
+&0,1,2,\dots,\frac{a-r}{b} \\
+&1,2,3,\dots,\frac{a-r}{b} + 1
+\end{align*}
+$$
+
+Hence, the length of the sequence $r,r+b,r+2b,\dots,a$ is $\frac{a-r}{b} + 1$. It is interesting to note that because $a = r + q \cdot b$, then $a, r, q,$ and $b$ can be interpreted as the dividend, remainder, quotient, and divisor, respectively, when $a$ is divided by $b$ via Euclidean division.
+
+<!-- <label for="sn-euclidean-division" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-euclidean-division" class="margin-toggle"><span class="sidenote">Because $a = r + q \cdot b$, then $a, r, q,$ and $b$ can be interpreted as the dividend, remainder, quotient, and divisor, respectively</span> -->
+
+This general case is useful when determining how many "points" there are in a given interval. For example, suppose that you are trying to run a numerical simulation over time. You have the desired total simulation time $T > 0$ and a fixed time step size $\Delta t > 0$. Given this information, you would like to compute how many points in time that the simulation will step through, denoted $N$.
+
+# TODO
 
 That is, you would like to determine the length of the sequence $0, \Delta t, 2\Delta t, \dots, T$. As done above, we can determine the length of this sequence by finding a bijection between this sequence and the sequence $1,\dots,c$, where $c \in \mathbb N$ is the length of the sequence and $c > 1$, as follows:
 
