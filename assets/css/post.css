@@ -11,12 +11,20 @@ After setting "math_engine: null" under the kramdown section in "_config.yml", k
 no longer adds the delimiters \( and \) and \[ and \] around math expressions.
 
 However, it will still add the div <div class="kdmath"></div> around display math
-blocks. We make use of this fact to selectively increase the font size of the display
-math blocks while keeping the font size of inline math intact.
-*/
-/* .kdmath {
+blocks. If we try to make use of this fact to selectively increase the font size of the
+display math blocks while keeping the font size of inline math intact, by writing:
+
+.kdmath {
     font-size: 1.4rem;
-    /* 1.4em; */
+}
+
+we will get a weird bug where the display math font size keeps increasing on each page
+reload. Instead, we make use of the fact that display math blocks are contained in
+<mjx-container ... display="true" ...></mjx-container> blocks.
+*/
+mjx-container[display="true"] {
+    font-size: 140% !important;
+}
 
 */ a:link,
 a:visited {

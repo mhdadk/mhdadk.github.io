@@ -33,3 +33,8 @@ automatically build the website on each push to the repository.
 * `favicon.ico`: Empty file used to avoid the `ERROR '/favicon.ico' not found.` error when running `bundle exec jekyll serve`.
 * `index.html`: Home page.
 * `robots.txt`: Configure web scraping.
+
+> [!IMPORTANT]  
+> If you edit any of the .css files under `assets/css`, be sure to minify them. That is,
+> if you edit file `X.css`, then minify it to generate `X.min.css`, since `X.min.css` is
+> the one that is used for the website, note `X.css`.
