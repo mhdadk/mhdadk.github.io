@@ -23,7 +23,7 @@ reload. Instead, we make use of the fact that display math blocks are contained 
 <mjx-container ... display="true" ...></mjx-container> blocks.
 */
 mjx-container[display="true"] {
-    font-size: 140% !important;
+    font-size: 135% !important;
 }
 
 */ a:link,
