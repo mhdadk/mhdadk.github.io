@@ -15,7 +15,7 @@ blocks. If we try to make use of this fact to selectively increase the font size
 display math blocks while keeping the font size of inline math intact, by writing:
 
 .kdmath {
-    font-size: 1.4rem;
+    font-size: 140%;
 }
 
 we will get a weird bug where the display math font size keeps increasing on each page
