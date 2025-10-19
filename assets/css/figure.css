@@ -3,7 +3,9 @@
 /* Center figure and make image full text width */
 figure {
     max-width: 100%;
-    margin: 0 auto 3em auto;
+    /* Set the top and bottom margins so that the top and bottom vertical spacing between
+    the image and surrounding text are close to equal. */
+    margin: 2.5em auto 1.5em auto;
     text-align: center;
 }
 
