@@ -1,0 +1,8 @@
+<figure{% if include.class %} class="{{ include.class }}" {% endif %}>
+    <img src="{{ include.src }}" alt="{{ include.alt | default: include.caption | strip_html | escape }}" {% if
+        include.scale %} style="width: {{ include.scale }}%; height: auto;" {% else %}
+        style="width: 100%; height: auto;" {% endif %}>
+    {% if include.caption %}
+    <figcaption><b>Fig. {{ include.fignum}}</b>: {{ include.caption }}</figcaption>
+    {% endif %}
+    </figure>

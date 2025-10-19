@@ -35,3 +35,6 @@ node_modules/
 
 # Optional: Gemfile.lock if you want to ignore it (usually keep it for GitHub Pages)
 Gemfile.lock
+
+# .drawio backup files
+*.drawio.bkp

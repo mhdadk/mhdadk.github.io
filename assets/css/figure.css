@@ -1,0 +1,43 @@
+/* --- Override Tufte CSS figure/caption layout --- */
+
+/* Center figure and make image full text width */
+figure {
+    max-width: 100%;
+    margin: 0 auto 3em auto;
+    text-align: center;
+}
+
+/* Make image scale nicely within text width */
+figure img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Reset Tufte’s floating caption behavior */
+figcaption {
+    float: none !important;
+    clear: both;
+    margin: 0.5em auto 0 auto;
+    max-width: 100%;
+    text-align: center;
+    position: static;
+}
+
+/* Optional: remove right-margin tweak for fullwidth figures */
+figure.fullwidth figcaption {
+    margin-right: 0 !important;
+}
+
+/* Keep mobile layout consistent */
+@media (max-width: 760px) {
+    figure {
+        max-width: 100%;
+    }
+
+    figcaption {
+        max-width: 100%;
+        text-align: center;
+    }
+}

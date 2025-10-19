@@ -8,7 +8,19 @@ We prove that every square can be partitioned into $n$ squares for every $n \geq
 
 This problem belongs to a family of problems known as [*squaring the square*](https://en.wikipedia.org/wiki/Squaring_the_square). What I particularly like about this problem is that the problem statement can be understood by anyone of almost any age, and this problem admits some elegant solutions.
 
-First, let us better understand the problem statement. To "partition a square" means to tile the square with other squares. For example, consider the simple cases of $n=1$ and $n=4$, which are shown in TODO
+First, let us better understand the problem statement. To "partition a square" means to tile the square with other squares that are not necessarily of the same size.
+
+The simplest cases for tiling a square with other squares, for $n = 1, 4, 9, 16, \dots$, is shown in Fig. 1 below.
+
+{% include figure.html
+   src="/assets/images/squaring-the-square-simple.svg"
+   caption="The quantity $n \geq 6$ shows the threshold."
+   fignum=1
+   scale=70
+%}
+
+
+For example, consider the simple cases of $n=1, n=4$, which are shown in TODO
 
 In general, it is often a good idea to "play" with the problem statement by considering examples and counter-examples, which gives you a better sense of how to proceed.
 
