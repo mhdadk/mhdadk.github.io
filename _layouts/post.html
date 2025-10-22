@@ -5,7 +5,7 @@ layout: default
 <h1>{{ page.title }}</h1>
 <p class="post-date">
     {{ page.date | date: "%B %d, %Y" }}{% assign words = content | number_of_words %}{% assign reading_time = words |
-    divided_by:150 | ceil %} | {{ reading_time }} min read
+    divided_by:100 | ceil %} | {{ reading_time }} min read
 </p>
 <div class="post-content">
     {{ content }}
