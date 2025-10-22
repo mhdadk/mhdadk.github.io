@@ -1,4 +1,31 @@
-# Proof that the Bayes criterion minimizes risk
+---
+title: "The optimal decision rule"
+layout: post
+tags:
+  - probability
+  - machine-learning
+---
+Given an image of a number in the range 0 - 9, what is the optimal way to decide which number is in the image?
+
+If this question sounds familiar, that's because it is. This is the standard [MNIST](https://en.wikipedia.org/wiki/MNIST_database) classification task that is often introduced as a toy example in introductory Machine Learning (ML) classes.
+
+Surprisingly, this question is never explicitly answered in these classes, and one is instead taught how to apply some ML technique (including, but not limited to, deep learning) to solve this classification problem.
+
+Let's review the classical deep learning approach to solving this problem. Each image in the MNIST dataset has a size of 28x28. We first flatten each image into a 784-dimensional vector $x$.
+
+Outline:
+
+* Review deep learning approach.
+* Training and testing splits.
+* Consider first the testing approach and assume net is fully trained so that we 
+have a perfect p(c | x).
+* Mention that we take argmax of output. Why do we do this? That's the purpose of this post.
+* Applying softmax in the end and then using cross-entropy loss to train.
+* Mention how this is essentially maximum-likelihood estimation.
+
+---
+
+**OLD**
 
 Let $Y$ and $\hat Y$ be Bernoulli random variables that represent the hypotheses and decisions respectively. The decision $\hat Y$ is a function of the observation $X$, such that if $\mathcal X = R \cup \bar R$ is the set of all possible observations, then
 $$
