@@ -5,12 +5,24 @@ tags:
   - signal-processing
   - control-theory
 ---
+
+## TODO
+
+
+* Write FIR derivation and then mention that IIR direct form I is just generalization of this.
+* Write IIR direct form II and mention that it is all-pole filter followed by all-zero filter.
+* Provide proof that it is correct.
+* Derive state space form
+
+---
+
+
 We show how to express a finite impulse response (FIR) and an infinite impulse response
 (IIR) filter in state-space form.
 
 Of course, one may wonder why this is useful in the first place. The reason for this is
 that controller design techniques can be applied to achieve some desired output signal
-characteristics, which may not easily be available when the filter is expressed as a
+characteristics, which may not easily applicable when the filter is expressed as a
 standard transfer function.
 
 ## FIR
@@ -44,17 +56,6 @@ x[k] = \begin{bmatrix}u[k-1] \\ u[k-2] \\ \vdots \\ u[k - (N-1)]\end{bmatrix} \l
 $$
 
 Then,
-
-$$
-\begin{align*}
-x_1[k+1] &= u[k] \\
-x_2[k+1] &= u[k-1] \\
-&\vdots \\
-x_{N-1}[k+1] &= u[k-(N-2))
-\end{align*}
-$$
-
-Similarly, stack these together to form the state vector at the $(k+1)$th time-step such that,
 
 $$
 \begin{align}
@@ -146,3 +147,91 @@ Additionally, the $A, B,$ and $C$ matrices closely resemble the [controllable ca
 
 ## IIR
 
+Next, we show how to express an IIR filter in state space form. Given an input $u[k]$ at the $k$th time-step, the output $y[k]$ at the $k$th time-step, for $k = 0,\dots,L-1$, is
+
+$$
+\begin{align}
+y[k] &= h[0] \cdot u[k] + h[1] \cdot u[k - 1] + \cdots + h[N-1] \cdot u[k - (N-1)] + g[1] \cdot y[k-1] + g[2] \cdot y[k-2] + \cdots + g[M] \cdot y[k - M] \nonumber \\
+&= \sum_{i=0}^{N-1} h[i] \cdot u[k - i] + \sum_{j=1}^{M} g[j] \cdot y[k - j] \label{iir_out}
+\end{align}
+$$
+
+In contrast to an FIR filter, an IIR filter involves feeding back previous outputs as inputs. With the introduction of feedback, an IIR filter can be unstable. That is, given a bounded input sequence $u[0],u[1],\dots$, as $k \to \infty$, $\| y[k] \|\to \infty$.
+
+Define the states $x_1[k], \dots, x_M[k]$ at the $k$th time-step as
+
+$$
+\begin{align*}
+x_1[k] &= y[k-1] \\
+x_2[k] &= y[k-2] \\
+&\vdots \\
+x_{M}[k] &= y[k-M]
+\end{align*}
+$$
+
+Stack these states to form the state vector at the $k$th time-step,
+
+$$
+\begin{equation}
+x[k] = \begin{bmatrix}y[k-1] \\ y[k-2] \\ \vdots \\ y[k - M]\end{bmatrix} \label{state_vec_iir}
+\end{equation}
+$$
+
+Then,
+
+$$
+\begin{align}
+x[k+1] &= \begin{bmatrix}y[k] \\ y[k-1] \\ \vdots \\ y[k-(M-1)]\end{bmatrix} \nonumber \\
+&= \begin{bmatrix}\sum_{i=0}^{N-1} h[i] \cdot u[k - i] + \sum_{j=1}^{M} g[j] \cdot y[k - j] \\ y[k-1] \\ \vdots \\ y[k-(M-1)]\end{bmatrix} \\
+&= \begin{bmatrix}\sum_{j=1}^{M} g[j] \cdot y[k - j] \\ y[k-1] \\ \vdots \\ y[k-(M-1)]\end{bmatrix} + \begin{bmatrix}\sum_{i=0}^{N-1} h[i] \cdot u[k - i] \\ 0 \\ \vdots \\ 0\end{bmatrix} \\
+&= \begin{bmatrix}
+0 & 0 & 0 & \cdots & 0 \\
+1 & 0 & 0 & \cdots & 0 \\
+0 & 1 & 0 & \cdots & 0 \\
+0 & 0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1 & 0
+\end{bmatrix}\begin{bmatrix}u[k-1] \\ u[k-2] \\ \vdots \\ u[k - (N-1)]\end{bmatrix} + \begin{bmatrix}1 \\ 0 \\ \vdots \\ 0\end{bmatrix}u[k] \nonumber \\
+&= Ax[k] + Bu[k] \label{state_eq}
+\end{align}
+$$
+
+where
+
+* $\eqref{state_eq}$ is the state equation,
+* $x[k]$ is defined in $\eqref{state_vec}$,
+* $u[k]$ is the input signal at the $k$th time-step, and
+
+$$
+\begin{align*}
+A &= \begin{bmatrix}
+0 & 0 & 0 & \cdots & 0 \\
+1 & 0 & 0 & \cdots & 0 \\
+0 & 1 & 0 & \cdots & 0 \\
+0 & 0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1 & 0
+\end{bmatrix} \\
+B &= \begin{bmatrix}1 \\ 0 \\ \vdots \\ 0\end{bmatrix}
+\end{align*}
+$$
+
+Furthermore, the output equation is
+
+$$
+\begin{align}
+y[k] &= h[0] \cdot u[k] + h[1] \cdot u[k - 1] + \cdots + h[N-1] \cdot u[k - (N-1)] \\
+&= h[1] \cdot u[k - 1] + \cdots + h[N-1] \cdot u[k - (N-1)] + h[0] \cdot u[k] \\
+&= \begin{bmatrix}h[1] & \cdots & h[N-1]\end{bmatrix}\begin{bmatrix}u[k - 1] \\ \vdots \\ u[k - (N-1)]\end{bmatrix} + h[0] \cdot u[k] \\
+&= Cx[k] + Du[k]
+\end{align}
+$$
+
+where
+
+$$
+\begin{align*}
+C &= \begin{bmatrix}h[1] & \cdots & h[N-1]\end{bmatrix} \\
+D &= h[0]
+\end{align*}
+$$
