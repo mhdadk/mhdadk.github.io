@@ -8,7 +8,7 @@ tags:
 
 ## TODO
 
-
+* Create another copy of this draft and call it "The FIR filter and its state-space form". Provide intuitive derivation for where it comes from, as solving a difference equation.
 * Write FIR derivation and then mention that IIR direct form I is just generalization of this.
 * Write IIR direct form II and mention that it is all-pole filter followed by all-zero filter.
 * Provide proof that it is correct.
