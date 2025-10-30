@@ -17,6 +17,8 @@ y[k] &= h[0] \cdot u[k] + \sum_{i=1}^{N-1} h[i] \cdot u[k - i] + \sum_{j=1}^{M} 
 \end{align}
 $$
 
+> **TODO**: Express (1) recursively by assigning w[k - M] = ... then assigning w[k-(M-1)] = ... then assigning w[k-(M-2)] = ... and so on.
+
 for $k = 0,\dots,L-1$, where $h[0], \dots, h[N-1]$ are the $N$ feedforward coefficients and $g[1], \dots, g[M]$ are the $M$ feedback coefficients. We convert $\eqref{iir_out}$ into state-space form as follows. Define the $N-1$ states $x_1[k],\dots,x_{N-1}[k]$ at the $k$th time-step as
 
 $$
