@@ -5,6 +5,8 @@ tags:
   - signal-processing
   - control-theory
 ---
+**TODO: give up on direct form II derivation. Focus on direct form I.**
+
 We show how to express an infinite impulse response (IIR) filter in state-space form.
 
 Linear and time-invariant (LTI) filters are not often expressed in state-space form, since in filtering applications, we have control over the filter and not the input signal, while in control applications, the opposite is true. Nonetheless, expressing LTI filters in state-space form offers another way of analyzing the filter.
