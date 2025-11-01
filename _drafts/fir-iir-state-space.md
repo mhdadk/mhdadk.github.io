@@ -7,7 +7,9 @@ tags:
 ---
 We show how to express a discrete-time infinite impulse response (IIR) filter in state-space form.
 
-Linear and time-invariant (LTI) filters are not often expressed in state-space form since in filtering applications, we have control over the filter and not the input signal, while in control applications, the opposite is true. Nonetheless, expressing LTI filters in state-space form offers another way of analyzing the filter.
+Linear and time-invariant (LTI) filters are not often expressed in state-space form since in filtering applications, we have control over the filter and not the input signal, while in control applications, the opposite is true. Nonetheless, expressing LTI filters in state-space form offers another way of analyzing the filter and bridges the fields of signal processing and control theory.
+
+**TODO**: fix this part because it seems redundant
 
 We first derive the difference equation that describes a general discrete-time IIR filter from the general discrete-time IIR filter transfer function, which is
 
