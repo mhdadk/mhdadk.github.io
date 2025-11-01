@@ -5,23 +5,82 @@ tags:
   - signal-processing
   - control-theory
 ---
-**TODO: give up on direct form II derivation. Focus on direct form I.**
+We show how to express a discrete-time infinite impulse response (IIR) filter in state-space form.
 
-We show how to express an infinite impulse response (IIR) filter in state-space form.
+Linear and time-invariant (LTI) filters are not often expressed in state-space form since in filtering applications, we have control over the filter and not the input signal, while in control applications, the opposite is true. Nonetheless, expressing LTI filters in state-space form offers another way of analyzing the filter.
 
-Linear and time-invariant (LTI) filters are not often expressed in state-space form, since in filtering applications, we have control over the filter and not the input signal, while in control applications, the opposite is true. Nonetheless, expressing LTI filters in state-space form offers another way of analyzing the filter.
-
-Let $u[0],\dots,u[L-1]$ be the input signal. Let the corresponding output signal of the IIR filter be $y[0],\dots,y[L-1]$, such that
+We first derive the difference equation that describes a general discrete-time IIR filter from the general discrete-time IIR filter transfer function, which is
 
 $$
 \begin{align}
-y[k] &= h[0] \cdot u[k] + \sum_{i=1}^{N-1} h[i] \cdot u[k - i] + \sum_{j=1}^{M} g[j] \cdot y[k - j] \label{iir_out}
+H(z) = \frac{Y(z)}{U(z)} &= \frac{b_0 + b_1z^{-1} + \cdots + b_{N-1}z^{-(N-1)}}{1 + a_1z^{-1} + \cdots + a_Mz^{-M}} \label{iir_tf} \\
+Y(z)\left[1 + a_1z^{-1} + \cdots + a_Mz^{-M}\right] &= U(z)\left[b_0 + b_1z^{-1} + \cdots + b_{N-1}z^{-(N-1)}\right] \nonumber \\
+Y(z) + a_1Y(z)z^{-1} + \cdots + a_MY(z)z^{-M} &= b_0U(z) + b_1U(z)z^{-1} + \cdots + b_{N-1}U(z)z^{-(N-1)} \label{iir_tf1}
 \end{align}
 $$
 
-> **TODO**: Express (1) recursively by assigning w[k - M] = ... then assigning w[k-(M-1)] = ... then assigning w[k-(M-2)] = ... and so on.
+Computing the inverse Z-transform of both sides of $\eqref{iir_tf1}$ yields
 
-for $k = 0,\dots,L-1$, where $h[0], \dots, h[N-1]$ are the $N$ feedforward coefficients and $g[1], \dots, g[M]$ are the $M$ feedback coefficients. We convert $\eqref{iir_out}$ into state-space form as follows. Define the $N-1$ states $x_1[k],\dots,x_{N-1}[k]$ at the $k$th time-step as
+$$
+\begin{align}
+y[k] + a_1y[k-1] + \cdots + a_My[k-M] &= b_0u[k] + b_1u[k-1] + \cdots + b_{N-1}u[k-(N-1)] \nonumber \\
+y[k] &= b_0u[k] + b_1u[k-1] + \cdots + b_{N-1}u[k-(N-1)] - a_1y[k-1] - \cdots - a_My[k-M] \nonumber \\
+&= b_0u[k] + \sum_{i=1}^{N-1} b_i \cdot u[k - i] + \sum_{j=1}^M -a_j \cdot y[k-j] \label{iir_out}
+\end{align}
+$$
+
+where $u[k]$ and $y[k]$ are the input and output signals at the $k$th time-step, respectively, $b_0, \dots,b_{N-1}$ are the $N$ feedforward coefficients, and $a_1,\dots,a_M$ are the $M$ feedback coefficients.
+
+## Cascade structure of an IIR filter
+
+There are two main ways of expressing an IIR filter in state-space form. Each method has its pros and cons. These two methods can be derived as follows.
+
+Looking at $\eqref{iir_tf}$ and $\eqref{iir_out}$, we see that an IIR filter consists of an all-zero IIR filter and an all-pole IIR filter in cascade. That is, let
+
+$$
+\begin{align}
+H_b(z) &= b_0 + b_1z^{-1} + \cdots + b_{N-1}z^{-(N-1)} \label{iir_allzero} \\
+H_a(z) &= \frac{1}{1 + a_1z^{-1} + \cdots + a_Mz^{-M}} \label{iir_allpole}
+\end{align}
+$$
+
+such that $H(z) = H_a(z) \cdot H_b(z) = H_b(z) \cdot H_a(z)$. This provides us with two ways for expressing an IIR filter: as an all-zero IIR filter followed by an all-pole IIR filter, called _Direct Form I_, or as an all-pole IIR filter followed by an all-zero IIR filter, called _Direct Form II_.
+
+That is, from $\eqref{iir_allzero}$,
+
+$$
+\begin{align}
+H_b(z) = \frac{Y_b(z)}{U_b(z)} &= b_0 + b_1z^{-1} + \cdots + b_{N-1}z^{-(N-1)} \\
+Y_b(z) &= b_0U_b(z) + b_1U_b(z)z^{-1} + \cdots + b_{N-1}U_b(z)z^{-(N-1)} \\
+y_b[k] &= b_0u_b[k] + b_1u_b[k-1] + \cdots + b_{N-1}u_b[k-(N-1)] \\
+&= b_0u_b[k] + \sum_{i=1}^{N-1} b_i \cdot u_b[k - i] \label{iir_allzero_out}
+\end{align}
+$$
+
+and from $\eqref{iir_allpole}$,
+
+$$
+\begin{align}
+H_a(z) = \frac{Y_a(z)}{U_a(z)} &= \frac{1}{1 + a_1z^{-1} + \cdots + a_Mz^{-M}} \\
+Y_a(z) + a_1Y_a(z)z^{-1} + \cdots + a_MY_a(z)z^{-M} &= U_a(z) \\
+y_a[k] + a_1y_a[k-1] + \cdots + a_My_a[k-M] &= u_a[k] \\
+y_a[k] &= u_a[k] - a_1y_a[k-1] - \cdots - a_My_a[k-M] \\
+&= u_a[k] + \sum_{j = 1}^M -a_j \cdot y_a[k - j] \label{iir_allpole_out}
+\end{align}
+$$
+
+## Direct Form I
+
+In a Direct Form I IIR filter, the input $u[k]$ is passed into the all-zero filter first and the output of the all-zero filter is input to the all-pole filter to produce the output $y[k]$. In other words, $u[k] = u_b[k]$, $y_b[k] = u_a[k]$, and $y[k] = y_a[k]$ for each $k$ such that
+
+$$
+\begin{align}
+u_a[k] &= b_0u[k] + \sum_{i=1}^{N-1} b_i \cdot u[k - i] \\
+y[k] &= u_a[k] + \sum_{j = 1}^M -a_j \cdot y[k - j]
+\end{align}
+$$
+
+Looking at $\eqref{iir_out}$, define the $N-1$ states $x_1[k],\dots,x_{N-1}[k]$ at the $k$th time-step as
 
 $$
 \begin{align*}
@@ -32,7 +91,7 @@ x_{N-1}[k] &= u[k-(N-1)]
 \end{align*}
 $$
 
-Then, define the $M$ states $z_1[k],\dots,z_M[k]$ at the $k$th time-step as
+and define the $M$ states $z_1[k],\dots,z_M[k]$ at the $k$th time-step as
 
 $$
 \begin{align*}
@@ -48,18 +107,6 @@ $$
 \begin{equation}
 y[k] = h[0] \cdot u[k] + \sum_{i=1}^{N-1} h[i] \cdot x_i[k] + \sum_{j=1}^{M} g[j] \cdot z_j[k]
 \end{equation}
-$$
-
-Note that $z_i[k]$ is related to $x_1[k],\dots,x_{N-1}[k]$ via
-
-$$
-\begin{align}
-z_i[k] &= y[k - i] \\
-
-&= h[0] \cdot u[k-i] + \sum_{j=1}^{N-1} h[j] \cdot x_j[k-i] + \sum_{\ell=1}^{M} g[\ell] \cdot z_\ell[k-i] \\
-
-&= h[0] \cdot x_i[k] + \sum_{j=1}^{N-1} h[j] \cdot x_{j+i}[k] + \sum_{\ell=1}^{M} g[\ell] \cdot z_{\ell+i}[k]
-\end{align}
 $$
 
 We can stack both sets of states to form the state vectors
@@ -105,8 +152,34 @@ g[1] & g[2] & g[3] & \cdots & g[M] \\
 0 & 0 & \cdots & 1 & 0
 \end{bmatrix}\begin{bmatrix}z_1[k] \\ \vdots \\ z_{M}[k]\end{bmatrix} + \begin{bmatrix}h[1] & h[2] & \cdots & h[N-1] \\ 0 & 0 & \cdots & 0 \\ \vdots & \vdots & \vdots & 0 \\ 0 & 0 & \cdots & 0\end{bmatrix}\begin{bmatrix}x_1[k] \\ \vdots \\ x_{N-1}[k]\end{bmatrix} + \begin{bmatrix}h[0] \\ 0 \\ \vdots \\ 0\end{bmatrix}u[k]  \\
 
-&= A_zz[k] + B_z^xx[k] + B_zu[k]
+&= A_zz[k] + A_{zx}x[k] + B_zu[k]
 \end{align}
+$$
+
+where
+
+$$
+\begin{align*}
+A_x &= \begin{bmatrix}
+0 & 0 & 0 & \cdots & 0 \\
+1 & 0 & 0 & \cdots & 0 \\
+0 & 1 & 0 & \cdots & 0 \\
+0 & 0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1 & 0
+\end{bmatrix} \\
+B_x &= \begin{bmatrix}1 \\ 0 \\ \vdots \\ 0\end{bmatrix} \\
+A_z &= \begin{bmatrix}
+g[1] & g[2] & g[3] & \cdots & g[M] \\
+1 & 0 & 0 & \cdots & 0 \\
+0 & 1 & 0 & \cdots & 0 \\
+0 & 0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1 & 0
+\end{bmatrix} \\
+A_{zx} &= \begin{bmatrix}h[1] & h[2] & \cdots & h[N-1] \\ 0 & 0 & \cdots & 0 \\ \vdots & \vdots & \vdots & 0 \\ 0 & 0 & \cdots & 0\end{bmatrix} \\
+B_z &= \begin{bmatrix}h[0] \\ 0 \\ \vdots \\ 0\end{bmatrix}
+\end{align*}
 $$
 
 Notice that the state $x$ evolves independently of $z$, while $z$ evolves as a function of both $u[k]$ and $x[k]$. Hence, $x[k]$ is an input to the system with state $z$ along with $u[k]$.
@@ -133,6 +206,20 @@ y[k] &= h[0] \cdot u[k] + \sum_{i=1}^{N-1} h[i] \cdot x_i[k] + \sum_{j=1}^{M} g[
 &= C_xx[k] + C_zz[k] + Du[k]
 \end{align}
 $$
+
+
+## Direct Form II
+
+For Direct Form II,
+
+$$
+\begin{align}
+u_b[k] &= u[k] + \sum_{j = 1}^M -a_j \cdot u_b[k - j] \\
+y[k] &= b_0u_b[k] + \sum_{i=1}^{N-1} b_i \cdot u_b[k - i]
+\end{align}
+$$
+
+
 
 <!-- $$
 \begin{align}
