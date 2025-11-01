@@ -98,6 +98,8 @@ Note that the terms $u[k - 1],\dots,u[k-(N-1)]$ and $y[k - 1],\dots,y[k-M]$ are 
 
 ## Transposed Direct Form II
 
+The Transposed Direct Form II structure can be derived directly from the Direct Form I structure (personally, I think the name "Transposed Direct Form II" is a misnomer and should instead be called "Transposed Direct Form I").
+
 Looking at $\eqref{iir_df1_in}$, define the $N-1$ states $x_1[k],\dots,x_{N-1}[k]$ at the $k$th time-step as
 
 $$
