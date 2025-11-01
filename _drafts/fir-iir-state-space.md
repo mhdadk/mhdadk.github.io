@@ -212,7 +212,7 @@ $$
 
 ## Direct Form II
 
-For Direct Form II,
+In a Direct Form II IIR filter, the input $u[k]$ is passed into the all-pole filter first and the output of the all-pole filter is input to the all-zero filter to produce the output $y[k]$. In other words, $u[k] = u_a[k]$, $y_a[k] = u_b[k]$, and $y[k] = y_b[k]$ for each $k$ such that
 
 $$
 \begin{align}
