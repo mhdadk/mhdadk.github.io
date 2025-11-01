@@ -77,12 +77,12 @@ In a Direct Form I IIR filter, the input $u[k]$ is passed into the all-zero filt
 
 $$
 \begin{align}
-u_a[k] &= b_0u[k] + \sum_{i=1}^{N-1} b_i \cdot u[k - i] \\
-y[k] &= u_a[k] + \sum_{j = 1}^M -a_j \cdot y[k - j]
+u_a[k] &= b_0u[k] + \sum_{i=1}^{N-1} b_i \cdot u[k - i] \label{iir_df1_in} \\
+y[k] &= u_a[k] + \sum_{j = 1}^M -a_j \cdot y[k - j] \label{iir_df1_out}
 \end{align}
 $$
 
-Looking at $\eqref{iir_out}$, define the $N-1$ states $x_1[k],\dots,x_{N-1}[k]$ at the $k$th time-step as
+Looking at $\eqref{iir_df1_in}$, define the $N-1$ states $x_1[k],\dots,x_{N-1}[k]$ at the $k$th time-step as
 
 $$
 \begin{align*}
@@ -93,7 +93,9 @@ x_{N-1}[k] &= u[k-(N-1)]
 \end{align*}
 $$
 
-and define the $M$ states $z_1[k],\dots,z_M[k]$ at the $k$th time-step as
+Additionally, looking at $\eqref{iir_df1_out}$, define the $M$ states $z_1[k],\dots,z_M[k]$ at the $k$th time-step as
+
+**TODO**: continue from here
 
 $$
 \begin{align*}
@@ -103,7 +105,7 @@ z_{M}[k] &= y[k-M] \\
 \end{align*}
 $$
 
-Substituting these states into $\eqref{iir_out}$ yields
+Substituting these states into $\eqref{iir_df1_in}$ and $\eqref{iir_df1_out}$ yields
 
 $$
 \begin{equation}
