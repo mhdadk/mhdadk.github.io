@@ -139,6 +139,8 @@ $$
 
 where $V_{N-2}(z) = b_{N-2}U_b(z) + z^{-1}V_{N-1}(z)$ and $V_{N-3}(z) = b_{N-3}U_b(z) + z^{-1}V_{N-2}(z)$. More generally, for $\ell = N-2,N-3,\dots,0$, let $V_\ell(z) = b_{\ell}U_b(z) + z^{-1}V_{\ell+1}(z)$, such that the terminal condition is $V_{N-1}(z) = b_{N-1}U_b(z)$ and $Y_b(z) = V_0(z)$.
 
+**TODO: continue from here**
+
 ## Transposed Direct Form II
 
 
