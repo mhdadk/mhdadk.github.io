@@ -94,11 +94,39 @@ y[k] &= u_a[k] + \sum_{j = 1}^M -a_j \cdot y[k - j] \label{iir_df1_out}
 \end{align}
 $$
 
-Note that the terms $u[k - 1],\dots,u[k-(N-1)]$ and $y[k - 1],\dots,y[k-M]$ are obtained as memory from a previous iteration. Hence, the Direct Form I structure requires memory for $N - 1 + M$ floating-point numbers.
+Note that the terms $u[k - 1],\dots,u[k-(N-1)]$ and $y[k - 1],\dots,y[k-M]$ are obtained from memory from a previous iteration. Hence, the Direct Form I structure requires memory for $N - 1 + M$ floating-point numbers.
+
+## Direct Form II
+
+In a Direct Form II implementation of an IIR filter, the input $u[k]$ is passed into the all-pole filter $H_a(z)$ first and the output of the all-pole filter is input to the all-zero filter $H_b(z)$ to produce the output $y[k]$.
+
+In contrast to the Direct Form I structure, the order of the all-pole and all-zero IIR filters are reversed. Additionally, we have that $u_a[k] = u[k]$, $y_a[k] = u_b[k]$, and $y_b[k] = y[k]$ for each $k$ such that
+
+$$
+\begin{align}
+u_b[k] &= u[k] + \sum_{j = 1}^M -a_j \cdot u_b[k - j] \label{iir_df2_in} \\
+y[k] &= b_0u_b[k] + \sum_{i=1}^{N-1} b_i \cdot u_b[k - i] \label{iir_df2_out}
+\end{align}
+$$
+
+Note that the terms $u_b[k - 1],\dots,u_b[k-M],\dots,u_b[k-(N-1)]$ are obtained from memory from a previous iteration.
+
+In contrast to the Direct Form I structure, which requires memory for $N - 1 + M$ floating-point numbers, the Direct Form II structure requires memory for only $\max(N-1, M)$ floating-point numbers. Because $\max(N-1, M) < N - 1 + M$ when $N - 1 > 0$ and $M > 0$, then the Direct Form II structure requires less memory than the Direct Form I structure.
+
+## Transposed Direct Form I
+
+
 
 ## Transposed Direct Form II
 
+
+**TODO**: don't say that it can be derived from direct form I. Just derive it from $H(z)$.
+
 The Transposed Direct Form II structure can be derived directly from the Direct Form I structure (personally, I think the name "Transposed Direct Form II" is a misnomer and should instead be called "Transposed Direct Form I").
+
+Looking at
+
+
 
 Looking at $\eqref{iir_df1_in}$, define the $N-1$ states $x_1[k],\dots,x_{N-1}[k]$ at the $k$th time-step as
 
