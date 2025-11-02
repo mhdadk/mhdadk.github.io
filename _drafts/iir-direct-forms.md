@@ -113,7 +113,7 @@ Note that the terms $u_b[k - 1],\dots,u_b[k-M],\dots,u_b[k-(N-1)]$ are obtained 
 
 In contrast to the Direct Form I structure, which requires memory for $N - 1 + M$ floating-point numbers, the Direct Form II structure requires memory for only $\max(N-1, M)$ floating-point numbers. Because $\max(N-1, M) < N - 1 + M$ when $N - 1 > 0$ and $M > 0$, then the Direct Form II structure requires less memory than the Direct Form I structure.
 
-## Transposed Direct Form I
+## Transposed Direct Forms
 
 Recall from $\eqref{iir_allzero_out}$ that the all-zero filter $H_b(z)$ is defined as
 
@@ -141,7 +141,13 @@ where $V_{N-2}(z) = b_{N-2}U_b(z) + z^{-1}V_{N-1}(z)$ and $V_{N-3}(z) = b_{N-3}U
 
 **TODO: continue from here**
 
-## Transposed Direct Form II
+One of the main advantages of transposed direct forms is that there are no temporary storage requirements, since...
+
+### Transposed Direct Form I
+
+sdfvdfvd
+
+### Transposed Direct Form II
 
 
 **TODO**: don't say that it can be derived from direct form I. Just derive it from $H(z)$.
