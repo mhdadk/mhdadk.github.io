@@ -115,7 +115,7 @@ In contrast to the Direct Form I structure, which requires memory for $N - 1 + M
 
 ## Transposed Direct Forms
 
-Recall from $\eqref{iir_allzero_out}$ that the all-zero filter $H_b(z)$ is defined as
+The main advantage of Transposed Direct Forms I and II is that no temporary storage is required when computing the outputs. Recall from $\eqref{iir_allzero_out}$ that the all-zero filter $H_b(z)$ is defined as
 
 $$
 \begin{align*}
@@ -137,9 +137,25 @@ Y_b(z) &= b_0U_b(z) + \cdots + b_{N-3}U_b(z)z^{-(N-3)} + b_{N-2}U_b(z)z^{-(N-2)}
 \end{align*}
 $$
 
-where $V_{N-2}(z) = b_{N-2}U_b(z) + z^{-1}V_{N-1}(z)$ and $V_{N-3}(z) = b_{N-3}U_b(z) + z^{-1}V_{N-2}(z)$. More generally, for $\ell = N-2,N-3,\dots,0$, let $V_\ell(z) = b_{\ell}U_b(z) + z^{-1}V_{\ell+1}(z)$, such that the terminal condition is $V_{N-1}(z) = b_{N-1}U_b(z)$ and $Y_b(z) = V_0(z)$.
+where $V_{N-2}(z) = b_{N-2}U_b(z) + z^{-1}V_{N-1}(z)$ and $V_{N-3}(z) = b_{N-3}U_b(z) + z^{-1}V_{N-2}(z)$. More generally, for $\ell = N-2,N-3,\dots,0$, let $V_\ell(z) = b_{\ell}U_b(z) + z^{-1}V_{\ell+1}(z)$, such that the recursion that describes the output $Y_b(z)$ of the all-zero IIR filter is
 
-**TODO: continue from here**
+$$
+\begin{align*}
+V_\ell(z) &= \begin{cases}b_{N-1}U_b(z),&\ell = N-1 \\ b_{\ell}U_b(z) + z^{-1}V_{\ell+1}(z),&\ell = N-2,N-3,\dots,0\end{cases} \\
+Y_b(z) &= V_0(z)
+\end{align*}
+$$
+
+and the corresponding difference equations in the time domain are
+
+$$
+\begin{align*}
+v_\ell[k] &= \begin{cases}b_{N-1}u_b[k],&\ell = N-1 \\ b_\ell u_b[k] + v_{\ell+1}[k-1],&\ell = N-2,N-3,\dots,0\end{cases} \\
+y_b[k] &= v_0[k]
+\end{align*}
+$$
+
+**TODO: continue from here with the all-pole filter derivation as well**
 
 One of the main advantages of transposed direct forms is that there are no temporary storage requirements, since...
 
