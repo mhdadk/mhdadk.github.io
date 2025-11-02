@@ -25,11 +25,11 @@ $$
 Note that $H(z)$ consists of an all-zero IIR filter (i.e., an FIR filter) cascaded with an all-pole IIR filter, such that
 
 $$
-\begin{align}
+\begin{align*}
 H(z) &= \frac{b_0 + b_1z^{-1} + \cdots + b_{N-1}z^{-(N-1)}}{1 + a_1z^{-1} + \cdots + a_Mz^{-M}} \\
 &= \left(b_0 + b_1z^{-1} + \cdots + b_{N-1}z^{-(N-1)}\right) \cdot \frac{1}{1 + a_1z^{-1} + \cdots + a_Mz^{-M}} \\
 &= H_b(z) \cdot H_a(z)
-\end{align}
+\end{align*}
 $$
 
 where
