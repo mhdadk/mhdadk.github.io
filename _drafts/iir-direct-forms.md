@@ -115,7 +115,29 @@ In contrast to the Direct Form I structure, which requires memory for $N - 1 + M
 
 ## Transposed Direct Form I
 
+Recall from $\eqref{iir_allzero_out}$ that the all-zero filter $H_b(z)$ is defined as
 
+$$
+\begin{align*}
+H_b(z) = \frac{Y_b(z)}{U_b(z)} &= b_0 + b_1z^{-1} + \cdots + b_{N-1}z^{-(N-1)} \\
+
+Y_b(z) &= b_0U_b(z) + \cdots + b_{N-3}U_b(z)z^{-(N-3)} + b_{N-2}U_b(z)z^{-(N-2)} + b_{N-1}U_b(z)z^{-(N-1)}
+\end{align*}
+$$
+
+We will show that $H_b(z)$ can be evaluated recursively backwards. First, let $V_{N-1}(z) = b_{N-1}U_b(z)$ be the terminal condition for the recursion. Then, $Y_b(z)$ can be re-written as
+
+$$
+\begin{align*}
+Y_b(z) &= b_0U_b(z) + \cdots + b_{N-3}U_b(z)z^{-(N-3)} + b_{N-2}U_b(z)z^{-(N-2)} + z^{-(N-1)}V_{N-1}(z) \\
+&= b_0U_b(z) + \cdots + b_{N-3}U_b(z)z^{-(N-3)} + z^{-(N-2)}\left[b_{N-2}U_b(z) + z^{-1}V_{N-1}(z)\right] \\
+&= b_0U_b(z) + \cdots + b_{N-3}U_b(z)z^{-(N-3)} + z^{-(N-2)}V_{N-2}(z) \\
+&= b_0U_b(z) + \cdots + z^{-(N-3)}\left[b_{N-3}U_b(z) + z^{-1}V_{N-2}(z)\right] \\
+&= b_0U_b(z) + \cdots + z^{-(N-3)}V_{N-3}(z)
+\end{align*}
+$$
+
+where $V_{N-2}(z) = b_{N-2}U_b(z) + z^{-1}V_{N-1}(z)$ and $V_{N-3}(z) = b_{N-3}U_b(z) + z^{-1}V_{N-2}(z)$. More generally, for $\ell = N-2,N-3,\dots,0$, let $V_\ell(z) = b_{\ell}U_b(z) + z^{-1}V_{\ell+1}(z)$, such that the terminal condition is $V_{N-1}(z) = b_{N-1}U_b(z)$ and $Y_b(z) = V_0(z)$.
 
 ## Transposed Direct Form II
 
