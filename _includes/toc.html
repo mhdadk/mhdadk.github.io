@@ -1,0 +1,62 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toc = document.getElementById("toc");
+        if (!toc) return;
+
+        // Select headings to include in the TOC
+        const headings = document.querySelectorAll(".post-content h2, .post-content h3");
+        if (headings.length === 0) return;
+
+        // Build the TOC list
+        headings.forEach(h => {
+            const id = h.id || h.textContent.trim().toLowerCase().replace(/\s+/g, "-");
+            h.id = id;
+            const li = document.createElement("li");
+            li.innerHTML = `<a href="#${id}">${h.textContent}</a>`;
+            toc.appendChild(li);
+        });
+
+        // Track which headings are currently visible
+        const headingMap = new Map();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                headingMap.set(entry.target.id, entry.isIntersecting);
+            });
+
+            // Determine which heading should be active
+            const visibleHeadings = Array.from(headingMap.entries())
+                .filter(([_, isVisible]) => isVisible)
+                .map(([id]) => id);
+
+            let activeId;
+
+            if (visibleHeadings.length > 0) {
+                // Use the topmost visible heading
+                activeId = visibleHeadings[0];
+            } else {
+                // Fallback: find the last heading above the viewport
+                const sorted = Array.from(headingMap.keys());
+                for (let i = sorted.length - 1; i >= 0; i--) {
+                    const el = document.getElementById(sorted[i]);
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.2) {
+                        activeId = sorted[i];
+                        break;
+                    }
+                }
+            }
+
+            // Update TOC highlighting
+            document.querySelectorAll(".toc a").forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === `#${activeId}`);
+            });
+        }, {
+            root: null,
+            rootMargin: "0px 0px -70% 0px",
+            threshold: 0
+        });
+
+        headings.forEach(h => observer.observe(h));
+    });
+</script>

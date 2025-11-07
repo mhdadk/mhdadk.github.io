@@ -121,15 +121,88 @@ $$
 \begin{align*}
 H_b(z) = \frac{Y_b(z)}{U_b(z)} &= b_0 + b_1z^{-1} + \cdots + b_{N-1}z^{-(N-1)} \\
 
-Y_b(z) &= b_0U_b(z) + \cdots + b_{N-3}U_b(z)z^{-(N-3)} + b_{N-2}U_b(z)z^{-(N-2)} + b_{N-1}U_b(z)z^{-(N-1)}
+Y_b(z) &= U_b(z)\left(b_0 + \cdots + b_{N-3}z^{-(N-3)} + b_{N-2}z^{-(N-2)} + b_{N-1}z^{-(N-1)}\right)
+
 \end{align*}
 $$
 
-We will show that $H_b(z)$ can be evaluated recursively backwards. First, let $V_{N-1}(z) = b_{N-1}U_b(z)$ be the terminal condition for the recursion. Then, $Y_b(z)$ can be re-written as
+We will show that $H_b(z)$ can be evaluated recursively backwards. First, let $V_{N-1}(z) = b_{N-1}$ (although $V_{N-1}(z)$ is independent of $z$, we use this notation for consistency) be the terminal condition for the recursion. Then, $Y_b(z)$ can be re-written as
 
 $$
 \begin{align*}
-Y_b(z) &= b_0U_b(z) + \cdots + b_{N-3}U_b(z)z^{-(N-3)} + b_{N-2}U_b(z)z^{-(N-2)} + z^{-(N-1)}V_{N-1}(z) \\
+Y_b(z) &= U_b(z)\left(b_0 + \cdots + b_{N-3}z^{-(N-3)} + b_{N-2}z^{-(N-2)} + z^{-(N-1)}V_{N-1}(z)\right) \\
+
+&= U_b(z)\left(b_0 + \cdots + b_{N-3}z^{-(N-3)} + z^{-(N-2)}\left[b_{N-2} + z^{-1}V_{N-1}(z)\right]\right) \\
+
+&= U_b(z)\left(b_0 + \cdots + b_{N-3}z^{-(N-3)} + z^{-(N-2)}V_{N-2}(z)\right) \\
+
+&= U_b(z)\left(b_0 + \cdots + z^{-(N-3)}\left[b_{N-3} + z^{-1}V_{N-2}(z)\right]\right) \\
+
+&= U_b(z)\left(b_0 + \cdots + z^{-(N-3)}V_{N-3}(z)\right)
+\end{align*}
+$$
+
+where $V_{N-2}(z) = b_{N-2} + z^{-1}V_{N-1}(z)$ and $V_{N-3}(z) = b_{N-3} + z^{-1}V_{N-2}(z)$. More generally, for $\ell = N-2,N-3,\dots,0$, let $V_\ell(z) = b_{\ell} + z^{-1}V_{\ell+1}(z)$, such that the recursion expressing the output $Y_b(z)$ of the all-zero IIR filter is
+
+$$
+\begin{align*}
+V_\ell(z) &= \begin{cases}b_{N-1},&\ell = N-1 \\ b_{\ell} + z^{-1}V_{\ell+1}(z),&\ell = N-2,N-3,\dots,0\end{cases} \\
+Y_b(z) &= U_b(z)V_0(z)
+\end{align*}
+$$
+
+and the corresponding difference equations in the time domain are
+
+$$
+\begin{align*}
+v_\ell[k] &= \begin{cases}b_{N-1},&\ell = N-1 \\ b_\ell + v_{\ell+1}[k-1],&\ell = N-2,N-3,\dots,0\end{cases} \\
+y_b[k] &= u_b[k] * v_0[k] \\
+&= \sum_{i=1}^Q u_b[k-i]v_0[i]
+\end{align*}
+$$
+
+Similarly, recall from $\eqref{iir_allpole_out}$ that the all-pole filter $H_a(z)$ is defined as
+
+$$
+\begin{align*}
+H_a(z) = \frac{Y_a(z)}{U_a(z)} &= \frac{1}{1 + a_1z^{-1} + \cdots + a_Mz^{-M}} \\
+
+Y_a(z) + a_1Y_a(z)z^{-1} + \cdots + a_MY_a(z)z^{-M} &= U_a(z) \\
+
+Y_a(z) &= U_a(z) + Y_a(z)\left(-a_1z^{-1} - \cdots - a_Mz^{-M}\right)
+\end{align*}
+$$
+
+**TODO: modify the code below and finish the derivation**
+
+<details>
+<summary>Derivation of $H_a(z)$</summary>
+
+We now show that $H_a(z)$ can be evaluated recursively backwards. First, let $P_{M}(z) = -a_{M}$ be the terminal condition for the recursion. Then, $Y_a(z)$ can be re-written as
+
+$$
+\begin{align*}
+Y_a(z) &= U_a(z) - a_1Y_a(z)z^{-1} - \cdots - a_{M-2}Y_a(z)z^{-(M-2)} - a_{M-1}Y_a(z)z^{-(M-1)} - P_M(z)z^{-M} \\
+
+&= U_a(z) - a_1Y_a(z)z^{-1} - \cdots - a_{M-2}Y_a(z)z^{-(M-2)} - z^{-(M-1)}\left[a_{M-1}Y_a(z) - P_M(z)z^{-1}\right] \\
+
+&= b_0U_b(z) + \cdots + b_{N-3}U_b(z)z^{-(N-3)} + z^{-(N-2)}\left[b_{N-2}U_b(z) + z^{-1}V_{N-1}(z)\right] \\
+&= b_0U_b(z) + \cdots + b_{N-3}U_b(z)z^{-(N-3)} + z^{-(N-2)}V_{N-2}(z) \\
+&= b_0U_b(z) + \cdots + z^{-(N-3)}\left[b_{N-3}U_b(z) + z^{-1}V_{N-2}(z)\right] \\
+&= b_0U_b(z) + \cdots + z^{-(N-3)}V_{N-3}(z)
+\end{align*}
+$$
+
+</details>
+
+We now show that $H_a(z)$ can be evaluated recursively backwards. First, let $P_{M}(z) = -a_{M}$ be the terminal condition for the recursion. Then, $Y_a(z)$ can be re-written as
+
+$$
+\begin{align*}
+Y_a(z) &= U_a(z) - a_1Y_a(z)z^{-1} - \cdots - a_{M-2}Y_a(z)z^{-(M-2)} - a_{M-1}Y_a(z)z^{-(M-1)} - P_M(z)z^{-M} \\
+
+&= U_a(z) - a_1Y_a(z)z^{-1} - \cdots - a_{M-2}Y_a(z)z^{-(M-2)} - z^{-(M-1)}\left[a_{M-1}Y_a(z) - P_M(z)z^{-1}\right] \\
+
 &= b_0U_b(z) + \cdots + b_{N-3}U_b(z)z^{-(N-3)} + z^{-(N-2)}\left[b_{N-2}U_b(z) + z^{-1}V_{N-1}(z)\right] \\
 &= b_0U_b(z) + \cdots + b_{N-3}U_b(z)z^{-(N-3)} + z^{-(N-2)}V_{N-2}(z) \\
 &= b_0U_b(z) + \cdots + z^{-(N-3)}\left[b_{N-3}U_b(z) + z^{-1}V_{N-2}(z)\right] \\

@@ -105,3 +105,89 @@ a:visited {
     color: #a2a1a1;
     margin-bottom: 0.5em;
 }
+
+/* <details> and <summary> tags styling to match Tufte-CSS */
+details {
+    margin: 1.2em 0;
+    padding: 0.5em 0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+/*
+summary {
+    font-weight: 600;
+    font-size: 1.1em;
+    cursor: pointer;
+    list-style: none;
+    outline: none;
+    transition: color 0.2s ease;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+    /* remove default disclosure triangle */
+/*}
+
+summary::before {
+    content: "▸";
+    margin-right: 0.5em;
+    font-size: 0.9em;
+    transition: transform 0.2s ease;
+}
+
+details[open] summary::before {
+    transform: rotate(90deg);
+}
+
+details[open] summary {
+    color: #555;
+}
+
+details>*:not(summary) {
+    margin-left: 1.5em;
+    margin-top: 0.5em;
+    font-size: 0.95em;
+    color: #333;
+}
+*/
+
+/* table of contents */
+.toc {
+    position: fixed;
+    top: 6rem;
+    left: 2rem;
+    width: 10rem;
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    /* border-right: 0px solid #ddd; */
+    padding-right: 0.5rem;
+    background: transparent
+}
+
+.toc h2 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.toc a {
+    text-decoration: none;
+    color: #969696;
+    display: block;
+    padding: 0.2rem 0;
+}
+
+.toc a.active {
+    color: #dedede;
+    font-weight: normal;
+    /*600;*/
+}
+
+/* remove bullets from toc list */
+.toc ul {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}
