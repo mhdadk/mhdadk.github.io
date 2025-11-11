@@ -178,21 +178,6 @@ $$
 <details>
 <summary>Derivation of $H_a(z)$</summary>
 
-We now show that $H_a(z)$ can be evaluated recursively backwards. First, let $P_{M}(z) = -a_{M}$ be the terminal condition for the recursion. Then, $Y_a(z)$ can be re-written as
-
-$$
-\begin{align*}
-Y_a(z) &= U_a(z) - a_1Y_a(z)z^{-1} - \cdots - a_{M-2}Y_a(z)z^{-(M-2)} - a_{M-1}Y_a(z)z^{-(M-1)} - P_M(z)z^{-M} \\
-
-&= U_a(z) - a_1Y_a(z)z^{-1} - \cdots - a_{M-2}Y_a(z)z^{-(M-2)} - z^{-(M-1)}\left[a_{M-1}Y_a(z) - P_M(z)z^{-1}\right] \\
-
-&= b_0U_b(z) + \cdots + b_{N-3}U_b(z)z^{-(N-3)} + z^{-(N-2)}\left[b_{N-2}U_b(z) + z^{-1}V_{N-1}(z)\right] \\
-&= b_0U_b(z) + \cdots + b_{N-3}U_b(z)z^{-(N-3)} + z^{-(N-2)}V_{N-2}(z) \\
-&= b_0U_b(z) + \cdots + z^{-(N-3)}\left[b_{N-3}U_b(z) + z^{-1}V_{N-2}(z)\right] \\
-&= b_0U_b(z) + \cdots + z^{-(N-3)}V_{N-3}(z)
-\end{align*}
-$$
-
 </details>
 
 We now show that $H_a(z)$ can be evaluated recursively backwards. First, let $P_{M}(z) = -a_{M}$ be the terminal condition for the recursion. Then, $Y_a(z)$ can be re-written as
