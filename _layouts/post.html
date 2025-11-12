@@ -8,11 +8,12 @@ layout: default
     divided_by:150 | ceil %} | {{ reading_time }} min read
 </p>
 <!-- Table of contents -->
-<!-- <aside class="toc">
+<aside class="toc">
+    <h3>Contents</h3>
     <ul id="toc"></ul>
-</aside> -->
+</aside>
 <div class="post-content">
     {{ content }}
 </div>
 <!-- Table of contents script -->
-<!-- {% include toc.html %} -->
+{% include toc.html %}
