@@ -111,7 +111,7 @@ $$
 where
 
 $$
-\begin{align*}
+\begin{align}
 A_x &= \begin{bmatrix}
 0 & 0 & 0 & \cdots & 0 \\
 1 & 0 & 0 & \cdots & 0 \\
@@ -119,8 +119,8 @@ A_x &= \begin{bmatrix}
 0 & 0 & 1 & \cdots & 0 \\
 \vdots & \vdots & \vdots & \ddots & \vdots \\
 0 & 0 & \cdots & 1 & 0
-\end{bmatrix} \\
-B_x &= \begin{bmatrix}1 \\ 0 \\ \vdots \\ 0\end{bmatrix} \\
+\end{bmatrix} \nonumber \\
+B_x &= \begin{bmatrix}1 \\ 0 \\ \vdots \\ 0\end{bmatrix} \nonumber \\
 A_z &= \begin{bmatrix}
 -a_1 & -a_2 & -a_3 & \cdots & -a_M \\
 1 & 0 & 0 & \cdots & 0 \\
@@ -128,10 +128,10 @@ A_z &= \begin{bmatrix}
 0 & 0 & 1 & \cdots & 0 \\
 \vdots & \vdots & \vdots & \ddots & \vdots \\
 0 & 0 & \cdots & 1 & 0
-\end{bmatrix} \\
-A_{zx} &= \begin{bmatrix}b_1 & b_2 & \cdots & b_{N-1} \\ 0 & 0 & \cdots & 0 \\ \vdots & \vdots & \vdots & 0 \\ 0 & 0 & \cdots & 0\end{bmatrix} \\
-B_z &= \begin{bmatrix}b_0 \\ 0 \\ \vdots \\ 0\end{bmatrix}
-\end{align*}
+\end{bmatrix} \label{A_z} \\
+A_{zx} &= \begin{bmatrix}b_1 & b_2 & \cdots & b_{N-1} \\ 0 & 0 & \cdots & 0 \\ \vdots & \vdots & \vdots & 0 \\ 0 & 0 & \cdots & 0\end{bmatrix} \nonumber \\
+B_z &= \begin{bmatrix}b_0 \\ 0 \\ \vdots \\ 0\end{bmatrix} \nonumber
+\end{align}
 $$
 
 We can stack $\eqref{x_state_eq}$ and $\eqref{z_state_eq}$ to form the combined state update equation
@@ -142,12 +142,109 @@ $$
 \end{equation}
 $$
 
-Notice that in $\eqref{xz_state_eq}$, the state vector $x$ evolves independently of the state vector $z$, while the state vector $z$ evolves as a function of both $x$ and $z$. Hence, the system represented by $\eqref{xz_state_eq}$ can be split into two subsystems: the first subsystem takes in $u[k]$ as an input and outputs $x[k]$, while the second subsystem takes in both $x[k]$ (the output of the first subsystem) and $u[k]$ as inputs and outputs $z[k]$.
+Finally, the output equation is
+
+$$
+\begin{align}
+y[k] &= b_0u[k] + \sum_{i=1}^{N-1} b_i \cdot x_i[k] + \sum_{j = 1}^M -a_j \cdot z_j[k] \nonumber \\
+&= \begin{bmatrix}-a_1 & \cdots & -a_M\end{bmatrix}\begin{bmatrix}z_1[k] \\ \vdots \\ z_M[k]\end{bmatrix} + \begin{bmatrix}b_1 & \cdots & b_{N-1}\end{bmatrix}\begin{bmatrix}x_1[k] \\ \vdots \\ x_{N-1}[k]\end{bmatrix} + b_0u[k] \nonumber \\
+&= C_zz[k] + C_xx[k] + Du[k] \label{output_eq_iir_df1} \\
+&= \begin{bmatrix}C_z & C_x\end{bmatrix}\begin{bmatrix}x[k] \\ z[k] \end{bmatrix} + Du[k] \nonumber
+\end{align}
+$$
+
+where
+
+$$
+\begin{align*}
+C_z &= \begin{bmatrix}-a_1 & \cdots & -a_M\end{bmatrix} \\
+C_x &= \begin{bmatrix}b_1 & \cdots & b_{N-1}\end{bmatrix} \\
+D &= b_0
+\end{align*}
+$$
+
+Notice that in $\eqref{xz_state_eq}$, the state vector $x$ evolves independently of the state vector $z$, while the state vector $z$ evolves as a function of both $x$ and $z$. Hence, the system represented by $\eqref{xz_state_eq}$ can be split into two subsystems: the first subsystem takes in $u[k]$ as an input and outputs $x[k]$, while the second subsystem takes in both $x[k]$ (the output of the first subsystem) and $u[k]$ as inputs and outputs $z[k]$. $x[k]$ and $z[k]$ are then output via $\eqref{output_eq_iir_df1}$.
 
 Additionally, the state transition matrix in $\eqref{xz_state_eq}$ is block lower-triangular, so its eigenvalues are the eigenvalues of the diagonal blocks, $A_x$ and $A_z$. Because $A_x$ is a lower triangular matrix with zeros on its diagonal, then its eigenvalues are all zero. Hence, we are only interested in the eigenvalues of $A_z$.
 
-Of course, in practice, we do not have control over the input $u[k]$, so this control-theoretic analysis can be limited.
+Of course, in signal processing applications, we do not have control over the input $u[k]$, so this control-theoretic analysis can be limited.
 
 ## Direct Form II
 
-**TODO: finish the derivation**
+The difference equations that describe a DF2 IIR filter are
+
+$$
+\begin{align}
+u_b[k] &= u[k] + \sum_{j = 1}^M -a_j \cdot u_b[k - j] \label{iir_df2_in} \\
+y[k] &= b_0u_b[k] + \sum_{i=1}^{N-1} b_i \cdot u_b[k - i] \label{iir_df2_out}
+\end{align}
+$$
+
+where $u_b[k]$ is an intermediate variable at the $k$th time-step and all other terms are defined as before.
+
+Without loss of generality, suppose that $M > N - 1$. Then, define the $M$ states $x_1[k],x_2[k],\dots,x_{N-1}[k],\dots,x_{M}[k]$ at the $k$th time-step as
+
+$$
+\begin{align*}
+x_1[k] &= u_b[k-1] \\
+x_2[k] &= u_b[k-2] \\
+&\vdots \\
+x_{N-1}[k] &= u_b[k - (N-1)] \\
+&\vdots \\
+x_{M}[k] &= u_b[k - M]
+\end{align*}
+$$
+
+Substituting these states into $\eqref{iir_df2_in}$ and $\eqref{iir_df2_out}$ yields
+
+$$
+\begin{align*}
+u_b[k] &= u[k] + \sum_{j = 1}^M -a_j \cdot x_j[k] \\
+y[k] &= b_0u_b[k] + \sum_{i=1}^{N-1} b_i \cdot x_i[k]
+\end{align*}
+$$
+
+We can also stack these states to form the state vector
+
+$$
+x[k] = \begin{bmatrix}x_1[k] \\ \vdots \\ x_{N-1}[k] \\ \vdots \\ x_{M}[k]\end{bmatrix} \\
+$$
+
+such that the state update equation is
+
+$$
+\begin{align}
+x[k+1] &= \begin{bmatrix}u_b[k] \\ x_1[k] \\ \vdots \\ x_{N-2}[k] \\ \vdots \\ x_{M-1}[k]\end{bmatrix} \nonumber \\
+&= \begin{bmatrix}u[k] + \sum_{j = 1}^M -a_j \cdot x_j[k] \\ x_1[k] \\ \vdots \\ x_{N-2}[k] \\ \vdots \\ x_{M-1}[k]\end{bmatrix} \nonumber \\
+&= \begin{bmatrix}\sum_{j = 1}^M -a_j \cdot x_j[k] \\ x_1[k] \\ \vdots \\ x_{N-2}[k] \\ \vdots \\ x_{M-1}[k]\end{bmatrix} + \begin{bmatrix}u[k] \\ 0 \\ \vdots \\ 0\end{bmatrix} \nonumber \\
+&= \begin{bmatrix}
+-a_1 & -a_2 & -a_3 & \cdots & -a_M \\
+1 & 0 & 0 & \cdots & 0 \\
+0 & 1 & 0 & \cdots & 0 \\
+0 & 0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1 & 0
+\end{bmatrix}\begin{bmatrix}x_1[k] \\ \vdots \\ x_{N-1}[k] \\ \vdots \\ x_{M}[k]\end{bmatrix} + \begin{bmatrix}1 \\ 0 \\ \vdots \\ 0\end{bmatrix}u[k] \nonumber \\
+&= A_zx[k] + B_ru[k]
+\end{align}
+$$
+
+where $A_z$ is defined in $\eqref{A_z}$ and $B_r$ is an $M$-dimensional column vector with $1$ at the top and zeros everywhere else.
+
+Finally, the output equation is
+
+$$
+\begin{align}
+y[k] &= b_0u_b[k] + \sum_{i=1}^{N-1} b_i \cdot x_i[k] \\
+&= b_0\left[u[k] + \sum_{j = 1}^M -a_j \cdot x_j[k]\right] + \sum_{i=1}^{N-1} b_i \cdot x_i[k] \\
+&= b_0u[k] + \sum_{j = 1}^M -b_0a_j \cdot x_j[k] + \sum_{i=1}^{N-1} b_i \cdot x_i[k] \\
+&= b_0u[k] + \sum_{j = N}^M -b_0a_j \cdot x_j[k] + \sum_{i=1}^{N-1} (b_i - b_0a_i) \cdot x_i[k] \\
+&= \begin{bmatrix}b_1 - b_0a_1 & b_2 - b_0a_2 & \cdots & b_{N-1} - b_0a_{N-1} & -b_0a_N & \cdots & -b_0a_{M}\end{bmatrix}\begin{bmatrix}x_1[k] \\ \vdots \\ x_{N-1}[k] \\ \vdots \\ x_{M}[k]\end{bmatrix} + b_0u[k] \\
+&= C_rx[k] + Du[k]
+\end{align}
+$$
+where $D = b_0$ and
+
+$$
+C_r = \begin{bmatrix}b_1 - b_0a_1 & b_2 - b_0a_2 & \cdots & b_{N-1} - b_0a_{N-1} & -b_0a_N & \cdots & -b_0a_{M}\end{bmatrix}
+$$
