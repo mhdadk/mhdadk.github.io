@@ -28,7 +28,7 @@ where $b_0,\dots,b_{N-1}$ are the $N$ feedforward coefficients, $a_1,\dots,a_M$ 
 * $u_a[k]$ is an intermediate variable, and
 * $y[k]$ is the output of the IIR filter.
 
-Looking at $\eqref{iir_df1_in}$, define the $N-1$ states $x_1[k],\dots,x_{N-1}[k]$ at the $k$th time-step as
+Looking at ..., define the $N-1$ states $x_1[k],\dots,x_{N-1}[k]$ at the $k$th time-step as
 
 $$
 \begin{align*}
@@ -234,14 +234,14 @@ where $A_z$ is defined in $\eqref{A_z}$ and $B_r$ is an $M$-dimensional column v
 Finally, the output equation is
 
 $$
-\begin{align}
+\begin{align*}
 y[k] &= b_0u_b[k] + \sum_{i=1}^{N-1} b_i \cdot x_i[k] \\
 &= b_0\left[u[k] + \sum_{j = 1}^M -a_j \cdot x_j[k]\right] + \sum_{i=1}^{N-1} b_i \cdot x_i[k] \\
 &= b_0u[k] + \sum_{j = 1}^M -b_0a_j \cdot x_j[k] + \sum_{i=1}^{N-1} b_i \cdot x_i[k] \\
 &= b_0u[k] + \sum_{j = N}^M -b_0a_j \cdot x_j[k] + \sum_{i=1}^{N-1} (b_i - b_0a_i) \cdot x_i[k] \\
 &= \begin{bmatrix}b_1 - b_0a_1 & b_2 - b_0a_2 & \cdots & b_{N-1} - b_0a_{N-1} & -b_0a_N & \cdots & -b_0a_{M}\end{bmatrix}\begin{bmatrix}x_1[k] \\ \vdots \\ x_{N-1}[k] \\ \vdots \\ x_{M}[k]\end{bmatrix} + b_0u[k] \\
 &= C_rx[k] + Du[k]
-\end{align}
+\end{align*}
 $$
 where $D = b_0$ and
 
