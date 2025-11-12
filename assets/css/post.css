@@ -191,3 +191,10 @@ details>*:not(summary) {
     padding-left: 0;
     margin-left: 0;
 }
+
+/* Hide table of contents on screens smaller than 840px */
+@media (max-width: 840px) {
+    .toc {
+        display: none;
+    }
+}
