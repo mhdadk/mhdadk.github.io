@@ -7,6 +7,11 @@
         const headings = document.querySelectorAll(".post-content h2, .post-content h3");
         if (headings.length === 0) return;
 
+        // Create and append the "Contents" title
+        const title = document.createElement("h3");
+        title.textContent = "Contents";
+        toc.appendChild(title);
+
         // Build the TOC list
         headings.forEach(h => {
             const id = h.id || h.textContent.trim().toLowerCase().replace(/\s+/g, "-");

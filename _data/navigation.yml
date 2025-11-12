@@ -1,4 +1,6 @@
 - name: Home
   link: /
+- name: Blog
+  link: /blog
 - name: RSS
   link: /feed.xml

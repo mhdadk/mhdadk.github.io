@@ -1,7 +1,19 @@
 <nav class="site-nav">
     {% for item in site.data.navigation %}
-    <a href="{{ item.link }}" class="nav-link">
-        {{ item.name }}
-    </a>
+
+    {% if item.name == "Blog" %}
+    {% if page.layout == "post" %}
+    <a href="{{ item.link }}" class="nav-link">{{ item.name }}</a>
+    {% endif %}
+
+    {% elsif item.name == "RSS" %}
+    {% if page.url == "/blog.html" %}
+    <a href="{{ item.link }}" class="nav-link">{{ item.name }}</a>
+    {% endif %}
+
+    {% else %}
+    <a href="{{ item.link }}" class="nav-link">{{ item.name }}</a>
+    {% endif %}
+
     {% endfor %}
 </nav>
