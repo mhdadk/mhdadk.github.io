@@ -28,7 +28,7 @@ where $b_0,\dots,b_{N-1}$ are the $N$ feedforward coefficients, $a_1,\dots,a_M$ 
 * $u_a[k]$ is an intermediate variable, and
 * $y[k]$ is the output of the IIR filter.
 
-Looking at ..., define the $N-1$ states $x_1[k],\dots,x_{N-1}[k]$ at the $k$th time-step as
+Looking at $(1)$ define the $N-1$ states $x_1[k],\dots,x_{N-1}[k]$ at the $k$th time-step as
 
 $$
 \begin{align*}
