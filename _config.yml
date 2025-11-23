@@ -2,10 +2,19 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
+
 feed:
   path: feed.xml
   posts_limit: 10
   categories: []
+
+# Use /blog/<file name without date>.html for blog posts
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      permalink: /blog/:title.html
 
 # stop Jekyll's Markdown processor from automatically adding MathJax delimiters around
 # ('$', '$') and ('$$', '$$')
@@ -13,3 +22,9 @@ kramdown:
   math_engine: null
 
 highlighter: rouge
+
+# LeetCode solutions
+collections:
+  leetcode_solutions:
+    output: true
+    permalink: /leetcode-solutions/:title.html

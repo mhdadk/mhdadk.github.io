@@ -1,19 +1,25 @@
 <nav class="site-nav">
     {% for item in site.data.navigation %}
-
-    {% if item.name == "Blog" %}
-    {% if page.layout == "post" %}
+    <!-- navbar items on the blog index page -->
+    {% if page.url contains "/blog.html" %}
+    {% if item.name == "Home" or item.name == "RSS" %}
     <a href="{{ item.link }}" class="nav-link">{{ item.name }}</a>
     {% endif %}
-
-    {% elsif item.name == "RSS" %}
-    {% if page.url == "/blog.html" %}
+    <!-- navbar items on each blog post page -->
+    {% elsif page.url contains "/blog/" %}
+    {% if item.name == "Home" or item.name == "Blog" %}
     <a href="{{ item.link }}" class="nav-link">{{ item.name }}</a>
     {% endif %}
-
-    {% else %}
+    <!-- navbar items on the LeetCode solutions index page -->
+    {% elsif page.url contains "/leetcode-solutions.html" %}
+    {% if item.name == "Home" %}
     <a href="{{ item.link }}" class="nav-link">{{ item.name }}</a>
     {% endif %}
-
+    <!-- navbar items on each LeetCode solutions post page -->
+    {% elsif page.url contains "/leetcode-solutions/" %}
+    {% if item.name == "Home" or item.name == "LeetCode solutions" %}
+    <a href="{{ item.link }}" class="nav-link">{{ item.name }}</a>
+    {% endif %}
+    {% endif %}
     {% endfor %}
 </nav>

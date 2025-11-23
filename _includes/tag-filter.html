@@ -1,0 +1,98 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const posts = Array.from(document.querySelectorAll(".post"));   // All blog post elements
+        const tagListContainer = document.getElementById("tag-list");   // Container for tag buttons
+        const postCounter = document.getElementById("post-counter");    // Counter element
+        const activeTags = new Set();                                   // Tracks selected tags
+
+        // --- Collect all unique tags from posts ---
+        const allTags = new Set();
+        posts.forEach(post => {
+            post.dataset.tags.split(",").forEach(tag => {
+                if (tag.trim()) allTags.add(tag.trim());
+            });
+        });
+
+        // --- Create "Show All" reset button ---
+        const resetBtn = document.createElement("button");
+        resetBtn.textContent = "Show all";
+        resetBtn.className = "tag-button reset";
+        resetBtn.addEventListener("click", () => {
+            activeTags.clear();
+            updateButtons();
+            filterPosts();
+        });
+        tagListContainer.appendChild(resetBtn);
+
+        // --- Create tag buttons dynamically ---
+        allTags.forEach(tag => {
+            const btn = document.createElement("button");
+            btn.textContent = tag;
+            btn.className = "tag-button";
+
+            // Toggle tag on/off
+            btn.addEventListener("click", () => {
+                if (activeTags.has(tag)) {
+                    activeTags.delete(tag);
+                } else {
+                    activeTags.add(tag);
+                }
+                updateButtons();
+                filterPosts();
+            });
+
+            tagListContainer.appendChild(btn);
+        });
+
+        // --- Update button active states ---
+        function updateButtons() {
+            const buttons = tagListContainer.querySelectorAll(".tag-button");
+            buttons.forEach(btn => {
+                const tag = btn.textContent;
+                if (activeTags.has(tag)) {
+                    btn.classList.add("active");
+                } else {
+                    btn.classList.remove("active");
+                }
+            });
+        }
+
+        // --- Filter posts (AND logic) ---
+        function filterPosts() {
+            let visibleCount = 0;
+
+            // If no tags selected → show all posts
+            if (activeTags.size === 0) {
+                posts.forEach(post => {
+                    post.style.display = "";
+                    visibleCount++;
+                });
+            } else {
+                posts.forEach(post => {
+                    const tags = post.dataset.tags.split(",").map(t => t.trim());
+                    // AND logic: post must include *all* selected tags
+                    const matchesAll = Array.from(activeTags).every(tag => tags.includes(tag));
+                    post.style.display = matchesAll ? "" : "none";
+                    if (matchesAll) visibleCount++;
+                });
+            }
+
+            updateCounter(visibleCount);
+        }
+
+        // --- Update visible post counter ---
+        function updateCounter(count) {
+            const total = posts.length;
+            if (count === total) {
+                postCounter.textContent = `Showing all ${total} posts`;
+            } else if (count === 0) {
+                postCounter.textContent = "No posts match the selected tags";
+            } else {
+                postCounter.textContent = `Showing ${count} of ${total} posts`;
+            }
+        }
+
+        // Initialize on page load
+        filterPosts();
+    });
+</script>

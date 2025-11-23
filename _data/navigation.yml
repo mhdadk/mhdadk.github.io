@@ -2,5 +2,7 @@
   link: /
 - name: Blog
   link: /blog
+- name: LeetCode solutions
+  link: /leetcode-solutions
 - name: RSS
   link: /feed.xml
