@@ -4,9 +4,9 @@ layout: post
 tags:
   - arrays-and-hashing
 ---
-# [Problem statement](https://leetcode.com/problems/contains-duplicate/description/)
+## [Problem statement](https://leetcode.com/problems/contains-duplicate/description/)
 
-# Naive solution
+## Naive solution
 
 Let $n$ be the length of the `nums` array. The simplest way to solve this problem is to
 iterate over the `nums` array once, and then for each integer in the `nums` array, iterate
@@ -16,7 +16,7 @@ the same integer.
 So, we will require $n$ iterations over the `nums` array, and for each iteration, we
 perform $n-1$ more iterations. Hence, we require $n(n-1) = n^2 - n$, or $O(n^2)$, iterations.
 
-# Key insights
+## Key insights
 
 The naive solution leaves performance on the table by not remembering each integer as we iterate
 over the `nums` array. Specifically, by keeping track of which integers we have already
@@ -33,7 +33,7 @@ integer in the hash set and continue iterating over the `nums` array.
 If we reach the end of the `nums` array, then there must have been no duplicates, so we
 return `false`.
 
-# Pseudocode
+## Pseudocode
 
 Here is what this optimized solutions looks like:
 ```
@@ -46,7 +46,7 @@ Here is what this optimized solutions looks like:
 
 We iterate over the `nums` array once, which requires $n$ iterations. Additionally, the hash set can have at most $n$ integers. So, this optimized solution requires $O(n)$ iterations and $O(n)$ integers to be stored.
 
-# Python code
+## Python code
 
 ```python
 class Solution:
