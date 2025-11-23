@@ -2,7 +2,7 @@
 title: "217. Contains Duplicate"
 layout: post
 tags:
-  - arrays-hashing
+  - arrays-and-hashing
 ---
 # [Problem statement](https://leetcode.com/problems/contains-duplicate/description/)
 
@@ -14,7 +14,7 @@ over the `nums` array again, ensuring to skip the current integer, to check if i
 the same integer.
 
 So, we will require $n$ iterations over the `nums` array, and for each iteration, we
-perform $n-1$ iterations. Hence, we require at most $n(n-1) = n^2 - n = O(n^2)$ iterations.
+perform $n-1$ more iterations. Hence, we require $n(n-1) = n^2 - n$, or $O(n^2)$, iterations.
 
 # Key insights
 
@@ -38,13 +38,13 @@ return `false`.
 Here is what this optimized solutions looks like:
 ```
 1. hash_set = {}
-2. For each integer in  nums ,
+2. For each integer in nums,
   a. If integer in hash_set, return true.
-  b. Else, add integer to hash set.
+  b. Else, add integer to hash_set.
 3. return false
 ```
 
-We iterate over the `nums` array once, which requires at most $n = O(n)$ iterations. Additionally, the hash set can have at most $n = O(n)$ integers. So, this optimized solution requires $O(n)$ iterations and $O(n)$ integers.
+We iterate over the `nums` array once, which requires $n$ iterations. Additionally, the hash set can have at most $n$ integers. So, this optimized solution requires $O(n)$ iterations and $O(n)$ integers to be stored.
 
 # Python code
 
