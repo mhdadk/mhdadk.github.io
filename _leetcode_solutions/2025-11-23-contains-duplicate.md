@@ -35,7 +35,7 @@ return `false`.
 
 ## Pseudocode
 
-Here is what this optimized solutions looks like:
+Here is what this optimized solution looks like:
 ```
 1. hash_set = {}
 2. For each integer in nums,
