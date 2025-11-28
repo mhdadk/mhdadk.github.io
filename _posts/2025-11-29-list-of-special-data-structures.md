@@ -3,6 +3,7 @@ title: "A list of special data structures"
 layout: post
 tags:
   - data-structures
+  - leetcode
 ---
 We provide a list of data structures that serve specific purposes when solving LeetCode
 problems.
