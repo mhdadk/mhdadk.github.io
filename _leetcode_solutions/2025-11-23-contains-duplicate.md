@@ -3,6 +3,7 @@ title: "217. Contains Duplicate"
 layout: post
 tags:
   - arrays-and-hashing
+  - leetcode-easy
 ---
 ## [Problem statement](https://leetcode.com/problems/contains-duplicate/description/)
 

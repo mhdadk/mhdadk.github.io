@@ -3,6 +3,7 @@ title: "242. Valid Anagram"
 layout: post
 tags:
   - arrays-and-hashing
+  - leetcode-easy
 ---
 ## [Problem statement](https://leetcode.com/problems/valid-anagram/description/)
 
@@ -12,7 +13,7 @@ A simple approach is to sort both strings and compare the results. For strings `
 
 ## Key insights
 
-Two strings are anagrams if and only if they contain the same characters with identical frequencies. Sorting enforces this, but counting is cheaper.
+Two strings are anagrams (permutations) of each other if and only if they contain the same characters with identical frequencies. Sorting enforces this, but counting is cheaper.
 
 For example, `anagram` and `nagaram` match because every letter appears the same number of times. In contrast, `rat` and `car` do not since one has a `t` and the other has a `c`.
 
