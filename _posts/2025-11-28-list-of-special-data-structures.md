@@ -17,8 +17,7 @@ Given an array of arbitrary items, this array maps a given index to a correspond
 item in the array. The inverse of this array maps the item to its corresponding index.
 
 An inverse array can be used to efficiently recall the items in an array that were already
-iterated over. This is demonstrated in [217. Contains Duplicate](/_leetcode_solutions/2025-11-23-contains-duplicate.md) and [1. Two Sum](/_leetcode_solutions/2025-11-28-two-sum.md). Specifically, rather than iterating over the array again to check if we already iterated
-over a specific element, we can query the inverse array.
+iterated over. This is demonstrated in [217. Contains Duplicate](/leetcode-solutions/valid-anagram) and [1. Two Sum](/leetcode-solutions/two-sum). Specifically, rather than iterating over the array again to check if we already iterated over a specific element, we can query the inverse array.
 
 An inverse array is most often implemented using a hash map, where the keys are the elements
 of an array and the values are the indices corresponding to these elements. If we are not
@@ -37,4 +36,4 @@ If the elements of the array are integers, then the histogram can be implemented
 using a list, where the indices of the list are the unique integers in the array and the
 values corresponding to these indices are their counts.
 
-For example, a histogram is used in [242. Valid Anagram](/_leetcode_solutions/2025-11-27-valid-anagram.md).
+For example, a histogram is used in [242. Valid Anagram](/leetcode-solutions/valid-anagram).

@@ -20,8 +20,15 @@ defaults:
 # ('$', '$') and ('$$', '$$')
 kramdown:
   math_engine: null
-
-highlighter: rouge
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    # bad idea, spans don't need linenos and would inherit this option. See
+    # https://github.com/jekyll/jekyll/issues/4619#issuecomment-191267346
+    # line_numbers: true
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
 
 # LeetCode solutions
 collections:
