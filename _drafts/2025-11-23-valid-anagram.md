@@ -23,7 +23,7 @@ A frequency map (histogram) captures this directly:
 3. Any missing or negative count means they differ.
 4. If all counts return to zero, the strings are anagrams.
 
-If the alphabet is fixed (e.g., 26 lowercase letters), this uses $O(1)$ space and $O(n)$ time. A length mismatch can be rejected immediately.
+If the alphabet is fixed (e.g., 26 lowercase letters), this uses $O(1)$ space and $O(n)$ time. A length mismatch between `s` and `t` can be rejected immediately.
 
 ## Pseudocode
 
