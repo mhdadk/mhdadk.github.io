@@ -8,65 +8,58 @@ tags:
 
 ## Naive solution
 
-A straightforward approach is to sort both strings `s` and `t` and then compare the
-results. If `s` has length $n$ and `t` has length $m$, then this takes
-$O(n \log n + m \log m)$ time and uses either $O(1)$ or $O(n + m)$ space,
-depending on the sorting implementation.
+A simple approach is to sort both strings and compare the results. For strings `s` and `t` of lengths $n$ and $m$, this runs in $O(n \log n + m \log m)$ time and uses either $O(1)$ or $O(n + m)$ extra space depending on the sorting method.
 
 ## Key insights
 
-Two strings are anagrams (permutations) if and only if they contain exactly the same
-characters with the same frequencies. Sorting enforces this, but counting is cheaper.
+Two strings are anagrams if and only if they contain the same characters with identical frequencies. Sorting enforces this, but counting is cheaper.
 
-For example, “anagram” and “nagaram” match because the frequency of each letter is
-identical. “rat” and “car” do not, because “rat” contains a “t” while “car” contains a
-“c”.
+For example, `anagram` and `nagaram` match because every letter appears the same number of times. In contrast, `rat` and `car` do not since one has a `t` and the other has a `c`.
 
-A frequency map (a simple histogram) captures these counts:
+A frequency map (histogram) captures this directly:
 
-1. Create an empty hash map.
-2. Traverse `s` and increment the count for each character.
-3. Traverse `t` and decrement the count for each character.
+1. Count each character in `s`.
+2. Decrease the corresponding counts while scanning `t`.
+3. Any missing or negative count means they differ.
+4. If all counts return to zero, the strings are anagrams.
 
-During the second pass, any character that is missing from the map or whose count drops
-below zero immediately proves the strings are not anagrams. If all counts end at zero,
-the strings match.
-
-This avoids building two separate histograms and runs in $O(n + m)$ time with
-$O(1)$ auxiliary space if the alphabet size is fixed (e.g., lowercase English letters).
-
-Additionally, if `s` and `t` have different lengths, they cannot be anagrams. The length
-check should be done immediately so you can return early.
+If the alphabet is fixed (e.g., 26 lowercase letters), this uses $O(1)$ space and $O(n)$ time. A length mismatch can be rejected immediately.
 
 ## Pseudocode
 
-Here is what this optimized solution looks like at a high level:
 ```
-1. If strings s and t have different lengths, return False .
-2. Compute the histogram for s.
-3. Iterate over the letters of t while decrementing the the histogram computed in step 2
-accordingly.
-4. Check that the resulting histogram has all zeros for values.
+1. If len(s) != len(t): return False
+2. Build a frequency map from characters in s
+3. For each character in t:
+       decrement its count
+       if count < 0: return False
+4. Return True
 ```
-
-Assuming that strings `s` and `t` have the same length, we iterate over them once, which
-requires $O(n)$ time ($n$ is the length of strings `s` and `t`).
-
-TODO: continue
-
-hash set can have at most $n$ integers. So, this optimized solution requires $O(n)$
-iterations and $O(n)$ integers to be stored.
 
 ## Python code
 
 ```python
 class Solution:
-  def containsDuplicate(self, nums: List[int]) -> bool:
-    seen = set()
-    for num in nums:
-      if num in seen:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+
+        # Create histogram for 26 lowercase English letters
+        hist = [0] * 26
+
+        for ch in s:
+            hist[ord(ch) - ord('a')] += 1
+        for ch in t:
+            i = ord(ch) - ord('a')
+            hist[i] -= 1
+            if hist[i] < 0:
+                return False
+
         return True
-      seen.add(num)
-    return False
 ```
 
+You will notice in the Python code above that the histogram was implemented using a
+list and not a hash map. This is because the 26 lowercase English letters have corresponding
+ASCII representations that can be used as indices for the list.
+
+Specifically, the letters `a` and `z` correspond to 97 and 122, respectively, in ASCII.
