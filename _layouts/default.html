@@ -62,7 +62,8 @@
 </script>
 
 <body>
-    <!-- Hide the navigation bar if a front matter flag called "hide_navbar" appears in the file. -->
+    {% comment %} Hide the navigation bar if a front matter flag called "hide_navbar" appears in the file. {% endcomment
+    %}
     {% unless page.hide_navbar %}
     {% include navigation.html %}
     {% endunless %}

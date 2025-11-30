@@ -29,6 +29,13 @@ length of the longest string.
 
 To solve this problem more efficiently, we make use of the [inverse array](/blog/list-of-special-data-structures#inverse-array) and [histogram](/blog/list-of-special-data-structures#histogram) data structures.
 
+Unlike the naive method, the histogram-based solution avoids sorting. Building a
+histogram for each string takes $O(k)$ time, and we do this for $n$ strings, making the
+total runtime $O(n \cdot k)$.
+
+Hash map insertion and lookup both average to $O(1)$, so no additional overhead
+dominates the cost.
+
 ## Pseudocode
 
 ```
@@ -48,15 +55,15 @@ class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         anagrams = {}
         for i in range(len(strs)):
-            # build histogram
+            # Build histogram
             hist = [0] * 26
             for ch in strs[i]:
                 hist[ord(ch) - ord('a')] += 1
-            # check if histogram is a key. if not, add it
+            # If histogram is a key, append string to existing list
             hist = tuple(hist)
             if hist in anagrams:
                 anagrams[hist].append(strs[i])
-            else:
+            else: # Otherwise, create the list
                 anagrams[hist] = [strs[i]]
         return list(anagrams.values())
 ```
