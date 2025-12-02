@@ -18,7 +18,7 @@ single separator we use will have the same problem: the same character used to s
 the strings can exist in one of the strings, so decoding the strings would not work.
 
 To fix this problem, we include an additional symbol next to the separator for each string.
-This symbol must be a function of the string that is next to it to ensure we don't face
+This symbol must be a property of the string that is next to it to ensure we don't face
 the same aforementioned problem.
 
 One possible property to use is the length of the current string, which is what we will
@@ -28,7 +28,7 @@ use in our solution. So, we encode each string as `<length of string><separator>
 
 Encoding:
 1. Initialize an empty list.
-2. For each string `s` in `strs`:
+2. For each string `s` in `strs`:\
     a. Append the string that consists of the length of `s`, followed by the delimiter
     `"#"`, and then the string `s` itself to the empty list.
 3. Return the encoded string.
@@ -36,12 +36,12 @@ Encoding:
 Decoding:
 1. Initialize an empty list `res` to store the decoded strings.
 2. Initialize pointers `i` and `j` as `i = 0` and `j = 0`.
-3. While `i < len(s)`:
-    a. Move pointer `j` to the next instance of the delimiter `"#"` using a while loop.
+3. While `i < len(s)`:\
+    a. Move pointer `j` to the next instance of the delimiter `"#"` using a while loop.\
     b. Extract the length of the current substring as `int(s[i : j])` (which was
-       previously encoded into `s`).
-    c. Let the start and end of the substring be `j + 1` and `j + 1 + length of substring`, respectively.
-    d. Extact the substring as `s[start of substring : end of substring]` and append it to `res`.
+       previously encoded into `s`).\
+    c. Let the start and end of the substring be `j + 1` and `j + 1 + length of substring`, respectively.\
+    d. Extact the substring as `s[start of substring : end of substring]` and append it to `res`.\
     e. Move pointers `i` and `j` to the end of the substring.
 4. Return `res`.
 
