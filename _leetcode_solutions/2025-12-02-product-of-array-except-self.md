@@ -43,8 +43,8 @@ Then, notice in the previous solution that
 
 $$
 \begin{align}
-o[i] &= (n[0] \times n[1] \times \cdots \times n[i-1]) \times (n[i+1] \times n[i+2] \times \cdots \times n[N-1]) \\
-&= \left(\prod_{k=0}^{i-1} n[k]\right) \times \left(\prod_{k=i+1}^{N-1} n[k]\right)
+o[i] &= (n[0] \cdot n[1] \cdot \cdots \cdot n[i-1]) \cdot (n[i+1] \cdot n[i+2] \cdot \cdots \cdot n[N-1]) \\
+&= \left(\prod_{k=0}^{i-1} n[k]\right) \cdot \left(\prod_{k=i+1}^{N-1} n[k]\right)
 \end{align}
 $$
 
@@ -76,34 +76,62 @@ class Solution:
         suffix = [1] * len(nums)
         for i in range(len(nums)-1, 0, -1):
             suffix[i-1] = suffix[i] * nums[i]
-        output = []
+        output = [1] * len(nums)
         for i in range(len(nums)):
-            output.append(prefix[i] * suffix[i])
+            output[i] = prefix[i] * suffix[i]
         return output
 ```
 
 ## Best solution
 
+Although the solution in the previous section requires $O(N)$ time, where $N$ is the length
+of the `nums` array, it still requires $O(N)$ space due to the `prefix`, `suffix`, and `output` arrays.
+If we ignore the `output` array, can we get rid of the `prefix` and `suffix` arrays altogether to save space?
 
-## Pseudocode
+The crucial insights for reducing the space required are:
 
+1. We only need either the `prefix` array or the `suffix` array, but not both.
+2. Once we've chosen which array to keep, the other product can be computed using a
+running variable. For example, if we choose to keep the `suffix` array, the prefix product
+can be computed using a running variable.
+3. We can reuse the same `prefix` (or `suffix`) array to store the final output values.
 
+Without loss of generality, suppose we choose to keep the `prefix` array. We first
+compute the elements of this array as before:
 
-## Python code
+```python
+prefix = [1] * len(nums)
+for i in range(len(nums)-1):
+    prefix[i+1] = prefix[i] * nums[i]
+```
 
-NOTE: the code below is optimal.
+We then compute the suffix product using a running variable and compute the final
+output value:
+
+```python
+suffix = 1
+for i in range(len(nums)-1, -1, -1):
+    # compute output value and put it into prefix[i]
+    prefix[i] = prefix[i] * suffix
+    # update suffix running variable
+    suffix = suffix * nums[i]
+```
+
+We are essentially performing a forward and backward pass over the `prefix` array.
+Finally, we return the `prefix` array as the `output` array. The full Python code is
+given below.
 
 ```python
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        output = []
-        prefix = 1
-        for i in range(1, len(nums)+1):
-            output.append(prefix)
-            prefix *= nums[i-1]
+        prefix = [1] * len(nums)
+        for i in range(len(nums)-1):
+            prefix[i+1] = prefix[i] * nums[i]
         suffix = 1
-        for i in range(1, len(nums)+1):
-            output[-i] *= suffix
-            suffix *= nums[-i]
-        return output
+        for i in range(len(nums)-1, -1, -1):
+            # compute output value and put it into prefix[i]
+            prefix[i] = prefix[i] * suffix
+            # update suffix running variable
+            suffix = suffix * nums[i]
+        return prefix
 ```
