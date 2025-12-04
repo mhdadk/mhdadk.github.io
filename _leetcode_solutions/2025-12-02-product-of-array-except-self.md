@@ -56,14 +56,14 @@ $$
 \begin{align}
 p[i] &= \prod_{k=0}^{i-1} n[k] \\
 &= \left(\prod_{k=0}^{i-2} n[k]\right) \cdot n[i-1] \\
-&= p[i-1] \cdot n[i-1]
+&= p[i-1] \cdot n[i-1] \\
 s[i] &= \prod_{k=i+1}^{N-1} n[k] \\
 &= \left(\prod_{k=i+2}^{N-1} n[k]\right) \cdot n[i+1] \\
 &= s[i+1] \cdot n[i+1]
 \end{align}
 $$
 
-Hence, $p[i]$ can be computed for $i = 1,\dots,N-1$ via forward induction with the initial condition $p[0] = 1$ and $s[i]$ can be computed for $i = N-2, \dots, 0$ via backward induction with the terminal condition $s[N-1] = 1$. Finally, we compute $o[i]$ for $i = 0,\dots,N-1$ as $o[i] = p[i] * s[i]$.
+Hence, $p[i]$ can be computed for $i = 1,\dots,N-1$ via forward induction with the initial condition $p[0] = 1$ and $s[i]$ can be computed for $i = N-2, \dots, 0$ via backward induction with the terminal condition $s[N-1] = 1$. Finally, we compute $o[i]$ for $i = 0,\dots,N-1$ as $o[i] = p[i] \cdot s[i]$.
 
 This is done in the Python code below, where the $p$ array corresponds to a **p**refix product array and the $s$ array corresponds to a **s**uffix product array.
 
