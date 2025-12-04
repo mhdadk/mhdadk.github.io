@@ -37,21 +37,48 @@ $O(n^2)$ time. We also only require $O(n)$ space for the `output` array.
 
 ## Better solution
 
-TODO: continue
+For convenience, let $n[i]$ and $o[i]$ correspond to `nums[i]` and `output[i]`, respectively, and let $N$ be the length of the `nums` array.
 
-We can reduce the time
+Then, notice in the previous solution that
+
+$$
+\begin{align}
+o[i] &= (n[0] \times n[1] \times \cdots \times n[i-1]) \times (n[i+1] \times n[i+2] \times \cdots \times n[N-1]) \\
+&= \left(\prod_{k=0}^{i-1} n[k]\right) \times \left(\prod_{k=i+1}^{N-1} n[k]\right)
+\end{align}
+$$
+
+Let $p[0] = 1$ and for $i = 1, \dots, N-1$, let $p[i] = \prod_{k=0}^{i-1} n[k]$. Similarly,
+let $s[N-1] = 1$ and for $i = N-2, \dots, 0$, let $s[i] = \prod_{k=i+1}^{N-1} n[k]$.
+Then, note that
+
+$$
+\begin{align}
+p[i] &= \prod_{k=0}^{i-1} n[k] \\
+&= \left(\prod_{k=0}^{i-2} n[k]\right) \cdot n[i-1] \\
+&= p[i-1] \cdot n[i-1]
+s[i] &= \prod_{k=i+1}^{N-1} n[k] \\
+&= \left(\prod_{k=i+2}^{N-1} n[k]\right) \cdot n[i+1] \\
+&= s[i+1] \cdot n[i+1]
+\end{align}
+$$
+
+Hence, $p[i]$ can be computed for $i = 1,\dots,N-1$ via forward induction with the initial condition $p[0] = 1$ and $s[i]$ can be computed for $i = N-2, \dots, 0$ via backward induction with the terminal condition $s[N-1] = 1$. Finally, we compute $o[i]$ for $i = 0,\dots,N-1$ as $o[i] = p[i] * s[i]$.
+
+This is done in the Python code below, where the $p$ array corresponds to a **p**refix product array and the $s$ array corresponds to a **s**uffix product array.
 
 ```python
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        prefix = [1] * (len(nums) + 1)
-        suffix = [1] * (len(nums) + 1)
-        for i in range(1, len(nums)+1):
-            prefix[i] = prefix[i-1] * nums[i-1]
-            suffix[-i-1] = suffix[-i] * nums[-i]
+        prefix = [1] * len(nums)
+        for i in range(len(nums)-1):
+            prefix[i+1] = prefix[i] * nums[i]
+        suffix = [1] * len(nums)
+        for i in range(len(nums)-1, 0, -1):
+            suffix[i-1] = suffix[i] * nums[i]
         output = []
         for i in range(len(nums)):
-            output.append(prefix[i] * suffix[i+1])
+            output.append(prefix[i] * suffix[i])
         return output
 ```
 
