@@ -36,6 +36,9 @@ If the elements of the array are integers, then the histogram can be implemented
 using a list, where the indices of the list are the unique integers in the array and the
 values corresponding to these indices are their counts.
 
+Note that a hash set can be thought of as a special case of a histogram, where the keys
+are the elements of the hash set and the values are all $1$.
+
 For example, a histogram is used in [242. Valid Anagram](/leetcode-solutions/valid-anagram).
 
 ## Inverse histogram
