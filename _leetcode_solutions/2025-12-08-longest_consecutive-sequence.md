@@ -30,7 +30,7 @@ consecutive sequence amongst all other consecutive sequences.
     longest sequence.\
     b. Otherwise, initialize a variable `length` to `1`.\
     c. Keep incrementing `length` by `1` until `num + length` is not in `nums_unique`.\
-    d. Set `max_length` to `max(max_length, length)` to update it.\
+    d. Set `max_length` to `max(max_length, length)` to update it.
 4. Return `max_length`.
 
 If $n$ is the length of the `nums` array, then this solution requires $O(n)$ time in the
