@@ -33,12 +33,14 @@ class Solution:
     def isPalindrome(self, s: str) -> bool:
         l, r = 0, len(s) - 1
         while l < r:
-            # move the left pointer to the first alphanumeric
-            # character
+            # Move the left pointer to the first alphanumeric
+            # character. We need to ensure that l < r so that
+            # the outer while loop's condition is also true.
             while not s[l].isalnum() and l < r:
                 l += 1
-            # move the right pointer to the first alphanumeric
-            # character
+            # Move the right pointer to the first alphanumeric
+            # character. We need to ensure that l < r so that
+            # the outer while loop's condition is also true.
             while not s[r].isalnum() and l < r:
                 r -= 1
             if s[l].lower() == s[r].lower():
