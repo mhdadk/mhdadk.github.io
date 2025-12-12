@@ -7,6 +7,8 @@ tags:
 ---
 ## [Problem statement](https://leetcode.com/problems/longest-consecutive-sequence/description/)
 
+## Solution
+
 The key insight needed to solve this problem is that a consecutive sequence will always
 look like `num, num + 1, num + 2, ..., num + X`, where the first integer `num` is one of
 the unique integers in the `nums` array and `X + 1` is the length of this consecutive
