@@ -22,7 +22,7 @@ The psuedocode for this solution is as follows:
     b. If `s[r]` is not an alphanumeric character, keep moving `r` to the left until
     `s[r]` is an alphanumeric character. Make sure that `l < r` while doing this.\
     c. If the lowercase version of `s[l]` is equal to the lowercase version of `s[r]`,
-    then return move `l` to the right by `1` and move `r` to the left by `1`.
+    then return move `l` to the right by `1` and move `r` to the left by `1`.\
     d. Otherwise, return `False`, which means that `s` is not a valid palindrome.
 3. Return `True`, which implies that `s` is a valid palindrome.
 
