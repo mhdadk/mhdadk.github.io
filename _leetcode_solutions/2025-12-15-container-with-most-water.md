@@ -33,7 +33,7 @@ Note that
 $$
 \begin{align*}
 A^* &= \max_{(i, j) \in S} A(i,j) \\
-&= \max\{A(i, j) \mid (i, j) \in S\}
+&= \max\{A(i, j) \mid (i, j) \in S\} \\
 &= \max Q
 \end{align*}
 $$
