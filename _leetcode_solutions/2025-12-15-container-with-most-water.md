@@ -10,7 +10,7 @@ tags:
 ## Brute force
 
 We can solve this problem via brute force as follows. First, let $N$ be the length of the
-`heights` array and define the set $S = \{(m, n) \mid (m, n) \in \{0, \dots, N-1\}^2, m < n\}$. Then, for each $(i, j) \in S$, let
+`heights` array and define the set $ S = \lbrace (m, n) \mid (m, n) \in \lbrace 0, \dots, N-1 \rbrace^2, m < n\ \rbrace$. Then, for each $(i, j) \in S$, let
 
 $$
 A(i,j) = (j-i)\min(h_i,h_j)
@@ -33,12 +33,12 @@ Note that
 $$
 \begin{align*}
 A^* &= \max_{(i, j) \in S} A(i,j) \\
-&= \max\{A(i, j) \mid (i, j) \in S\} \\
+&= \max \lbrace A(i, j) \mid (i, j) \in S\rbrace \\
 &= \max Q
 \end{align*}
 $$
 
-where $Q = \{A(i, j) \mid (i, j) \in S\}$. The key insight that leads us to the optimized solution is that we can remove elements from set $Q$ without affecting $A^*$. The
+where $Q = \lbrace A(i, j) \mid (i, j) \in S \rbrace$. The key insight that leads us to the optimized solution is that we can remove elements from set $Q$ without affecting $A^*$. The
 following results will allow us to do this.
 
 First, let $h_i = \texttt{heights[i]}$ for each $i = 0,\dots,N-1$. Then, if
