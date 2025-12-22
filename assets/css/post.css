@@ -198,3 +198,11 @@ details>*:not(summary) {
         display: none;
     }
 }
+
+/* Increase font size of content inside <details> except the <summary> */
+/* details> :not(summary) {
+    font-size: 2rem;
+} */
+/* details {
+    font-size: 1.2rem;
+} */
