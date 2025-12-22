@@ -6,7 +6,7 @@ tags:
   - algorithms
   - puzzle
 ---
-A friend recently asked me the following question: "What is the time complexity of computing the $n$th Fibonnaci number without caching?" Although this question may seem arbitrary at first, its solution motivates the need for a closed-form expression for the $n$th term in a Fibonacci sequence and the interesting relationship between this closed-form expression and the golden ratio $\varphi$.
+A friend recently asked me, “What is the time complexity of computing the $n$th Fibonacci number without caching?” At first glance, it sounds like a simple programming puzzle, but solving it quickly reveals why a closed-form expression for the $n$th Fibonacci number isn’t just convenient, it’s essential. Even more intriguing, this formula reveals a connection between Fibonacci numbers and the golden ratio $\varphi$.
 
 ## Preliminaries
 
