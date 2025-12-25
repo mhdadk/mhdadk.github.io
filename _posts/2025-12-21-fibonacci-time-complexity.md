@@ -6,7 +6,7 @@ tags:
   - algorithms
   - puzzle
 ---
-A friend recently asked me, “What is the time complexity of computing the $n$th Fibonacci number without caching?” At first glance, it sounds like a simple programming puzzle, but solving it quickly reveals why a closed-form expression for the $n$th Fibonacci number isn’t just convenient, it’s essential. Even more intriguing, this formula reveals a connection between Fibonacci numbers and the golden ratio $\varphi$.
+A friend recently asked me, “What is the time complexity of computing the $n$th Fibonacci number without caching?” At first glance, it sounds like a simple programming puzzle, but solving it reveals an interesting connection between the closed-form expression for the $n$th Fibonacci number and the golden ratio $\varphi$.
 
 ## Preliminaries
 
@@ -35,7 +35,7 @@ def fib(n):
         return fib(n-1) + fib(n-2)
 ```
 
-Evaluating `fib(100)` takes several minutes on my PC, and if I try to evaluate `fib(1200)`, I get a `RecursionError: maximum recursion depth exceeded`, which suggests a stack overflow. Clearly, computing $F_n$ requires a non-trivial amount of computations.
+Evaluating `fib(100)` takes several minutes on my PC and if I try to evaluate `fib(1200)`, I get a `RecursionError: maximum recursion depth exceeded`, suggesting a stack overflow. Clearly, computing $F_n$ requires a non-trivial amount of computations.
 
 ## Number of additions
 
