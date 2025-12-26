@@ -1,7 +1,7 @@
 ---
 title: "On the time complexity of computing the $n$th Fibonnaci number"
 layout: post
-excerpt: "We derive an interesting relationship between the number of additions required to compute the $n$th Fibonnaci number and the golden ratio $\varphi$."
+excerpt: "We derive an interesting relationship between the number of additions required to compute the $n$th Fibonnaci number and the golden ratio $\\varphi$."
 tags:
   - algorithms
   - puzzle
