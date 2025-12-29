@@ -7,7 +7,11 @@ tags:
   - probability
 ---
 
-At time $t = 0$, you are placed on vertex $A$ of a square with vertices $A, B, C,$ and $D$. This square is shown in Fig. 1.
+At time $t = 0$, you are placed on vertex $A$ of a square with vertices $A, B, C,$ and $D$. At time $t = 1$, you move to vertex $B$ with probability $1/4$, to vertex $D$ with probability $1/4$, or remain at vertex $A$ with probability $1/2$.
+
+Then,
+
+This square is shown in Fig. 1.
 
 {% include figure.html
    filename="trapping-rain-water/trapping_rain_water_orig.jpg"
@@ -16,7 +20,7 @@ At time $t = 0$, you are placed on vertex $A$ of a square with vertices $A, B, C
    scale=90
 %}
 
-At time $t = 1, 2, ...$, you move to either vert
+
 
 At time time $t = 0$ on vertex A of a square with vertices A, B, C, and D. For t = 1, 2, ..., you move to either vertex B or vertex D with probability 1/4 each and stay at vertex A with probability 1/2. Same goes for all other vertices, but you can only move to neighboring vertices (i.e. A can move to B or D, from B we can move to A or C, from C we can move to B or D, and from D we can move to A or C)
 
