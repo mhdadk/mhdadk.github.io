@@ -7,49 +7,53 @@ tags:
 ---
 ## [Problem statement](https://leetcode.com/problems/trapping-rain-water/description/)
 
-We describe 2 different ways to solve the Leetcode problem "[Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/description/)". A useful explanation (but not exactly the same as the explanation here) for these solutions can be found [here](https://www.hellointerview.com/learn/code/two-pointers/trapping-rain-water).
+TODO: change structure so that they start with showing how to compute maximum area
+of rain water using example, then provide more general two-step process.
 
-Here is a statement of the problem:
+We first solve this problem using an example input and then provide a more general
+solution.
 
-> You are given an array non-negative integers `height` which represent an elevation map. Each value `height[i]` represents the height of a bar, which has a width of `1`.
-> Return the maximum area of water that can be trapped between the bars.
->
-> Example:
-```
-Input: height = [0,2,0,3,1,0,1,3,2,1]
-Output: 9
-```
-
-The figure corresponding to this example is shown in Fig. 1.
+Consider the input array `height = [0,2,0,3,1,0,1,3,2,1]`. The maximum area of water
+trapped for this `height` array is shown in Fig. 1.
 
 {% include figure.html
    filename="trapping-rain-water/trapping_rain_water_orig.jpg"
-   caption='TEST'
+   caption='Maximum area of rain water trapped for `height = [0,2,0,3,1,0,1,3,2,1]`.'
    fignum=1
    scale=90
 %}
 
-We can compute the maximum area of water trapped between the bars using the following two steps:
-1. Construct a function $f : \{0,1,\dots,N-1\} \to \mathbb N \cup \{0\}$, where $N$ is the length of the `height` array, that returns the amount of water that can be trapped at the $i$th position in the `height` array.
-2. The total area of water is then $\sum_{k=0}^{N-1} f(k)$.
+We then overlay the amount of water trapped at the $i$th position, as shown in Fig. 2.
 
-To construct $f$, we work backwards from what we want to compute. In Fig. 1, we overlay the amount of water trapped at the $i$th position to obtain Fig. 2.
+{% include figure.html
+   filename="trapping-rain-water/trapping_rain_water_per_pos.jpg"
+   caption='The amount of water trapped at the $i$th position based on Fig. 1.'
+   fignum=2
+   scale=90
+%}
 
-<figcaption>
-<img src="figures/trapping_rain_water/trapping_rain_water_per_pos.jpg">
-<caption>Fig. 2</caption>
-</figcaption>
+The amount of water that can be trapped at the $i$th position is shown in orange. The
+orange line also corresponds to a plot of the function
+$f : \{0,1,\dots,N-1\} \to \mathbb N \cup \{0\}$, where $N$ is the length of the `height`
+array, that returns the amount of water that can be trapped at the $i$th position in the
+`height` array.
 
-The amount of water that can be trapped at the $i$th position is shown in orange. In other words, Fig. 2 shows a plot of the function $f$ for each of its inputs. The total amount of water trapped is equivalent to the area under the orange line.
+The total amount of water trapped is equivalent to the area under the orange line. That
+is, we compute the total area of water trapped as $\sum_{k=0}^{N-1} f(k)$.
 
-Note that the function $f$ can be decomposed as the difference between the "envelope" of the bars in Fig. 2 and the height of the bars, as shown in Fig. 3.
+The function $f$ can be decomposed as the difference between the "envelope" of the bars
+in Fig. 2 and the height of the bars, as shown in Fig. 3.
 
-<figcaption>
-<img src="figures/trapping_rain_water/trapping_rain_water_difference.jpg">
-<caption>Fig. 3</caption>
-</figcaption>
+{% include figure.html
+   filename="trapping-rain-water/trapping_rain_water_difference.jpg"
+   caption='The difference between the envelope of the bars and the height of the bars. The envelope of the bars is shown in green while the height of the bars is shown in red'
+   fignum=3
+   scale=90
+%}
 
-In Fig. 3, the envelope of the bars is shown in green while the height of the bars is shown in red. The function $f$ shown in orange is obtained by subtracting the red line (bar heights) from the green line (envelope). So, our goal is to construct the green and red lines and then subtract them to obtain the function $f$.
+In Fig. 3, the function $f$ shown in orange is obtained by subtracting the red line
+(bar heights) from the green line (envelope). Our goal then is to construct the green
+and red lines and then subtract them to obtain the function $f$.
 
 We already know how to construct the red line, since it is equivalent to the values in the `height` array. To construct the green line, we decompose it as the minimum of two lines, as shown in Fig. 4.
 
