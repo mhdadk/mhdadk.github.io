@@ -7,11 +7,11 @@ tags:
 ---
 ## [Problem statement](https://leetcode.com/problems/trapping-rain-water/description/)
 
-TODO: change structure so that they start with showing how to compute maximum area
-of rain water using example, then provide more general two-step process.
+We show how to solve this problem using an example input. We first describe a solution
+that requires $O(n)$ time and space. Then, we explain how to further optimize this
+solution to reduce the space required to $O(1)$.
 
-We first solve this problem using an example input and then provide a more general
-solution.
+## Preliminaries
 
 Consider the input array `height = [0,2,0,3,1,0,1,3,2,1]`. The maximum area of water
 trapped for this `height` array is shown in Fig. 1.
@@ -41,6 +41,8 @@ array, that returns the amount of water that can be trapped at the $i$th positio
 The total amount of water trapped is equivalent to the area under the orange line. That
 is, we compute the total area of water trapped as $\sum_{k=0}^{N-1} f(k)$.
 
+## Decomposing $f$
+
 The function $f$ can be decomposed as the difference between the "envelope" of the bars
 in Fig. 2 and the height of the bars, as shown in Fig. 3.
 
@@ -57,107 +59,84 @@ and red lines and then subtract them to obtain the function $f$.
 
 We already know how to construct the red line, since it is equivalent to the values in the `height` array. To construct the green line, we decompose it as the minimum of two lines, as shown in Fig. 4.
 
-<figcaption>
-<img src="figures/trapping_rain_water/trapping_rain_water_envelope.jpg">
-<caption>Fig. 4</caption>
-</figcaption>
+{% include figure.html
+   filename="trapping-rain-water/trapping_rain_water_envelope.jpg"
+   caption='How to construct the envelope of the bars. The envelope is shown in green.'
+   fignum=4
+   scale=90
+%}
 
-In Fig. 4, the envelope is shown in green, which can be decomposed as the minimum of a "left envelope" shown in blue in Fig. 5a and a "right envelope" shown in purple in Fig. 5b.
+In Fig. 4, the envelope can be decomposed as the minimum of a "left envelope" shown in
+blue in Fig. 5a and a "right envelope" shown in purple in Fig. 5b.
 
-<figcaption>
-<img src="figures/trapping_rain_water/trapping_rain_water_left_envelope.jpg">
-<caption>Fig. 5a</caption>
-</figcaption>
+{% include figure.html
+   filename="trapping-rain-water/trapping_rain_water_left_envelope.jpg"
+   caption='Left envelope.'
+   fignum=5a
+   scale=90
+%}
 
-<figcaption>
-<img src="figures/trapping_rain_water/trapping_rain_water_right_envelope.jpg">
-<caption>Fig. 5b</caption>
-</figcaption>
+{% include figure.html
+   filename="trapping-rain-water/trapping_rain_water_right_envelope.jpg"
+   caption='Right envelope.'
+   fignum=5b
+   scale=90
+%}
 
-Note that when the element-wise minimum of the arrays corresponding to the left and right envelopes is computed, we obtain an array whose values correspond to the envelope shown in green in Fig. 4.
+The envelope in Fig. 4 is the result of computing the element-wise minimum of the left
+and right envelopes shown in Fig. 5a and 5b, respectively.
 
-To summarize, to compute the total area of trapped water, which is equivalent to the sum of all the outputs of the function $f$, we first decompose $f$ as the difference between the green and red lines shown in Fig. 3. We then decompose the green line into the blue and purple lines shown in Fig. 5a and Fig. 5b.
+To summarize, we compute the total area of trapped water as follows:
 
-What remains to be done is to compute the arrays corresponding to the left and right envelopes shown in Fig. 5a and Fig. 5b.
+1. Decompose $f$ as the difference between the green and red lines shown in Fig. 3.
+2. Decompose the green line into the blue and purple lines shown in Fig. 5a and 5b, respectively.
+3. Compute the heights of the blue and purple lines.
+4. Compute $f$ at each position.
+5. Sum all the outputs of $f$ to obtain the total area of trapped water.
 
-We do so by noting that the left envelope corresponds to the "maximum-so-far", "running maximum", or "cumulative maximum" function of the bar heights starting from the left. That is, the height of the blue line at position `i` in Fig. 5a is equivalent to `max(height[0], height[1], ..., height[i])`.
+We now describe how to compute the blue and purple lines (i.e. the left and right envelopes).
 
-To compute this cumulative maximum array `left_max` for a simpler array $[a_0,a_1,a_2,a_3]$, note that
+## Computing the left and right envelopes
+
+For convenience, let $\texttt{height}[i] = h_i$.
+
+The left and right envelopes correspond to the cumulative maximum of the bar heights
+starting from the left and right, respectively. That is, the height of the blue and
+purple lines in Fig. 5a and Fig. 5b, respectively, at the $i$th position are
+$\ell_i = \max(h_0, h_1, \dots, h_i)$ and $r_i = \max(h_{N-(i+1)}, \dots, h_{N-2}, h_{N-1})$, respectively.
+
+Because
+
 $$
 \begin{align}
-\texttt{left\_max}[0] &= a_0 \\
-\texttt{left\_max}[1] &= \max(a_0, a_1) \\
-&= \max(\texttt{left\_max}[0], a_1) \\
-\texttt{left\_max}[2] &= \max(a_0, a_1,a_2) \\
-&= \max(\max(a_0, a_1),a_2) \\
-&= \max(\texttt{left\_max}[1],a_2) \\
-\texttt{left\_max}[3] &= \max(a_0, a_1, a_2, a_3) \\
-&= \max(\max(\max(a_0, a_1),a_2),a_3) \\
-&= \max(\texttt{left\_max}[2],a_3) \\
+\ell_i &= \max(h_0, h_1, \dots h_i) \\
+&= \max(\max(\max(\max(h_0, h_1),h_2),h_3), ..., h_i) \\
+&= \max(\max(\max(\max(\max(h_0, h_0), h_1),h_2),h_3), ..., h_i) \\
+\r_i &= \max(h_{N-(i+1)}, \dots, h_{N-2}, h_{N-1}) \\
+&= \max(h_{N-(i+1)}, \dots, \max(h_{N-4},\max(h_{N-3}, \max(h_{N-2}, h_{N-1})))) \\
+&= \max(h_{N-(i+1)}, \dots, \max(h_{N-4},\max(h_{N-3}, \max(h_{N-2}, \max(h_{N-1}, h_{N-1})))))
 \end{align}
 $$
-More generally, for an array of length $N$,
-$$
-\texttt{left\_max}[k] =
-\begin{cases}
-a_0, &k = 0 \\
-\max(\texttt{left\_max}[k-1],a_{k}), &k = 1,\dots,N-1
-\end{cases}
-$$
-Applying this to the `height` array, we get
-$$
-\texttt{left\_max}[k] =
-\begin{cases}
-\texttt{height}[0], &k = 0 \\
-\max(\texttt{left\_max}[k-1],\texttt{height}[k]), &k = 1,\dots,N-1
-\end{cases} \tag{1}
-$$
-Similarly, the right envelope corresponds to the "maximum-so-far", "running maximum", or "cumulative maximum" function of the bar heights starting from the right. That is, the height of the purple line at position `i` in Fig. 5b is equivalent to `max(height[i], height[i+1], ..., height[-1])`.
 
-To compute this cumulative maximum array `right_max` for a simpler array $[a_0,a_1,a_2,a_3]$, note that
+we can compute $\ell_i$ and $r_i$ recursively as
+
 $$
 \begin{align}
-\texttt{right\_max}[3] &= a_3 \\
-\texttt{right\_max}[2] &= \max(a_2, a_3) \\
-&= \max(a_2,\texttt{right\_max}[3]) \\
-\texttt{\texttt{right\_max}}[1] &= \max(a_1, a_2,a_3) \\
-&= \max(a_1,\max(a_2,a_3)) \\
-&= \max(a_1,\texttt{right\_max}[2]) \\
-\texttt{right\_max}[0] &= \max(a_0, a_1, a_2, a_3) \\
-&= \max(a_0,\max(a_1,\max(a_2, a_3))) \\
-&= \max(a_0,\texttt{right\_max}[1]) \\
+\ell_i &= \begin{cases} h_0, &i = 0 \\ \max(\ell_{i-1},h_i), &i = 1,\dots,N-1\end{cases} \\
+\r_i &= \begin{cases} h_{N-1}, &i = 0 \\ \max(\r_{i-1},h_{N-(i+1)}), &i = 1,\dots,N-1\end{cases}
 \end{align}
 $$
-More generally, for an array of length $N$,
-$$
-\texttt{right\_max}[k] =
-\begin{cases}
-a_{N-1}, &k = N-1 \\
-\max(a_k,\texttt{right\_max}[k+1]), &k = N-2,\dots,0
-\end{cases}
-$$
-Applying this to the `height` array, we get
-$$
-\texttt{right\_max}[k] =
-\begin{cases}
-\texttt{height}[N-1], &k = N-1 \\
-\max(\texttt{height}[k],\texttt{right\_max}[k+1]), &k = N-2,\dots,0
-\end{cases} \tag{2}
-$$
-Moreover, the envelope array `envelope` shown in Fig. 4 is
-$$
-\texttt{envelope}[k] = \min(\texttt{left\_max}[k],\texttt{right\_max}[k])
-$$
-for $k = 0,\dots,N-1$.
 
-Once the `envelope` array is computed, the function $f$ can be computed as
-$$
-f(k) = \texttt{envelope}[k] - \texttt{height}[k]
-$$
-for $k = 0,\dots,N-1$. Finally, the total area of water trapped is equal to
-$$
-\sum_{k=0}^{N-1} f(k)
-$$
+## Computing the envelope, $f$, and the area of water trapped
+
+Once we have computed the left and right envelopes $\ell_i$ and $r_i$ for $i = 0,\dots,N-1$,
+the envelope shown in Fig. 4 is $e_i = \min(\ell_i,r_i)$ for $i = 0,\dots,N-1$.
+
+The function $f$ is then be computed as $f(k) = e_k - h_k$ for $k = 0,\dots,N-1$ and
+the total area of water trapped is equal to $\sum_{k=0}^{N-1} f(k)$.
+
+## Implementation
+
 Because this solution required the use of the `left_max` and `right_max` arrays, then it requires $O(n)$ space. Additionally, only single passes are made over the `height` array, so this solution requires $O(n)$ time.
 # $O(1)$ space
 We can simplify the solution given above to only require $O(1)$ space. The key insight needed to do this is to notice that `left_max` is a monotonically increasing sequence from the left and `right_max` is a monotonically increasing sequence from the right. This means that
