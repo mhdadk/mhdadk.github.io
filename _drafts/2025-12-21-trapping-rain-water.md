@@ -18,7 +18,7 @@ trapped for this `height` array is shown in Fig. 1.
 
 {% include figure.html
    filename="trapping-rain-water/trapping_rain_water_orig.jpg"
-   caption='Maximum area of rain water trapped for `height = [0,2,0,3,1,0,1,3,2,1]`.'
+   caption='Maximum area of rain water trapped for <code>height = [0,2,0,3,1,0,1,3,2,1]</code>.'
    fignum=1
    scale=90
 %}
@@ -48,7 +48,7 @@ in Fig. 2 and the height of the bars, as shown in Fig. 3.
 
 {% include figure.html
    filename="trapping-rain-water/trapping_rain_water_difference.jpg"
-   caption='The difference between the envelope of the bars and the height of the bars. The envelope of the bars is shown in green while the height of the bars is shown in red'
+   caption='The difference between the envelope of the bars and the height of the bars. The envelope of the bars is shown in green while the height of the bars is shown in red.'
    fignum=3
    scale=90
 %}
@@ -108,23 +108,23 @@ $\ell_i = \max(h_0, h_1, \dots, h_i)$ and $r_i = \max(h_{N-(i+1)}, \dots, h_{N-2
 Because
 
 $$
-\begin{align}
+\begin{align*}
 \ell_i &= \max(h_0, h_1, \dots h_i) \\
 &= \max(\max(\max(\max(h_0, h_1),h_2),h_3), ..., h_i) \\
 &= \max(\max(\max(\max(\max(h_0, h_0), h_1),h_2),h_3), ..., h_i) \\
-\r_i &= \max(h_{N-(i+1)}, \dots, h_{N-2}, h_{N-1}) \\
+r_i &= \max(h_{N-(i+1)}, \dots, h_{N-2}, h_{N-1}) \\
 &= \max(h_{N-(i+1)}, \dots, \max(h_{N-4},\max(h_{N-3}, \max(h_{N-2}, h_{N-1})))) \\
 &= \max(h_{N-(i+1)}, \dots, \max(h_{N-4},\max(h_{N-3}, \max(h_{N-2}, \max(h_{N-1}, h_{N-1})))))
-\end{align}
+\end{align*}
 $$
 
-we can compute $\ell_i$ and $r_i$ recursively as
+we can compute $\ell_i$ recursively forward and $r_i$ recursively backward as
 
 $$
-\begin{align}
+\begin{align*}
 \ell_i &= \begin{cases} h_0, &i = 0 \\ \max(\ell_{i-1},h_i), &i = 1,\dots,N-1\end{cases} \\
-\r_i &= \begin{cases} h_{N-1}, &i = 0 \\ \max(\r_{i-1},h_{N-(i+1)}), &i = 1,\dots,N-1\end{cases}
-\end{align}
+r_i &= \begin{cases} h_{N-1}, &i = N-1 \\ \max(r_{i+1},h_{i}), &i = N-2,\dots,0\end{cases}
+\end{align*}
 $$
 
 ## Computing the envelope, $f$, and the area of water trapped
@@ -136,6 +136,10 @@ The function $f$ is then be computed as $f(k) = e_k - h_k$ for $k = 0,\dots,N-1$
 the total area of water trapped is equal to $\sum_{k=0}^{N-1} f(k)$.
 
 ## Implementation
+
+TODO: mention that we can compute the sum over $f(k)$ naively by computing each step
+into arrays then computing the sum. Then, the smarter way to move forward is to notice
+that...
 
 Because this solution required the use of the `left_max` and `right_max` arrays, then it requires $O(n)$ space. Additionally, only single passes are made over the `height` array, so this solution requires $O(n)$ time.
 # $O(1)$ space
