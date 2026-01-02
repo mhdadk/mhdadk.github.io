@@ -158,7 +158,7 @@ $F_n$ only worked because we implicitly assumed that the Z-transform of $F_n$, $
 exists.
 
 We assumed so because the expression $F_n = F_{n-1} + F_{n-2}$ given in $\eqref{fib-seq}$
-represents a 2nd order FIR filter, which we know has a finite Z-transform.
+represents a 2nd order all-pole IIR filter, which we know has a Z-transform.
 
 More generally, if a recurrence relation does not have the form of an FIR or IIR filter,
 then it is necessary to verify beforehand that its Z-transform exists.
