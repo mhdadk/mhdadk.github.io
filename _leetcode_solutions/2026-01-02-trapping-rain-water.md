@@ -73,14 +73,14 @@ blue in Fig. 5a and a "right envelope" shown in purple in Fig. 5b.
 {% include figure.html
    filename="trapping-rain-water/trapping_rain_water_left_envelope.jpg"
    caption='Left envelope.'
-   fignum=5a
+   fignum='5a'
    scale=90
 %}
 
 {% include figure.html
    filename="trapping-rain-water/trapping_rain_water_right_envelope.jpg"
    caption='Right envelope.'
-   fignum=5b
+   fignum='5b'
    scale=90
 %}
 
