@@ -180,7 +180,9 @@ $r_j < \ell_i \leq \ell_{i+1} \leq \ell_{i+2} \leq \cdots \leq \ell_{N-1}$. That
 $r_j < \ell_i \implies \min(r_j, \ell_k) = r_j$ for every $k = i, \dots, N-1$. This means
 that if $i < j$ and $r_j < \ell_i$, then $e_j = \min(r_j, \ell_j) = r_j$.
 
-These properties suggest a left and right pointers approach:
+These "dominance" properties are similar to the ones derived in
+[11. Container With Most Water](/leetcode-solutions/container-with-most-water) and
+suggest a left and right pointers approach:
 
 1. Let $i \gets 0$ and $j \gets N-1$ be the left and right pointers, respectively.
 2. Let $A \gets 0$ be a variable that will accumulate the area of water trapped.
