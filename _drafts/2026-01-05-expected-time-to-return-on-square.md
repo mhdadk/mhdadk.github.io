@@ -1,24 +1,49 @@
 ---
 title: "Expected time to return on a square"
 layout: post
-excerpt: "We explore the theory of Markov Chains using a random walk puzzle on a square."
+excerpt: "We explore the theory of Markov Chains and Geometric distributions using a random walk puzzle on a square."
 tags:
   - puzzle
   - probability
 ---
 
-At time $t = 0$, you are placed on vertex $A$ of a square with vertices $A, B, C,$ and $D$. At time $t = 1$, you move to vertex $B$ with probability $1/4$, to vertex $D$ with probability $1/4$, or remain at vertex $A$ with probability $1/2$.
+Imagine you are standing on vertex $A$ of a square, with vertices labeled $A, B, C, D$ in clockwise order. Time starts at $t = 0$.
 
-Then,
+At each vertex, you play the following game: flip a fair coin repeatedly until it lands Heads. Each flip takes one unit of time, so after each flip, the clock increments by $1$. As
+soon as you get Heads, you move clockwise to the next vertex and repeat the same process.
 
-This square is shown in Fig. 1.
+You continue around the square, flipping coins at each vertex, until you finally return
+to vertex $A$.
 
-{% include figure.html
-   filename="trapping-rain-water/trapping_rain_water_orig.jpg"
-   caption='TEST'
-   fignum=1
-   scale=90
-%}
+Two questions naturally arise from this journey:
+
+1. On average, how many times do you flip the coin before you return to vertex $A$?
+2. What is the expected time $t$ when you first return to vertex $A$?
+
+There are two ways to solve this problem: using Geometric distributions and using the
+theory of Markov chains. We will describe both methods.
+
+## Geometric distributions
+
+We can decompose the problem into four sequential and independent random experiments:
+
+1. At vertex $A$, flip a fair coin repeatedly until you observe Heads, then move to vertex $B$.
+2. At vertex $B$, flip a fair coin repeatedly until you observe Heads, then move to vertex $C$.
+3. At vertex $C$, flip a fair coin repeatedly until you observe Heads, then move to vertex $D$.
+4. At vertex $D$, flip a fair coin repeatedly until you observe Heads, then move to vertex $A$.
+
+So, the average number of coin flips needed to move from vertex $A$ back to vertex $A$ is
+equivalent to the average number of coin flips needed to move from vertex $A$ to vertex $B$,
+from vertex $B$ to vertex $C$, from vertex $C$ to vertex $D$, and from vertex $D$ back
+to vertex $A$.
+
+Let $X$ be the number of flips of a fair coin required to observe the first Heads. Then,
+$X$ follows a [Geometric distribution](https://en.wikipedia.org/wiki/Geometric_distribution)
+with parameter $p = 1/2$. The mean of $X$ is $1/p = 2$ coin flips.
+
+Hence, the average number of flips of a fair coin required to move between any two
+vertices is $2$. Because there are 4 transitions needed to return to vertex $A$, then
+the average number of flips needed to return to vertex $A$ is $2 \times 4 = 8$.
 
 
 
