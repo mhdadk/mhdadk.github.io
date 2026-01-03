@@ -1,7 +1,7 @@
 ---
-title: "Expected time to return on a square"
+title: "The expected return time around a square"
 layout: post
-excerpt: "We explore the theory of Markov Chains and Geometric distributions using a random walk puzzle on a square."
+excerpt: "We explore the theory of Markov chains and geometric distributions using a random walk around a square."
 tags:
   - puzzle
   - probability
@@ -17,13 +17,17 @@ to vertex $A$.
 
 Two questions naturally arise from this journey:
 
-1. On average, how many times do you flip the coin before you return to vertex $A$?
-2. What is the expected time $t$ when you first return to vertex $A$?
+1. On average, how many coin flips does it take to return to vertex $A$?
+2. On average, what is the time $t$ at which you return to $A$?
 
-There are two ways to solve this problem: using Geometric distributions and using the
-theory of Markov chains. We will describe both methods.
+There two questions can be answered using the theory of geometric distributions or using
+the theory of Markov chains. We will describe both approaches.
 
 ## Geometric distributions
+
+### Coin flips
+
+TODO: modify the explanation to use the geometric random variables $X_{AB}, X_{BC}, X_{CD}, X_{DA}$.
 
 We can decompose the problem into four sequential and independent random experiments:
 
@@ -45,6 +49,16 @@ Hence, the average number of flips of a fair coin required to move between any t
 vertices is $2$. Because there are 4 transitions needed to return to vertex $A$, then
 the average number of flips needed to return to vertex $A$ is $2 \times 4 = 8$.
 
+### Time
+
+Notice that the number of coin flips so far at time $t = T$ will always be $T + 1$. To
+see this, consider the following sample
+
+## Markov chains
+
+### Time
+
+### Coin flips
 
 
 At time time $t = 0$ on vertex A of a square with vertices A, B, C, and D. For t = 1, 2, ..., you move to either vertex B or vertex D with probability 1/4 each and stay at vertex A with probability 1/2. Same goes for all other vertices, but you can only move to neighboring vertices (i.e. A can move to B or D, from B we can move to A or C, from C we can move to B or D, and from D we can move to A or C)
