@@ -9,8 +9,10 @@ tags:
 
 Imagine you are standing on vertex $A$ of a square, with vertices labeled $A, B, C, D$ in clockwise order. Time starts at $t = 0$.
 
-At each vertex, you play the following game: flip a fair coin repeatedly until it lands Heads. Each flip takes one unit of time, so after each flip, the clock increments by $1$. As
-soon as you get Heads, you move clockwise to the next vertex and repeat the same process.
+At each vertex, you play the following game: flip a fair coin repeatedly until it lands
+Heads. As soon as you get Heads, you move clockwise to the next vertex and repeat the
+same process. Coin flips are counted separately from time steps. Time steps measure the
+number of vertex-to-vertex transitions, not the number of flips.
 
 You continue around the square, flipping coins at each vertex, until you finally return
 to vertex $A$.
@@ -18,7 +20,7 @@ to vertex $A$.
 Two questions naturally arise from this journey:
 
 1. On average, how many coin flips does it take to return to vertex $A$?
-2. On average, what is the time $t$ at which you return to $A$?
+2. On average, how many time steps does it take for you to return to vertex $A$?
 
 There two questions can be answered using the theory of geometric distributions or using
 the theory of Markov chains. We will describe both approaches.
@@ -27,36 +29,54 @@ the theory of Markov chains. We will describe both approaches.
 
 ### Coin flips
 
-TODO: modify the explanation to use the geometric random variables $X_{AB}, X_{BC}, X_{CD}, X_{DA}$.
+Let $X$ be the number of flips of the fair coin made before returning to vertex $A$ and
+let $X_{AB}, X_{BC}, X_{CD},$ and $X_{DA}$ be the number of coin flips made to transition
+from vertex $A$ to vertex $B$, from vertex $B$ to vertex $C$, from vertex $C$ to vertex
+$D$, and from vertex $D$ to vertex $A$, respectively.
 
-We can decompose the problem into four sequential and independent random experiments:
+Then, $X = X_{AB} + X_{BC} + X_{CD} + X_{DA}$. We are trying to determine $E[X]$, the
+average number of flips of the coin made before returning to vertex $A$, which is
+equivalent to determining $E[X_{AB}] + E[X_{BC}] + E[X_{CD}] + E[X_{DA}]$.
 
-1. At vertex $A$, flip a fair coin repeatedly until you observe Heads, then move to vertex $B$.
-2. At vertex $B$, flip a fair coin repeatedly until you observe Heads, then move to vertex $C$.
-3. At vertex $C$, flip a fair coin repeatedly until you observe Heads, then move to vertex $D$.
-4. At vertex $D$, flip a fair coin repeatedly until you observe Heads, then move to vertex $A$.
+Each of $X_{AB}, X_{BC}, X_{CD},$ and $X_{DA}$ follow a
+[Geometric distribution](https://en.wikipedia.org/wiki/Geometric_distribution) with
+parameter $p = 1/2$. Hence, $E[X_{AB}] = E[X_{BC}] = E[X_{CD}] = E[X_{DA}] = 1/p = 2$
+coin flips. So, the average number of coin flips needed to return to vertex $A$ is
 
-So, the average number of coin flips needed to move from vertex $A$ back to vertex $A$ is
-equivalent to the average number of coin flips needed to move from vertex $A$ to vertex $B$,
-from vertex $B$ to vertex $C$, from vertex $C$ to vertex $D$, and from vertex $D$ back
-to vertex $A$.
+$$
+\begin{align*}
+E[X] &= E[X_{AB}] + E[X_{BC}] + E[X_{CD}] + E[X_{DA}] \\
+&= 2 + 2 + 2 + 2 \\
+&= 8
+\end{align*}
+$$
 
-Let $X$ be the number of flips of a fair coin required to observe the first Heads. Then,
-$X$ follows a [Geometric distribution](https://en.wikipedia.org/wiki/Geometric_distribution)
-with parameter $p = 1/2$. The mean of $X$ is $1/p = 2$ coin flips.
+### Time steps
 
-Hence, the average number of flips of a fair coin required to move between any two
-vertices is $2$. Because there are 4 transitions needed to return to vertex $A$, then
-the average number of flips needed to return to vertex $A$ is $2 \times 4 = 8$.
+Notice that from time $t = k$ until $t = T + \Delta k$ inclusive, for some number of
+time steps $\Delta k$, there will be exactly $\Delta k + 1$ coin flips. In other words,
+the number of time steps it takes to make $x$ coin flips is $x - 1$.
 
-### Time
+This means that $X_{AB}, X_{BC}, X_{CD},$ and $X_{DA}$ coin flips will take
+$X_{AB} - 1, X_{BC} - 1, X_{CD} - 1,$ and $X_{DA} - 1$ time steps, respectively. If we
+let $T$ be the number of time steps it takes to return to vertex $A$, then
 
-Notice that the number of coin flips so far at time $t = T$ will always be $T + 1$. To
-see this, consider the following sample
+$$
+\begin{align*}
+T &= X_{AB} - 1 + X_{BC} - 1 + X_{CD} - 1 + X_{DA} - 1 \\
+&= X_{AB} + X_{BC} + X_{CD} + X_{DA} - 4 \\
+&= X - 4
+\end{align*}
+$$
+
+and so the average number of time steps required to return to vertex $A$ is
+$E[T] = E[X] - 4 = 8 - 4 = 4$.
 
 ## Markov chains
 
-### Time
+### Time steps
+
+
 
 ### Coin flips
 
