@@ -1,5 +1,5 @@
 ---
-title: "The expected return time around a square"
+title: "The expected time to return on a square"
 layout: post
 excerpt: "We explore the theory of Markov chains and geometric distributions using a random walk around a square."
 tags:
@@ -7,12 +7,12 @@ tags:
   - probability
 ---
 
-Imagine you are standing on vertex $A$ of a square, with vertices labeled $A, B, C, D$ in clockwise order. Time starts at $t = 0$.
+Imagine you are standing on vertex $A$ of a square with vertices labeled $A, B, C, D$ in
+clockwise order. Time starts at $t = 0$.
 
 At each vertex, you play the following game: flip a fair coin repeatedly until it lands
 Heads. As soon as you get Heads, you move clockwise to the next vertex and repeat the
-same process. Coin flips are counted separately from time steps. Time steps measure the
-number of vertex-to-vertex transitions, not the number of flips.
+same process.
 
 You continue around the square, flipping coins at each vertex, until you finally return
 to vertex $A$.
@@ -22,7 +22,10 @@ Two questions naturally arise from this journey:
 1. On average, how many coin flips does it take to return to vertex $A$?
 2. On average, how many time steps does it take for you to return to vertex $A$?
 
-There two questions can be answered using the theory of geometric distributions or using
+Note that coin flips are counted separately from time steps. Time steps measure the
+number of vertex-to-vertex transitions, not the number of coin flips.
+
+These two questions can be answered using the theory of geometric distributions or using
 the theory of Markov chains. We will describe both approaches.
 
 ## Geometric distributions
@@ -73,6 +76,89 @@ and so the average number of time steps required to return to vertex $A$ is
 $E[T] = E[X] - 4 = 8 - 4 = 4$.
 
 ## Markov chains
+
+We now describe the Markov chain approach to solving this problem. This approach is
+useful for generalizations to the problem where we can transition to more than one other
+vertex on the square. Before describing the solution, we first review some Markov chain
+concepts.
+
+### Preliminaries
+
+Consider the discrete-time random process $X_0, X_1, X_2, \dots$. We say that this
+random process is a discrete-time Markov chain if
+
+$$
+\Pr(X_{t+1} = x_{t+1} \mid X_t = x_t, \dots, X_0 = x_0) = \Pr(X_{t+1} = x_{t+1} \mid X_t = x_t)
+$$
+
+for every $t, x_{t+1},x_t,\dots,x_0$. We assume that the range of each $X_t$ is a finite
+set of "states", such that $X_t \in \{0, 1, 2, \dots, N-1\}$ for every $t$ and
+"$X_t = k$" is read as "$X_t$ is in state $k$".
+
+We refer to $\Pr(X_{t+1} = j \mid X_t = i)$ as the probability of transition from state
+$i$ to state $j$, and we assume that these transition probabilities are time-invariant,
+such that $\Pr(X_{T_0+1} = j \mid X_{T_0} = i) = \Pr(X_{T_1+1} = j \mid X_{T_1} = i)$
+for every pair $(T_0, T_1)$. Hence, we can write $\Pr(X_{t+1} = j \mid X_t = i)$ as $p_{ij}$.
+
+### Return time
+
+Going back to our problem, consider the random process
+$\\{X_t \mid t \in \\{0\\} \cup \mathbb N\\}$ that represents which vertex we are at
+during each time step. Moreover, we assume that the range of each $X_t$ is $\\{A, B, C, D\\}$.
+Because we always start at vertex $A$, then $X_0 = A$. Finally, we will assume that this
+random process is a discrete-time Markov chain with the following transition probability
+matrix:
+
+$$
+\begin{bmatrix}
+p_{AA} & p_{AB} & 0 & 0 \\
+0 & p_{BB} & p_{BC} & 0 & 0 \\
+0 & 0 & p_{CC} & p_{CD} \\
+p_{DA} & 0 & 0 & p_{DD}
+\end{bmatrix}
+$$
+
+Next, let $T$ be a random variable that represents the number of time-steps required to
+return to vertex $A$, such that
+
+$$
+T = \min\\{t \mid t \in \mathbb N, X_t = A\\}
+$$
+
+For example, consider the sample trajectory below.
+
+| $t$  | $X_t$ |
+| ---- | ----  |
+| 0 | $A$ |
+| 1 | $B$ |
+| 2 | $B$ |
+| 3 | $B$ |
+| 4 | $C$ |
+| 5 | $C$ |
+| 6 | $D$ |
+| 7 | $D$ |
+| 8 | $D$ |
+| 9 | $A$ |
+| 10 | $A$ |
+| 11 | $A$ |
+| 12 | $B$ |
+
+We see that
+
+$$
+\begin{align*}
+T &= \min\\{t \mid t \in \mathbb N, X_t = A\\} \\
+&= \min\\{9, 10, 11\\} \\
+&= 9
+\end{align*}
+$$
+
+for this sample trajectory. Our goal is to compute $E[T]$.
+
+### Computing $E[T]$
+
+First, note that when $X_1 \neq A$, then $T \mid X_1 \neq A = 1 + T$
+
 
 ### Time steps
 
