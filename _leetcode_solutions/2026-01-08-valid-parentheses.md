@@ -69,7 +69,7 @@ In pseudocode, this solution proceeds as follows:
     1. If `stack` is empty or if `c` is not a delimiter (i.e. it is not one of
     `)`, `}`, or `]`), append `c` to the `stack`.
     2. Otherwise, if `c` is a delimiter , check if `c` is the closing parenthesis for
-    the character on the top of the `stack`. If it isn't, return `False`. Otherwise, pop
+    the character on the top of the `stack`. If it isn't, return `False`. Otherwise, remove
     the character that is on top of the stack.
 3. Return `True` if the `stack` is empty and `False` otherwise.
 
