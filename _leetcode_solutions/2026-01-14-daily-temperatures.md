@@ -114,3 +114,6 @@ solution evolves:
 10. We have now reached the end of the `for` loop. At this stage, `stack = [5, 6]` because
 the last two elements of `temperatures` do not have warmer future days. Also,
 `result = [1, 4, 1, 2, 1, 0, 0]`, as desired.
+
+This optimized solution requires $O(n)$ time and $O(n)$ space, where $n$ is the length
+of the `temperatures` array.
