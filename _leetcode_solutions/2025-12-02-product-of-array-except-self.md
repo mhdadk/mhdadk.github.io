@@ -97,30 +97,40 @@ running variable. For example, if we choose to keep the `suffix` array, the pref
 can be computed using a running variable.
 3. We can reuse the same `prefix` (or `suffix`) array to store the final output values.
 
-Without loss of generality, suppose we choose to keep the `prefix` array. We first
-compute the elements of this array as before:
+Without loss of generality, suppose we choose to reuse the `prefix` array. Then, we can
+first get rid of the `output` array in the previous solution as follows:
 
 ```python
-prefix = [1] * len(nums)
-for i in range(len(nums)-1):
-    prefix[i+1] = prefix[i] * nums[i]
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        prefix = [1] * len(nums)
+        for i in range(len(nums)-1):
+            prefix[i+1] = prefix[i] * nums[i]
+        suffix = [1] * len(nums)
+        for i in range(len(nums)-1, 0, -1):
+            suffix[i-1] = suffix[i] * nums[i]
+        for i in range(len(nums)):
+            prefix[i] = prefix[i] * suffix[i]
+        return prefix
 ```
 
-We then compute the suffix product using a running variable and compute the final
-output value:
+Then, we replace the `suffix` array with a running variable:
 
 ```python
-suffix = 1
-for i in range(len(nums)-1, -1, -1):
-    # compute output value and put it into prefix[i]
-    prefix[i] = prefix[i] * suffix
-    # update suffix running variable
-    suffix = suffix * nums[i]
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        prefix = [1] * len(nums)
+        for i in range(len(nums)-1):
+            prefix[i+1] = prefix[i] * nums[i]
+        suffix = 1
+        for i in range(len(nums)-1, 0, -1):
+            suffix = suffix * nums[i]
+        for i in range(len(nums)):
+            prefix[i] = prefix[i] * suffix
+        return prefix
 ```
 
-We are essentially performing a forward and backward pass over the `prefix` array.
-Finally, we return the `prefix` array as the `output` array. The full Python code is
-given below.
+We then merge the two `for` loops at the end together to obtain:
 
 ```python
 class Solution:
@@ -130,9 +140,10 @@ class Solution:
             prefix[i+1] = prefix[i] * nums[i]
         suffix = 1
         for i in range(len(nums)-1, -1, -1):
-            # compute output value and put it into prefix[i]
             prefix[i] = prefix[i] * suffix
-            # update suffix running variable
             suffix = suffix * nums[i]
         return prefix
 ```
+
+We are essentially performing a forward and backward pass over the `prefix` array. This
+solution requires $O(N)$ time and $O(1)$ space.
