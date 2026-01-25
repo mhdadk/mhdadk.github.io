@@ -44,13 +44,14 @@ Then, notice in the previous solution that
 $$
 \begin{align*}
 o[i] &= (n[0] \cdot n[1] \cdot \cdots \cdot n[i-1]) \cdot (n[i+1] \cdot n[i+2] \cdot \cdots \cdot n[N-1]) \\
-&= \left(\prod_{k=0}^{i-1} n[k]\right) \cdot \left(\prod_{k=i+1}^{N-1} n[k]\right)
+&= \left(\prod_{k=0}^{i-1} n[k]\right) \cdot \left(\prod_{k=i+1}^{N-1} n[k]\right) \\
+&= p[i] \cdot s[i]
 \end{align*}
 $$
 
-Let $p[0] = 1$ and for $i = 1, \dots, N-1$, let $p[i] = \prod_{k=0}^{i-1} n[k]$. Similarly,
-let $s[N-1] = 1$ and for $i = N-2, \dots, 0$, let $s[i] = \prod_{k=i+1}^{N-1} n[k]$.
-Then, note that
+where $p[i] = \prod_{k=0}^{i-1} n[k]$ for $i = 1, \dots, N-1$ and $p[0] = 1$ and
+$s[i] = \prod_{k=i+1}^{N-1} n[k]$ for $i = N-2, \dots, 0$ and $s[N-1] = 1$. Then, note
+that
 
 $$
 \begin{align*}
