@@ -7,39 +7,53 @@ tags:
 ---
 ## [Problem statement](https://leetcode.com/problems/longest-consecutive-sequence/description/)
 
+## Brute force
+
+The simplest way to solve this problem is to first convert the `nums` array into a hash
+set `nums_unique` that contains the unique elements of `nums` to count the lengths of
+consecutive sequences.
+
+Then, we simply let each `num` in `nums` be the start of a sequence and check if the
+succeeding numbers, `num + 1`, `num + 2`, and so on, exist in `nums_unique`. If they
+do, we count how many successive numbers exist in `nums_unqique`, which is equivalent
+to the length of this consecutive sequence with a starting number of `num`.
+
+We then compute the maximum length of all of these conscutive sequences. In Python, this
+brute force solution would be implemented as follows:
+
+```python
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        max_len = 0
+        nums_unique = set(nums)
+        for num in nums:
+            streak, curr = 0, num
+            while curr in nums_unique:
+                streak += 1
+                curr += 1
+            max_len = max(max_len, streak)
+        return max_len
+```
+
+Even though this method works, it does unnecessary repeated work because many sequences
+get recomputed multiple times. Can we do better?
+
 ## Solution
 
-The key insight needed to solve this problem is that a consecutive sequence will always
-look like `num, num + 1, num + 2, ..., num + X`, where the first integer `num` is one of
-the unique integers in the `nums` array and `X + 1` is the length of this consecutive
-sequence.
+We can solve this problem more efficiently by noticing that if a `num` in `nums` is part
+of a longer consecutive sequence, then the length of the consecutive sequence starting
+from `num` will always be shorter or equal in length to the sequence starting from
+`num - 1`, `num - 2`, and so on.
 
-Hence, to find the length of the longest consecutive sequence in the `nums` array, we
-determine what `X + 1` is for each unique `num` in the `nums` array. We do so as follows:
+So, to save on computation, for each `num` in `nums`, we first check if `num` is part
+of a longer consecutive sequence. This is the case if `num - 1` is in `nums_unique`.
 
-1. Because the `nums` array can contain duplicates, convert it into a hash set to
-determine its unique elements. Additionally, a hash set offers $O(1)$ look-up costs.
-Call the resulting hash set `nums_unique`.
-2. Initialize a running variable `max_length` to record the length of the longest
-consecutive sequence amongst all other consecutive sequences.
-3. For each `num` in `nums_unique`:\
-    a. If `num - 1` is in `nums_unique`, then we will skip this `num` and move on to the
-    next one. This is because if `num - 1` is in `nums_unique`, then `num` is part of
-    a larger sequence, so counting from `num` onwards will always lead to a shorter
-    sequence. Hence, we skip this `num` to avoid the extra iterations. For example,
-    if `nums = [1,2,3,4,5]`, then without this condition, we would check the sequences
-    `(2,3,4,5),(3,4,5),(4,5),` and `(5)` when we already know that `(1,2,3,4,5)` is the
-    longest sequence.\
-    b. Otherwise, initialize a variable `length` to `1`.\
-    c. Keep incrementing `length` by `1` until `num + length` is not in `nums_unique`.\
-    d. Set `max_length` to `max(max_length, length)` to update it.
-4. Return `max_length`.
+If `num` is not part of a longer consecutive sequence, then we consider `num` to be part
+of a new sequence. We then proceed as before by counting the length of the consecutive
+sequence starting from `num` and determine the longest length of these consecutive
+sequences.
 
-If $n$ is the length of the `nums` array, then this solution requires $O(n)$ time in the
-worst case (because we iterate over the `nums` array once). This solution will also
-require $O(n)$ space due to the hash set `nums_unique`.
-
-Here is what this solution looks like in Python:
+In Python, this solution can be implemented as follows:
 
 ```python
 class Solution:
@@ -47,11 +61,13 @@ class Solution:
         nums_unique = set(nums)
         max_length = 0
         for num in nums_unique:
-            if (num - 1) in nums_unique:
-                continue
-            length = 1
-            while (num + length) in nums_unique:
-                length += 1
-            max_length = max(length, max_length)
+            # if num is not part of a longer consecutive sequence and is the start of
+            # a new sequnce, measure the length of the consecutive sequence starting
+            # from num
+            if (num - 1) not in nums_unique:
+                length = 1
+                while (num + length) in nums_unique:
+                    length += 1
+                max_length = max(length, max_length)
         return max_length
 ```
