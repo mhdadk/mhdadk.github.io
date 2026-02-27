@@ -29,10 +29,24 @@ we are interested in computing.
 
 Note that $T_0(0) = 1 + T_0(1)$. That is, the hitting time for state 0 from time $0$
 onwards is one more than the hitting time for state 0 from time $1$ onwards. This makes
-sense since if we perform a transition after time $0$, we've completed a time step.
+sense since if we perform a transition after time $0$, we've completed a time step. Then,
 
 $$
+\begin{align}
+E[T_0(0) \mid X_0 = 1] &= E[1 + T_0(1) \mid X_0 = 1] \nonumber \\
+&= 1 + E[T_0(1) \mid X_0 = 1] \label{eq1} \\
+&= 1 + E[E[T_0(1) \mid X_0 = 1, X_1]] \label{eq2} \\
+\end{align}
+$$
 
+where we used the law of total expectation to go from $\eqref{eq1}$ to $\eqref{eq2}$.
+Note that
+
+$$
+\begin{align}
+E[E[T_0(1) \mid X_0 = 1, X_1]] &= \sum_{k=0}^3 \Pr(X_1 = k \mid X_0 = 1) \cdot E[T_0(1) \mid X_0 = 1, X_1 = k] \\
+&= \sum_{k=0}^3 \Pr(X_1 = k \mid X_0 = 1) \cdot E[T_0(1) \mid X_1 = k]
+\end{align}
 $$
 
 
