@@ -20,9 +20,9 @@ many transitions it takes, on average, for the MC to enter states 0 and 3 if it 
 from the other states. This is often referred to as the _mean hitting time_ of states
 0 and 3.
 
-Unfortunately, most derivations of mean hitting times that I've found tend to be
-"hand-wavy", where they skip some important steps. In this post, I aim to be as clear and
-precise as possible when deriving the mean hitting times of states 0 and 3.
+Unfortunately, most derivations of mean hitting times that I've found (such as the one on [this page](https://www.probabilitycourse.com/chapter11/11_2_5_using_the_law_of_total_probability_with_recursion.php)) tend to be "hand-wavy", where they skip some important steps. In this post, I aim
+to be as clear and precise as possible when deriving the mean hitting times of states 0
+and 3.
 
 First, let the MC represented in Fig. 1 correspond to the random process
 $\mathcal X = \lbrace X_0, X_1, X_2, \dots \rbrace$, where
@@ -71,16 +71,47 @@ expression $E[E[T_j(1) \mid X_0 = i, X_1]]$ expands to
 $$
 \begin{align}
 E[E[T_j(1) \mid X_0 = i, X_1]] &= \sum_{s=0}^3 \Pr(X_1 = s \mid X_0 = i) \cdot E[T_j(1) \mid X_0 = i, X_1 = s] \label{eq3} \\
-&= \sum_{s=0}^3 \Pr(X_1 = s \mid X_0 = i) \cdot E[T_0(1) \mid X_1 = s] \label{eq4} \\
-&= \sum_{s=0}^3 p_{is} \cdot E[T_0(1) \mid X_1 = s] \label{eq5}
+&= \sum_{s=0}^3 \Pr(X_1 = s \mid X_0 = i) \cdot E[T_j(1) \mid X_1 = s] \label{eq4} \\
+&= \sum_{s=0}^3 p_{is} \cdot E[T_j(1) \mid X_1 = s] \label{eq5}
 \end{align}
 $$
 
 where we used the Markov property to go from $\eqref{eq3}$ to $\eqref{eq4}$ and we used
 the fact that the MC in Fig. 1 is time-homogeneous to go from $\eqref{eq4}$ to $\eqref{eq5}$.
+For the sake of brevity, let $E[T_j(k) \mid X_k = s] = \tau_{j \mid s}^k$. Then, to summarize,
 
-We can now solve for the mean hitting times as follows.
+$$
+\tau_{j \mid i}^0 = 1 + \sum_{s=0}^3 p_{is} \cdot \tau_{j \mid s}^1
+$$
 
+We can now solve for all 4 mean hitting times simultaneously as follows.
+
+$$
+\begin{align*}
+\tau_{0 \mid 1}^0 &= 1 + \sum_{s=0}^3 p_{1s} \cdot \tau_{0 \mid s}^1 \\
+&= 1 + p_{10} \cdot \tau_{0 \mid 0}^1 + p_{12} \cdot \tau_{0 \mid 2}^1 \\
+&= 1 + \frac{1}{3} \cdot \tau_{0 \mid 0}^1 + \frac{2}{3} \cdot \tau_{0 \mid 2}^1 \\
+
+\tau_{0 \mid 2}^0 &= 1 + \sum_{s=0}^3 p_{2s} \cdot \tau_{0 \mid s}^1 \\
+&= 1 + p_{21} \cdot \tau_{0 \mid 1}^1 + p_{23} \cdot \tau_{0 \mid 3}^1 \\
+&= 1 + \frac{1}{2} \cdot \tau_{0 \mid 1}^1 + \frac{1}{2} \cdot \tau_{0 \mid 3}^1 \\
+
+\tau_{3 \mid 1}^0 &= 1 + \sum_{s=0}^3 p_{1s} \cdot \tau_{3 \mid s}^1 \\
+&= 1 + p_{10} \cdot \tau_{3 \mid 0}^1 + p_{12} \cdot \tau_{3 \mid 2}^1 \\
+&= 1 + \frac{1}{3} \cdot \tau_{3 \mid 0}^1 + \frac{2}{3} \cdot \tau_{3 \mid 2}^1 \\
+
+\tau_{3 \mid 2}^0 &= 1 + \sum_{s=0}^3 p_{2s} \cdot \tau_{3 \mid s}^1 \\
+&= 1 + p_{21} \cdot \tau_{3 \mid 1}^1 + p_{23} \cdot \tau_{3 \mid 3}^1 \\
+&= 1 + \frac{1}{2} \cdot \tau_{3 \mid 1}^1 + \frac{1}{2} \cdot \tau_{3 \mid 3}^1
+\end{align*}
+$$
+
+Solving these 4 linear equations simultaneously yields
+
+$$
+\begin{align}
+\end{align}
+$$
 
 
 
