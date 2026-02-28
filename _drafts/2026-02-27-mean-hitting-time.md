@@ -17,37 +17,72 @@ Consider the discrete-time and time-homogeneous Markov chain (MC) shown in Fig. 
 
 There are 2 recurrent states in this MC: states 0 and 3. Our goal is to determine how
 many transitions it takes, on average, for the MC to enter states 0 and 3 if it starts
-from the other states. This is often referred to as the "mean hitting time".
+from the other states. This is often referred to as the _mean hitting time_ of states
+0 and 3.
 
 Unfortunately, most derivations of mean hitting times that I've found tend to be
-"hand-wavy", such that they skip some important steps. In this post, I will attempt to
-be as clear as possible when deriving the mean hitting times.
+"hand-wavy", where they skip some important steps. In this post, I aim to be as clear and
+precise as possible when deriving the mean hitting times of states 0 and 3.
 
-First, we compute the mean hitting time for state 0. Let $T_0(k) = \inf \lbrace n \geq 0 \mid X_{n+k} = 0\rbrace$ be the hitting time for state 0 from time $k$ onwards, where the random process
-$X_0, X_1, \dots$ represents the MC in Fig. 1 and $E[T_0(0)]$ is the mean hitting time
-we are interested in computing.
+First, let the MC represented in Fig. 1 correspond to the random process
+$\mathcal X = \lbrace X_0, X_1, X_2, \dots \rbrace$, where
+$X_n \in \lbrace 0, 1, 2, 3\rbrace$ for each $n \in \lbrace 0, 1, \dots\rbrace$. Then,
+let the hitting time of state $j$ be
 
-Note that $T_0(0) = 1 + T_0(1)$. That is, the hitting time for state 0 from time $0$
-onwards is one more than the hitting time for state 0 from time $1$ onwards. This makes
-sense since if we perform a transition after time $0$, we've completed a time step. Then,
+$$
+T_{j} = \min \lbrace n \geq 0 \mid X_n = j\rbrace
+$$
+
+Moreover, let $T_j \mid X_0 = i$ be the hitting time of state $j$ starting from state $i$.
+Because each possible trajectory of $\mathcal X$ is random, then $T_{j}$ is a random
+variable. For example, one possible trajectory of $\mathcal X$ is
+$\lbrace 1, 2, 1, 0, 0, 0, \dots\rbrace$, such that $(T_0 \mid X_0 = 1) = 3$. Finally,
+the mean hitting time of state $j$ starting from state $i$ is $E[T_{j} \mid X_0 = i]$.
+
+We want to compute $E[T_{j} \mid X_0 = i]$ for $(i, j) \in \lbrace (1, 0), (2, 0), (1, 3), (2, 3)\rbrace$.
+We skip the other $(i, j)$ pairs because states 0 and 3 are recurrent. We now derive an
+expression for $E[T_{j} \mid X_0 = i]$. Let
+
+$$
+T_{j}(k) = \min \lbrace n \geq k \mid X_n = j\rbrace
+$$
+
+such that $T_j(k) \mid X_k = i$ is the hitting time of state $j$ starting from state $i$
+at time $k$ and $T_j(0) = T_j$. Note that $T_j(0) = 1 + T_j(1)$. That is, the hitting
+time of state $j$ starting from time 0 is $1$ time-step more than the hitting time
+of state $j$ starting from time 1.
+
+For example, if the hitting time of state $j$ starting at time 1 is $m$ for some
+$m \in \lbrace 1, 2, \dots\rbrace$, then the hitting time of state $j$ starting at time
+0 is $m + 1$. This means that
 
 $$
 \begin{align}
-E[T_0(0) \mid X_0 = 1] &= E[1 + T_0(1) \mid X_0 = 1] \nonumber \\
-&= 1 + E[T_0(1) \mid X_0 = 1] \label{eq1} \\
-&= 1 + E[E[T_0(1) \mid X_0 = 1, X_1]] \label{eq2} \\
+E[T_j \mid X_0 = i] &= E[T_j(0) \mid X_0 = i] \nonumber \\
+E[1 + T_j(1) \mid X_0 = i] \nonumber \\
+&= 1 + E[T_j(1) \mid X_0 = i] \label{eq1} \\
+&= 1 + E[E[T_j(1) \mid X_0 = i, X_1]] \label{eq2}
 \end{align}
 $$
 
-where we used the law of total expectation to go from $\eqref{eq1}$ to $\eqref{eq2}$.
-Note that
+where we used the law of total expectation to go from $\eqref{eq1}$ to $\eqref{eq2}$. The
+expression $E[E[T_j(1) \mid X_0 = i, X_1]]$ expands to
 
 $$
 \begin{align}
-E[E[T_0(1) \mid X_0 = 1, X_1]] &= \sum_{k=0}^3 \Pr(X_1 = k \mid X_0 = 1) \cdot E[T_0(1) \mid X_0 = 1, X_1 = k] \\
-&= \sum_{k=0}^3 \Pr(X_1 = k \mid X_0 = 1) \cdot E[T_0(1) \mid X_1 = k]
+E[E[T_j(1) \mid X_0 = i, X_1]] &= \sum_{s=0}^3 \Pr(X_1 = s \mid X_0 = i) \cdot E[T_j(1) \mid X_0 = i, X_1 = s] \label{eq3} \\
+&= \sum_{s=0}^3 \Pr(X_1 = s \mid X_0 = i) \cdot E[T_0(1) \mid X_1 = s] \label{eq4} \\
+&= \sum_{s=0}^3 p_{is} \cdot E[T_0(1) \mid X_1 = s] \label{eq5}
 \end{align}
 $$
+
+where we used the Markov property to go from $\eqref{eq3}$ to $\eqref{eq4}$ and we used
+the fact that the MC in Fig. 1 is time-homogeneous to go from $\eqref{eq4}$ to $\eqref{eq5}$.
+
+We can now solve for the mean hitting times as follows.
+
+
+
 
 
 
