@@ -32,11 +32,11 @@ $$
 T_j = \min \lbrace n \ge 0 \mid X_n = j \rbrace
 $$
 
-$T_j$ is a (possibly infinite) random variable because each possible trajectory of
-$\mathcal X$ is random. For example, one possible trajectory of $\mathcal X$ is
+$T_j$ is a (possibly infinite) random variable because the possible trajectories of
+$\mathcal X$ are random. For example, one possible trajectory of $\mathcal X$ is
 $\lbrace 1, 2, 1, 0, 0, 0, \dots\rbrace$, such that $(T_0 \mid X_0 = 1) = 3$.
 
-For $i \in \lbrace 0,1,2,3 \rbrace$, define $m_i^{(j)} = E[T_j \mid X_0 = i]$.
+For $i \in \lbrace 0,1,2,3 \rbrace$, define $m_{j \mid i} = E[T_j \mid X_0 = i]$.
 Additionally, for $k \geq 0$, define $T_j(k) = \min \lbrace n \ge k \mid X_n = j \rbrace$
 such that $T_j(k) \mid X_k = i$ is the hitting time of state $j$ starting from state $i$
 at time $k$ and $T_j(0) = T_j$.
@@ -49,16 +49,17 @@ For example, if the hitting time of state $j$ starting at time 1 is $m$ for some
 $m \in \lbrace 1, 2, \dots\rbrace$, then the hitting time of state $j$ starting at time
 0 is $m + 1$.
 
-This identity holds only on the event $X_0 \ne j$. Since we are interested in $m_i^{(j)}$
+This identity holds only on the event $X_0 \ne j$. Since we are interested in $m_{j \mid i}$
 for $i \ne j$, this condition is satisfied when $X_0=i$.
 
-We want to compute $E[T_j \mid X_0 = i]$ for $(i, j) \in \lbrace (1, 0), (2, 0), (1, 3), (2, 3)\rbrace$.
-We skip the other $(i, j)$ pairs because states 0 and 3 are recurrent. We now derive an
-expression for $E[T_j \mid X_0 = i]$.
+We want to compute $m_{j \mid i}$ for $(i, j) \in \lbrace (1, 0), (2, 0), (1, 3), (2, 3)\rbrace$.
+We skip the other $(i, j)$ pairs because states 0 and 3 are recurrent. We derive an
+expression for $m_{j \mid i}$ as follows.
 
 $$
 \begin{align}
-E[T_j \mid X_0 = i] &= E[T_j(0) \mid X_0 = i] \nonumber \\
+m_{j \mid i} &= E[T_j \mid X_0 = i] \nonumber \\
+&= E[T_j(0) \mid X_0 = i] \nonumber \\
 E[1 + T_j(1) \mid X_0 = i] \nonumber \\
 &= 1 + E[T_j(1) \mid X_0 = i] \label{eq1} \\
 &= 1 + E[E[T_j(1) \mid X_0 = i, X_1]] \label{eq2}
@@ -75,7 +76,7 @@ E[E[T_j(1) \mid X_0 = i, X_1]] &= \sum_{s=0}^3 \Pr(X_1 = s \mid X_0 = i) \cdot E
 &= \sum_{s=0}^3 p_{is} \cdot E[T_j(1) \mid X_1 = s] \label{eq5} \\
 &= \sum_{s=0}^3 p_{is} \cdot E[T_j(0) \mid X_0 = s] \label{eq6} \\
 &= \sum_{s=0}^3 p_{is} \cdot E[T_j \mid X_0 = s] \nonumber \\
-&= \sum_{s=0}^3 p_{is} \cdot m_s^{(j)} \nonumber
+&= \sum_{s=0}^3 p_{is} \cdot m_{j \mid s} \nonumber
 \end{align}
 $$
 
@@ -85,13 +86,13 @@ where
 * we used the fact that the MC in Fig. 1 is time-homogeneous to go from $\eqref{eq4}$ to $\eqref{eq5}$ and
 from $\eqref{eq5}$ to $\eqref{eq6}$.
 
-More precisely, the MC being time-homogeneous implies that the underlying random process
+Intuitively, the MC being time-homogeneous implies that the underlying random process
 starting from time 1 with $X_1=s$ behaves like a fresh copy of the chain starting
-from time 0 with $X_0 = s$. For more details on this reasoning, see
+from time 0 with $X_0 = s$. For a more precise version of this reasoning, see
 [this answer](https://math.stackexchange.com/a/5126476/652310). To summarize,
 
 $$
-\tau_{j \mid i}^0 = 1 + \sum_{s=0}^3 p_{is} \cdot \tau_{j \mid s}^1
+m_{j \mid i} = 1 + \sum_{s=0}^3 p_{is} \cdot m_{j \mid s}
 $$
 
 We can now solve for all 4 mean hitting times simultaneously as follows.
