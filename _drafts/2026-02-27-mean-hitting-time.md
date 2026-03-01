@@ -95,17 +95,33 @@ $$
 m_{j \mid i} = 1 + \sum_{s=0}^3 p_{is} \cdot m_{j \mid s}
 $$
 
-We can now solve for all 4 mean hitting times simultaneously as follows.
+**TODO**: Note that probabilitycourse.com assumes that the hitting state is either 0 or
+3 and not only one or the other. This avoids the case when expected values can be
+infinite. This is the issue encountered below. So, re-define the hitting time as the
+time it takes to reach either state 0 or state 3.
+
+We can now solve for all 4 mean hitting times simultaneously as follows. First,
 
 $$
-\begin{align*}
-\tau_{0 \mid 1}^0 &= 1 + \sum_{s=0}^3 p_{1s} \cdot \tau_{0 \mid s}^1 \\
-&= 1 + p_{10} \cdot \tau_{0 \mid 0}^1 + p_{12} \cdot \tau_{0 \mid 2}^1 \\
-&= 1 + \frac{1}{3} \cdot \tau_{0 \mid 0}^1 + \frac{2}{3} \cdot \tau_{0 \mid 2}^1 \\
+\begin{align}
+m_{0 \mid 1} &= 1 + \sum_{s=0}^3 p_{1s} \cdot m_{0 \mid s} \nonumber \\
+&= 1 + p_{10} \cdot m_{0 \mid 0} + p_{12} \cdot m_{0 \mid 2} \label{eq7} \\
+&= 1 + p_{12} \cdot m_{0 \mid 2} \label{eq8}
+\end{align}
+$$
 
-\tau_{0 \mid 2}^0 &= 1 + \sum_{s=0}^3 p_{2s} \cdot \tau_{0 \mid s}^1 \\
-&= 1 + p_{21} \cdot \tau_{0 \mid 1}^1 + p_{23} \cdot \tau_{0 \mid 3}^1 \\
-&= 1 + \frac{1}{2} \cdot \tau_{0 \mid 1}^1 + \frac{1}{2} \cdot \tau_{0 \mid 3}^1 \\
+where we used the fact that $m_{0 \mid 0} = 0$ to go from $\eqref{eq7}$ to $\eqref{eq8}$.
+Next,
+
+$$
+\begin{align}
+m_{0 \mid 2} &= 1 + \sum_{s=0}^3 p_{2s} \cdot m_{0 \mid s} \\
+&= 1 + p_{21} \cdot m_{0 \mid 1} + p_{23} \cdot m_{0 \mid 3} \\
+\end{align}
+$$
+
+
+
 
 \tau_{3 \mid 1}^0 &= 1 + \sum_{s=0}^3 p_{1s} \cdot \tau_{3 \mid s}^1 \\
 &= 1 + p_{10} \cdot \tau_{3 \mid 0}^1 + p_{12} \cdot \tau_{3 \mid 2}^1 \\
