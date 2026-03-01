@@ -12,14 +12,13 @@ Consider the discrete-time and time-homogeneous Markov chain (MC) shown in Fig. 
    filename="markov-chain.png"
    caption="Discrete-time Markov chain with 4 states."
    fignum=1
-   scale=70
+   scale=90
 %}
 
-Consider the discrete-time and time-homogeneous Markov chain (MC) shown in Fig. 1. There
-are two absorbing (recurrent) states in this MC: states 0 and 3. Our goal is to determine
+There are two absorbing (recurrent) states in this MC: states 0 and 3. Our goal is to determine
 the mean hitting time for any one of the recurrent states in the MC when the MC starts
 from the non-recurrent states (i.e. states 1 and 2). That is, on average, how long does
-it take the MC to enter state 0 or 3 if it starts from state 1 and if it starts from
+it take the MC to enter state 0 or 3 if it starts from state 1 or if it starts from
 state 2?
 
 Unfortunately, most derivations of mean hitting times that I've found (such as the one
@@ -79,14 +78,14 @@ $$
 \begin{align}
 m_{0, 3 \mid i} &= E[T_{0, 3} \mid X_0 = i] \nonumber \\
 &= E[T_{0, 3}(0) \mid X_0 = i] \nonumber \\
-E[1 + T_{0, 3}(1) \mid X_0 = i] \nonumber \\
+&= E[1 + T_{0, 3}(1) \mid X_0 = i] \nonumber \\
 &= 1 + E[T_{0, 3}(1) \mid X_0 = i] \label{eq1} \\
 &= 1 + E[E[T_{0, 3}(1) \mid X_0 = i, X_1]] \label{eq2}
 \end{align}
 $$
 
 where we used the law of total expectation to go from $\eqref{eq1}$ to $\eqref{eq2}$. The
-expression $E[E[T_{0, 3}(1) \mid X_0 = i, X_1]]$ expands to
+expression $E[E[T_{0, 3}(1) \mid X_0 = i, X_1]]$ in $\eqref{eq2}$ expands to
 
 $$
 \begin{align}
@@ -99,10 +98,8 @@ E[E[T_{0, 3}(1) \mid X_0 = i, X_1]] &= \sum_{s=0}^3 \Pr(X_1 = s \mid X_0 = i) \c
 \end{align}
 $$
 
-where
-
-* we used the Markov property to go from $\eqref{eq3}$ to $\eqref{eq4}$ and
-* we used the fact that the MC in Fig. 1 is time-homogeneous to go from $\eqref{eq4}$ to $\eqref{eq5}$ and
+where we used the Markov property to go from $\eqref{eq3}$ to $\eqref{eq4}$ and we used
+the fact that the MC in Fig. 1 is time-homogeneous to go from $\eqref{eq4}$ to $\eqref{eq5}$ and
 from $\eqref{eq5}$ to $\eqref{eq6}$.
 
 Intuitively, the MC being time-homogeneous implies that the underlying random process
@@ -131,7 +128,7 @@ to go from $\eqref{eq7}$ to $\eqref{eq8}$. Next,
 
 $$
 \begin{align}
-m_{0, 3 \mid 2} &= 1 + \sum_{s=0}^3 p_{2s} \cdot m_{0, 3 \mid s} \\
+m_{0, 3 \mid 2} &= 1 + \sum_{s=0}^3 p_{2s} \cdot m_{0, 3 \mid s} \nonumber \\
 &= 1 + p_{20} \cdot m_{0, 3 \mid 0} + p_{21} \cdot m_{0, 3 \mid 1} + p_{22} \cdot m_{0, 3 \mid 2} + p_{23} \cdot m_{0, 3 \mid 3} \label{eq9} \\
 &= 1 + p_{21} \cdot m_{0, 3 \mid 1} \label{eq10} \\
 &= 1 + \frac{1}{2} \cdot m_{0, 3 \mid 1} \nonumber
@@ -143,14 +140,12 @@ to go from $\eqref{eq9}$ to $\eqref{eq10}$. We now have two equations and two un
 which when solved together yield
 
 $$
-\begin{align}
+\begin{align*}
 m_{0, 3 \mid 1} &= \frac{5}{2} \\
 m_{0, 3 \mid 2} &= \frac{9}{4}
-\end{align}
+\end{align*}
 $$
 
-as desired.
-
-It is interesting to note that the fact that mean hitting times can be infinite when
-considering hitting individual recurrent states (rather than any one of them) motivates
+as desired. It is interesting to note that the possibility that mean hitting times can be infinite when
+considering hitting individual recurrent states (rather than all of them collectively) motivates
 the need for classifying states into recurrent and transient classes, as explained [here](https://www.probabilitycourse.com/chapter11/11_2_4_classification_of_states.php).
