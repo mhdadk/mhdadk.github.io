@@ -137,8 +137,8 @@ $$
 
 where $\eqref{tauCD-1} \to \eqref{tauCD-2}$ follows because
 $p_{CA} = p_{CC} = \tau_{DD} = 0$. Notice that $\tau_{AD} = \tau_{CD}$. This makes sense
-since both vertices $A$ and $C$ have the exact same possible transitions to vertex $D$.
-That is, they are symmetric. Hence, this leaves us with two equations and two unknowns:
+since both vertices $A$ and $C$ have the exact same possible transitions to vertex $D$ (they
+are symmetric). Hence, this leaves us with two equations and two unknowns:
 
 $$
 \begin{align*}
@@ -147,23 +147,9 @@ $$
 \end{align*}
 $$
 
-Solving these two equations together yields
-
-$$
-\begin{align*}
-\tau_{AD} &= 3 \\
-\tau_{BD} &= 4
-\end{align*}
-$$
-
-
-
-
-
-
-
-
-
+Solving these two equations together yields $\tau_{AD} = \tau_{CD} = 3$ and $\tau_{BD} = 4$.
+That is, the average time required to go from vertices $A$ or $C$ to vertex $D$ is $3$ seconds,
+while the average time required to go from vertex $B$ to $D$ is $4$ seconds.
 
 
 
