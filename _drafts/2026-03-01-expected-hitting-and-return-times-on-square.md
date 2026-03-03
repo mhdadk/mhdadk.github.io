@@ -70,7 +70,7 @@ $$
 where
 
 * $\eqref{tauAD-1} \to \eqref{tauAD-2}$ follows from $T_D(0) = 1 + T_D(1)$
-(assuming $X_0 \neq A$). That is, the hitting time of state $D$ starting from time $0$
+(assuming $X_0 \neq D$). That is, the hitting time of state $D$ starting from time $0$
 is $1$ time-step more than the hitting time of state $D$ starting from time $1$. For
 example, if the hitting time of state $D$ starting at time $1$ is $t_0$ for some
 $t_0 \in \lbrace 1, 2, \dots\rbrace$, then the hitting time of state $D$ starting at time
