@@ -33,7 +33,7 @@ Two questions naturally arise from this random walk:
 1. Starting at vertex $A$, how long does it take, on average, to reach vertex $D$?
 2. Starting at vertex $A$, how long does it take, on average, to return to vertex $A$?
 
-To answer the first question, we need to learn about _mean hitting times_.
+We answer the first question using the concept of _mean hitting time_.
 
 # Mean hitting time
 
@@ -150,6 +150,15 @@ $$
 Solving these two equations together yields $\tau_{AD} = \tau_{CD} = 3$ and $\tau_{BD} = 4$.
 That is, the average time required to go from vertices $A$ or $C$ to vertex $D$ is $3$ seconds,
 while the average time required to go from vertex $B$ to $D$ is $4$ seconds.
+
+# Mean return time
+
+We now answer the second question, which was "Starting at vertex $A$, how long does it take, on average, to return to vertex $A$?", using the concept of _mean return time_.
+
+We want to compute $r_A = E[T_A(1) \mid X_0 = A]$.
+
+
+
 
 
 
