@@ -136,13 +136,23 @@ $$
 $$
 
 where $\eqref{tauCD-1} \to \eqref{tauCD-2}$ follows because
-$p_{CA} = p_{CC} = \tau_{DD} = 0$. We now have three equations and three unknowns, which
-when solved together yield
+$p_{CA} = p_{CC} = \tau_{DD} = 0$. Notice that $\tau_{AD} = \tau_{CD}$. This makes sense
+since both vertices $A$ and $C$ have the exact same possible transitions to vertex $D$.
+That is, they are symmetric. Hence, this leaves us with two equations and two unknowns:
 
 $$
 \begin{align*}
-m_{0, 3 \mid 1} &= \frac{5}{2} \\
-m_{0, 3 \mid 2} &= \frac{9}{4}
+\tau_{BD} &= 1 + \tau_{AD} \\
+\tau_{AD} &= 1 + \frac{1}{2} \tau_{BD}
+\end{align*}
+$$
+
+Solving these two equations together yields
+
+$$
+\begin{align*}
+\tau_{AD} &= 3 \\
+\tau_{BD} &= 4
 \end{align*}
 $$
 
