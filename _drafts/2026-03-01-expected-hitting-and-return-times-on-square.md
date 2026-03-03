@@ -37,118 +37,107 @@ To answer the first question, we need to learn about _mean hitting times_.
 
 # Mean hitting time
 
-First, let the MC represented in Fig. 1 correspond to the random process
+Let the MC shown in Fig. 1 be represented by the random process
 $\mathcal X = \lbrace X_0, X_1, X_2, \dots \rbrace$, where
-$X_n \in \lbrace 0, 1, 2, 3\rbrace$ for each $n \in \lbrace 0, 1, \dots\rbrace$. Then,
-let the hitting time of state $j$ be
+$X_n \in \lbrace A, B, C, D\rbrace$ for each $n \in \lbrace 0, 1, \dots\rbrace$. Then,
+for each state $i$, let
 
 $$
-T_j = \min \lbrace n \ge 0 \mid X_n = j \rbrace
+T_i(k) = \min \lbrace n \ge k \mid X_n = i \rbrace
 $$
 
-$T_j$ is a (possibly infinite) random variable because the possible trajectories of
+such that $T_i(k) \mid X_k = j$ is the hitting time of state $i$ starting from state
+$j$ at time $k$. In the special case that $i = D,k = 0,$ and $j = A$, $T_D(0) \mid X_0 = A$ is
+the hitting time of state $D$ starting from state $A$ at time $0$. Finally, we want to
+compute $\tau_{AD} = E[T_D(0) \mid X_0 = A]$, the average time required to reach
+vertex $D$ from vertex $A$ starting at time $0$.
+
+Note that $T_D(0) \mid X_0 = A$ is a random variable because the possible trajectories of
 $\mathcal X$ are random. For example, one possible trajectory of $\mathcal X$ is
-$\lbrace 1, 2, 1, 0, 0, 0, \dots\rbrace$, such that $(T_0 \mid X_0 = 1) = 3$.
+$\lbrace A, B, A, B, C, C, D, A, \dots\rbrace$, such that $(T_D(0) \mid X_0 = A) = 6$.
 
-For $i \in \lbrace 0,1,2,3 \rbrace$, define $m_{j \mid i} = E[T_j \mid X_0 = i]$.
-Additionally, for $k \geq 0$, define $T_j(k) = \min \lbrace n \ge k \mid X_n = j \rbrace$
-such that $T_j(k) \mid X_k = i$ is the hitting time of state $j$ starting from state $i$
-at time $k$ and $T_j(0) = T_j$.
-
-Notice that both $m_{0 \mid 3}$ and $m_{3 \mid 0}$ are infinite, so we instead want to
-compute the mean hitting for either state 0 or state 3, and not exclusively one or the
-other. This would then mean that $m_{(0 \, \textrm{or} \, 3) \mid 3}$ and
-$m_{(0 \, \textrm{or} \, 3) \mid 0}$ are both $0$. Moreover, we want to avoid infinite expected
-values.
-
-Hence, we generalize the notation introduced above as follows. First, let
-
-$$
-T_{j_1,j_2,\dots ,j_m} = \min \lbrace n \ge 0 \mid X_n \in \lbrace j_1, \dots, j_m\rbrace \rbrace
-$$
-
-be the hitting time for any one of states $j_1,\dots,j_m$. Then, for
-$i \in \lbrace 0,1,2,3 \rbrace$, let $m_{j_1,\dots,j_m \mid i} = E[T_{j_1,\dots,j_m} \mid X_0 = i]$
-be the mean hitting time for any one of the states $j_1,\dots,j_m$. We are interested
-in computing $m_{0, 3 \mid 1}$ and $m_{0, 3 \mid 2}$.
-
-If $X_0 \neq j$, then $T_j(0) = 1 + T_j(1)$. That is, the hitting time of state $j$
-starting from time 0 is $1$ time-step more than the hitting time of state $j$ starting
-from time 1.
-
-For example, if the hitting time of state $j$ starting at time 1 is $m$ for some
-$m \in \lbrace 1, 2, \dots\rbrace$, then the hitting time of state $j$ starting at time
-0 is $m + 1$.
-
-This identity holds only on the event $X_0 \ne j$. Since we are interested in $m_{j \mid i}$
-for $i \ne j$, this condition is satisfied when $X_0=i$.
-
-We now derive expressions for $m_{0, 3 \mid 1}$ and $m_{0, 3 \mid 2}$ as follows.
+We now derive an expression for $\tau_{AD}$ as follows.
 
 $$
 \begin{align}
-m_{0, 3 \mid i} &= E[T_{0, 3} \mid X_0 = i] \nonumber \\
-&= E[T_{0, 3}(0) \mid X_0 = i] \nonumber \\
-&= E[1 + T_{0, 3}(1) \mid X_0 = i] \nonumber \\
-&= 1 + E[T_{0, 3}(1) \mid X_0 = i] \label{eq1} \\
-&= 1 + E[E[T_{0, 3}(1) \mid X_0 = i, X_1]] \label{eq2}
+\tau_{AD} &= E[T_D(0) \mid X_0 = A] \label{tauAD-1} \\
+&= E[1 + T_D(1) \mid X_0 = A] \label{tauAD-2} \\
+&= 1 + E[T_D(1) \mid X_0 = A] \label{tauAD-3} \\
+&= 1 + E[E[T_D(1) \mid X_0 = A, X_1]] \label{tauAD-4}
 \end{align}
 $$
 
-where we used the law of total expectation to go from $\eqref{eq1}$ to $\eqref{eq2}$. The
-expression $E[E[T_{0, 3}(1) \mid X_0 = i, X_1]]$ in $\eqref{eq2}$ expands to
+where
+
+* $\eqref{tauAD-1} \to \eqref{tauAD-2}$ follows from $T_D(0) = 1 + T_D(1)$
+(assuming $X_0 \neq A$). That is, the hitting time of state $D$ starting from time $0$
+is $1$ time-step more than the hitting time of state $D$ starting from time $1$. For
+example, if the hitting time of state $D$ starting at time $1$ is $t_0$ for some
+$t_0 \in \lbrace 1, 2, \dots\rbrace$, then the hitting time of state $D$ starting at time
+$0$ is $t_0 + 1$.
+* $\eqref{tauAD-2} \to \eqref{tauAD-3}$ by linearity of the conditional expectation.
+* $\eqref{tauAD-3} \to \eqref{tauAD-4}$ follows from the law of total expectation.
+
+Next, the expression $E[E[T_D(1) \mid X_0 = A, X_1]]$ in $\eqref{tauAD-4}$ expands to
 
 $$
 \begin{align}
-E[E[T_{0, 3}(1) \mid X_0 = i, X_1]] &= \sum_{s=0}^3 \Pr(X_1 = s \mid X_0 = i) \cdot E[T_{0, 3}(1) \mid X_0 = i, X_1 = s] \label{eq3} \\
-&= \sum_{s=0}^3 \Pr(X_1 = s \mid X_0 = i) \cdot E[T_{0, 3}(1) \mid X_1 = s] \label{eq4} \\
-&= \sum_{s=0}^3 p_{is} \cdot E[T_{0, 3}(1) \mid X_1 = s] \label{eq5} \\
-&= \sum_{s=0}^3 p_{is} \cdot E[T_{0, 3}(0) \mid X_0 = s] \label{eq6} \\
-&= \sum_{s=0}^3 p_{is} \cdot E[T_{0, 3} \mid X_0 = s] \nonumber \\
-&= \sum_{s=0}^3 p_{is} \cdot m_{0, 3 \mid s} \nonumber
+E[E[T_D(1) \mid X_0 = A, X_1]] &= \sum_{s \in \lbrace A, B, C, D\rbrace} \Pr(X_1 = s \mid X_0 = A) \cdot E[T_D(1) \mid X_0 = A, X_1 = s] \label{exptauAD-1} \\
+&= \sum_{s \in \lbrace A, B, C, D\rbrace} \Pr(X_1 = s \mid X_0 = A) \cdot E[T_D(1) \mid X_1 = s] \label{exptauAD-2} \\
+&= \sum_{s \in \lbrace A, B, C, D\rbrace} p_{As} \cdot E[T_D(1) \mid X_1 = s] \label{exptauAD-3} \\
+&= \sum_{s \in \lbrace A, B, C, D\rbrace} p_{As} \cdot E[T_D(0) \mid X_0 = s] \label{exptauAD-4} \\
+&= \sum_{s \in \lbrace A, B, C, D\rbrace} p_{As} \cdot \tau_{sD} \label{exptauAD-5}
 \end{align}
 $$
 
-where we used the Markov property to go from $\eqref{eq3}$ to $\eqref{eq4}$ and we used
-the fact that the MC in Fig. 1 is time-homogeneous to go from $\eqref{eq4}$ to $\eqref{eq5}$ and
-from $\eqref{eq5}$ to $\eqref{eq6}$.
+where
 
-Intuitively, the MC being time-homogeneous implies that the underlying random process
-starting from time 1 with $X_1=s$ behaves like a fresh copy of the chain starting
-from time 0 with $X_0 = s$. For a more precise version of this reasoning, see
-[this answer](https://math.stackexchange.com/a/5126476/652310). To summarize,
+* $\eqref{exptauAD-1} \to \eqref{exptauAD-2}$ follows from the Markov property.
+* $\eqref{exptauAD-2} \to \eqref{exptauAD-3}$ by defining $p_{As} = \Pr(X_1 = s \mid X_0 = A)$ because the MC in Fig. 1 is time-homogeneous.
+* $\eqref{exptauAD-3} \to \eqref{exptauAD-4}$ follows again from the MC being
+time-homogeneous. Intuitively, the MC being time-homogeneous implies that the underlying
+random process starting from time $1$ with $X_1=s$ behaves like a fresh copy of the chain
+starting from time $0$ with $X_0 = s$. For a more rigorous version of this reasoning, see
+[this answer](https://math.stackexchange.com/a/5126476/652310).
 
-$$
-m_{0, 3 \mid i} = 1 + \sum_{s=0}^3 p_{is} \cdot m_{0, 3 \mid s}
-$$
-
-We can now solve for the mean hitting times $m_{0, 3 \mid 1}$ and $m_{0, 3 \mid 2}$
-simultaneously as follows. First,
+To summarize,
 
 $$
 \begin{align}
-m_{0, 3 \mid 1} &= 1 + \sum_{s=0}^3 p_{1s} \cdot m_{0, 3 \mid s} \nonumber \\
-&= 1 + p_{10} \cdot m_{0, 3 \mid 0} + p_{11} \cdot m_{0, 3 \mid 1} + p_{12} \cdot m_{0, 3 \mid 2} + p_{13} \cdot m_{0, 3 \mid 3} \label{eq7} \\
-&= 1 + p_{12} \cdot m_{0, 3 \mid 2} \label{eq8} \\
-&= 1 + \frac{2}{3} \cdot m_{0, 3 \mid 2} \nonumber
+\tau_{AD} &= 1 + \sum_{s \in \lbrace A, B, C, D\rbrace} \tau_{sD} \cdot p_{As} \label{tauAD-5} \\
+&= 1 + \tau_{AD} \cdot p_{AA} + \tau_{BD} \cdot p_{AB} + \tau_{CD} \cdot p_{AC} + \tau_{DD} \cdot p_{AD} \nonumber \\
+&= 1 + \tau_{BD} \cdot p_{AB} \label{tauAD-6} \\
+&= 1 + \tau_{BD} \cdot \frac{1}{2} \nonumber
 \end{align}
 $$
 
-where we used the fact that $m_{0, 3 \mid 0} = m_{0, 3 \mid 3} = 0$ and $p_{11} = 0$
-to go from $\eqref{eq7}$ to $\eqref{eq8}$. Next,
+where $\eqref{tauAD-5} \to \eqref{tauAD-6}$ follows because
+$\tau_{DD} = E[T_D(0) \mid X_0 = D] = 0$ and $p_{AA} = p_{AC} = 0$. Then, generalizing
+$\eqref{tauAD-5}$,
 
 $$
 \begin{align}
-m_{0, 3 \mid 2} &= 1 + \sum_{s=0}^3 p_{2s} \cdot m_{0, 3 \mid s} \nonumber \\
-&= 1 + p_{20} \cdot m_{0, 3 \mid 0} + p_{21} \cdot m_{0, 3 \mid 1} + p_{22} \cdot m_{0, 3 \mid 2} + p_{23} \cdot m_{0, 3 \mid 3} \label{eq9} \\
-&= 1 + p_{21} \cdot m_{0, 3 \mid 1} \label{eq10} \\
-&= 1 + \frac{1}{2} \cdot m_{0, 3 \mid 1} \nonumber
+\tau_{BD} &= 1 + \sum_{s \in \lbrace A, B, C, D\rbrace} \tau_{sD} \cdot p_{Bs} \nonumber \\
+&= 1 + \tau_{AD} \cdot p_{BA} + \tau_{BD} \cdot p_{BB} + \tau_{CD} \cdot p_{BC} + \tau_{DD} \cdot p_{BD} \label{tauBD-1} \\
+&= 1 + \tau_{AD} \cdot p_{BA} + \tau_{CD} \cdot p_{BC} \label{tauBD-2} \\
+&= 1 + \tau_{AD} \cdot \frac{1}{2} + \tau_{CD} \cdot \frac{1}{2} \nonumber
 \end{align}
 $$
 
-where we used the fact that $m_{0, 3 \mid 0} = m_{0, 3 \mid 3} = 0$ and $p_{22} = 0$
-to go from $\eqref{eq9}$ to $\eqref{eq10}$. We now have two equations and two unknowns,
-which when solved together yield
+where $\eqref{tauBD-1} \to \eqref{tauBD-2}$ follows because $p_{BB} = \tau_{DD} = 0$. Next,
+
+$$
+\begin{align}
+\tau_{CD} &= 1 + \sum_{s \in \lbrace A, B, C, D\rbrace} \tau_{sD} \cdot p_{Cs} \nonumber \\
+&= 1 + \tau_{AD} \cdot p_{CA} + \tau_{BD} \cdot p_{CB} + \tau_{CD} \cdot p_{CC} + \tau_{DD} \cdot p_{CD} \label{tauCD-1} \\
+&= 1 + \tau_{BD} \cdot p_{CB} \label{tauCD-2} \\
+&= 1 + \tau_{BD} \cdot \frac{1}{2} \nonumber
+\end{align}
+$$
+
+where $\eqref{tauCD-1} \to \eqref{tauCD-2}$ follows because
+$p_{CA} = p_{CC} = \tau_{DD} = 0$. We now have three equations and three unknowns, which
+when solved together yield
 
 $$
 \begin{align*}
