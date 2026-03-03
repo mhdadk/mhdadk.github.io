@@ -46,8 +46,8 @@ at time $k$ and $T_j(0) = T_j$.
 
 Notice that both $m_{0 \mid 3}$ and $m_{3 \mid 0}$ are infinite, so we instead want to
 compute the mean hitting for either state 0 or state 3, and not exclusively one or the
-other. This would then mean that $m_{0 \textrm{or} 3 \mid 3}$ and
-$m_{0 \textrm{or} 3 \mid 0}$ are both $0$. Moreover, we want to avoid infinite expected
+other. This would then mean that $m_{0 \, \textrm{or} \, 3 \mid 3}$ and
+$m_{0 \, \textrm{or} \, 3 \mid 0}$ are both $0$. Moreover, we want to avoid infinite expected
 values.
 
 Hence, we generalize the notation introduced above as follows. First, let
