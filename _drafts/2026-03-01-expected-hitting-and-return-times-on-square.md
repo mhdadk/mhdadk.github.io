@@ -1,10 +1,40 @@
 ---
-title: "Mean hitting time"
+title: "The expected hitting and return times on a square"
 layout: post
-excerpt: "We derive the mean hitting time for an arbitrary discrete-time, finite state, and time-homogeneous Markov chain."
+excerpt: "We explore the theory of Markov chains using a random walk around a square."
 tags:
   - probability
+  - puzzle
 ---
+
+Imagine you are standing on vertex $A$ of a square with vertices labeled $A, B, C, D$ in
+clockwise order. Time starts at $t = 0$.
+
+At each vertex, you play the following game: flip a fair coin and move to the neighboring
+vertex in clockwise order if it lands Heads and in counter-clockwise order if it lands
+tails. For example, suppose you are standing at vertex $B$ and flip the coin. If it
+lands Heads, move to vertex $C$ and if it lands Tails, move to vertex $A$.
+
+You repeat this game at each vertex, consuming 1 second of time each time you move from
+one vertex to another. You also play this game for an infinite amount of time.
+
+Two questions naturally arise from this journey:
+
+1. Starting at vertex $A$, how long does it take, on average, to reach vertex $D$?
+2. Starting at vertex $A$, how long does it take, on average, to return to vertex $A$?
+
+Answering these questions requires us to learn about _mean hitting times_ and _mean return times_.
+
+# Mean hitting time
+
+
+
+
+
+
+
+
+
 
 Consider the discrete-time and time-homogeneous Markov chain (MC) shown in Fig. 1.
 
@@ -46,8 +76,8 @@ at time $k$ and $T_j(0) = T_j$.
 
 Notice that both $m_{0 \mid 3}$ and $m_{3 \mid 0}$ are infinite, so we instead want to
 compute the mean hitting for either state 0 or state 3, and not exclusively one or the
-other. This would then mean that $m_{0 \, \textrm{or} \, 3 \mid 3}$ and
-$m_{0 \, \textrm{or} \, 3 \mid 0}$ are both $0$. Moreover, we want to avoid infinite expected
+other. This would then mean that $m_{(0 \, \textrm{or} \, 3) \mid 3}$ and
+$m_{(0 \, \textrm{or} \, 3) \mid 0}$ are both $0$. Moreover, we want to avoid infinite expected
 values.
 
 Hence, we generalize the notation introduced above as follows. First, let
