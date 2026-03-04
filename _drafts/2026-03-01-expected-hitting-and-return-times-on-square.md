@@ -43,20 +43,22 @@ $X_n \in \lbrace A, B, C, D\rbrace$ for each $n \in \lbrace 0, 1, \dots\rbrace$.
 for each state $i$, let
 
 $$
-T_i(k) = \min \lbrace n \ge k \mid X_n = i \rbrace
+T_i(k) = \min \lbrace n \ge 0 \mid X_{n+k} = i \rbrace
 $$
 
-such that $T_i(k) \mid X_k = j$ is the hitting time of state $i$ starting from state
-$j$ at time $k$. In the special case that $i = D,k = 0,$ and $j = A$, $T_D(0) \mid X_0 = A$ is
-the hitting time of state $D$ starting from state $A$ at time $0$. Finally, we want to
+be the hitting time of state $i$ as measured from time $k$. For example, for the sample
+trajectory $B, C, B, C, D, C, A, \dots$, $T_A(0) = 6, T_A(1) = 5, T_D(0) = 4,$ and
+$T_D(2) = 2$.
+
+More generally, $T_i(k) = d + T_i(k+d)$ for $d \in \lbrace 0, 1, \dots\rbrace$. Moreover,
+$T_i(k) \mid X_k = j$ is the hitting time of state $i$ starting from state $j$ at time
+$k$.
+
+In the special case that $i = D,k = 0,$ and $j = A$, $T_D(0) \mid X_0 = A$ is
+the hitting time of state $D$ starting from state $A$ at time $0$. So, we want to
 compute $\tau_{AD} = E[T_D(0) \mid X_0 = A]$, the average time required to reach
-vertex $D$ from vertex $A$ starting at time $0$.
-
-Note that $T_D(0) \mid X_0 = A$ is a random variable because the possible trajectories of
-$\mathcal X$ are random. For example, one possible trajectory of $\mathcal X$ is
-$\lbrace A, B, A, B, C, C, D, A, \dots\rbrace$, such that $(T_D(0) \mid X_0 = A) = 6$.
-
-We now derive an expression for $\tau_{AD}$ as follows.
+vertex $D$ from vertex $A$ starting at time $0$. We derive an expression for $\tau_{AD}$
+as follows.
 
 $$
 \begin{align}
@@ -70,11 +72,7 @@ $$
 where
 
 * $\eqref{tauAD-1} \to \eqref{tauAD-2}$ follows from $T_D(0) = 1 + T_D(1)$
-(assuming $X_0 \neq D$). That is, the hitting time of state $D$ starting from time $0$
-is $1$ time-step more than the hitting time of state $D$ starting from time $1$. For
-example, if the hitting time of state $D$ starting at time $1$ is $t_0$ for some
-$t_0 \in \lbrace 1, 2, \dots\rbrace$, then the hitting time of state $D$ starting at time
-$0$ is $t_0 + 1$.
+(assuming $X_0 \neq D$).
 * $\eqref{tauAD-2} \to \eqref{tauAD-3}$ by linearity of the conditional expectation.
 * $\eqref{tauAD-3} \to \eqref{tauAD-4}$ follows from the law of total expectation.
 
