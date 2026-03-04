@@ -153,7 +153,24 @@ while the average time required to go from vertex $B$ to $D$ is $4$ seconds.
 
 We now answer the second question, which was "Starting at vertex $A$, how long does it take, on average, to return to vertex $A$?", using the concept of _mean return time_.
 
-We want to compute $r_A = E[T_A(1) \mid X_0 = A]$.
+First, for each state $i$, let
+
+$$
+R_i(k) = \min \lbrace n \ge 1 \mid X_{n+k} = i \rbrace
+$$
+
+be the return time of state $i$ as measured from time $k$. For example, for the sample
+trajectory $B, C, B, C, D, C, A, \dots$, $R_B(0) = 2$ and $R_C(1) = 2$.
+
+More generally, $T_i(k) = d + T_i(k+d)$ for $d \in \lbrace 0, 1, \dots\rbrace$. Moreover,
+$R_i(k) \mid X_k = j$ is the return time of state $i$ starting from state $j$ at time
+$k$.
+
+In the special case that $i = A,k = 0,$ and $j = A$, $R_A(0) \mid X_0 = A$ is
+the return time of state $A$ starting from state $A$ at time $0$. So, we want to
+compute $r_A = E[R_A(0) \mid X_0 = A]$, the average time required to return to
+vertex $A$ from vertex $A$ starting at time $0$. We derive an expression for $r_A$
+as follows.
 
 
 
