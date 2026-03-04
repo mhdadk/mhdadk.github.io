@@ -166,11 +166,27 @@ More generally, $T_i(k) = d + T_i(k+d)$ for $d \in \lbrace 0, 1, \dots\rbrace$. 
 $R_i(k) \mid X_k = j$ is the return time of state $i$ starting from state $j$ at time
 $k$.
 
-In the special case that $i = A,k = 0,$ and $j = A$, $R_A(0) \mid X_0 = A$ is
-the return time of state $A$ starting from state $A$ at time $0$. So, we want to
+In the special case that $i = A,k = 0,$ and $j = A$, we want to
 compute $r_A = E[R_A(0) \mid X_0 = A]$, the average time required to return to
 vertex $A$ from vertex $A$ starting at time $0$. We derive an expression for $r_A$
 as follows.
+
+$$
+\begin{align}
+r_A &= E[R_A(0) \mid X_0 = A] \label{rA-1} \\
+&= E[1 + T_D(1) \mid X_0 = A] \label{tauAD-2} \\
+&= 1 + E[T_D(1) \mid X_0 = A] \label{tauAD-3} \\
+&= 1 + E[E[T_D(1) \mid X_0 = A, X_1]] \label{tauAD-4}
+\end{align}
+$$
+
+where
+
+* $\eqref{tauAD-1} \to \eqref{tauAD-2}$ follows from $T_D(0) = 1 + T_D(1)$
+(assuming $X_0 \neq D$).
+* $\eqref{tauAD-2} \to \eqref{tauAD-3}$ by linearity of the conditional expectation.
+* $\eqref{tauAD-3} \to \eqref{tauAD-4}$ follows from the law of total expectation.
+
 
 
 
