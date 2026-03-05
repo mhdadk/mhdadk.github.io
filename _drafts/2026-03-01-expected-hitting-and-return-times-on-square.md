@@ -189,7 +189,7 @@ r_A &= E[R_A(0) \mid X_0 = A] \nonumber \\
 \end{align}
 $$
 
-Next, using a similar set of steps as the ones shown above, the expression
+Next, using a similar set of steps as the ones shown in the previous section, the expression
 $E[E[T_A(1) \mid X_0 = A, X_1]]$ in $\eqref{rA-4}$ expands to $\sum_{s \in \lbrace A, B, C, D\rbrace} p_{As} \cdot \tau_{sA}$ such that
 
 $$
