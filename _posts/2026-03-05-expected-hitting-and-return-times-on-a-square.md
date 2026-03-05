@@ -42,7 +42,7 @@ possible when deriving expressions for the mean hitting and return times.
 Writing this post would not have been possible without the help of Misha Lavrov, who answered
 my related questions [_Why are these absorption probabilities equal?_](https://math.stackexchange.com/q/5126471/652310) and [_How can I derive a general expression for the mean return time in a Markov chain?_](https://math.stackexchange.com/q/5127245/652310).
 
-# Mean hitting time
+## Mean hitting time
 
 We now answer the first question.
 
@@ -158,7 +158,7 @@ Solving these two equations together yields $\tau_{AD} = \tau_{CD} = 3$ and $\ta
 That is, the average time required to go from vertices $A$ or $C$ to vertex $D$ is $3$ seconds,
 while the average time required to go from vertex $B$ to $D$ is $4$ seconds.
 
-# Mean return time
+## Mean return time
 
 We now answer the second question, which was "Starting at vertex $A$, how long does it
 take, on average, to return to vertex $A$?", using the concept of _mean return time_.
@@ -211,3 +211,6 @@ $$
 
 That is, the average time required to return to vertex $A$, starting from vertex $A$, is
 $4$ seconds.
+
+## Appendix
+
