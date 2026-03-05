@@ -214,3 +214,25 @@ $4$ seconds.
 
 ## Appendix
 
+So far, we assumed that all 4 states in Fig. 1 are transient. That is, none of the states
+transition to themselves with probability $1$. An interesting phenomenon occurs when this
+is no longer the case. Consider the MC shown in Fig. 2.
+
+{% include figure.html
+   filename="expected-hitting-and-return-time-on-square/mc-transient-recurrent.svg"
+   caption="Discrete-time MC with 2 transient states and 2 recurrent states."
+   fignum=2
+   scale=50
+%}
+
+If we now try to compute the mean hitting and return times, we face a problem: some of
+these values are no longer finite. For example, the quantity $\tau_{Ds} = E[T_s(0) \mid X_0 = D]$
+is infinite for every $s \in \lbrace A, B, C\rbrace$ because state $D$ is recurrent.
+Similarly, the quantity $\tau_{Cs} = E[T_s(0) \mid X_0 = C]$ is also infinite for every
+$s \in \lbrace A, B, D\rbrace$ because state $C$ is recurrent.
+
+Therefore, any quantity that involves either $\tau_{Ds}$ for $s \in \lbrace A, B, C\rbrace$ or
+$\tau_{Cs}$ for $s \in \lbrace A, B, D\rbrace$ will also be infinite. To avoid these
+infinite values, we can make use of the fact that $\tau_{DD} = \tau_{CC} = 0$ instead compute $\tau_{()}
+
+
