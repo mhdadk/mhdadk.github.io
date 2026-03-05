@@ -245,4 +245,5 @@ because $X_n$ will reach states $C$ or $D$ for some $n$ with probability $1$.
 
 It is interesting to note that the possibility that mean hitting times can be infinite when
 considering hitting individual recurrent states (rather than all of them collectively) motivates
-the need for classifying states into recurrent and transient classes, as explained [here](https://www.probabilitycourse.com/chapter11/11_2_4_classification_of_states.php).
+the need for classifying states into recurrent and transient classes, as explained
+[here](https://www.probabilitycourse.com/chapter11/11_2_4_classification_of_states.php).
