@@ -12,7 +12,7 @@ clockwise order. Time starts at $t = 0$.
 
 At each vertex, you play the following game: flip a fair coin and move to the neighboring
 vertex in clockwise order if it lands Heads and in counter-clockwise order if it lands
-tails. For example, suppose you are standing at vertex $B$ and flip the coin. If it
+Tails. For example, suppose you are standing at vertex $B$ and flip the coin. If it
 lands Heads, move to vertex $C$ and if it lands Tails, move to vertex $A$.
 
 You repeat this game at each vertex, consuming 1 second of time each time you move from
@@ -33,9 +33,18 @@ Two questions naturally arise from this random walk:
 1. Starting at vertex $A$, how long does it take, on average, to reach vertex $D$?
 2. Starting at vertex $A$, how long does it take, on average, to return to vertex $A$?
 
-We answer the first question using the concept of _mean hitting time_.
+We answer these questios using the concepts of _mean hitting time_ and _mean return time_.
+Most explanations of mean hitting and return times found online, such as the one
+on [this page](https://www.probabilitycourse.com/chapter11/11_2_5_using_the_law_of_total_probability_with_recursion.php), tend to be "hand-wavy",
+where they skip some important steps. In this post, I aim to be as clear and precise as
+possible when deriving expressions for the mean hitting and return times.
+
+This post would not have been possible without the help of Misha Lavrov, who answered
+my related questions [_Why are these absorption probabilities equal?_](https://math.stackexchange.com/q/5126471/652310) and [_How can I derive a general expression for the mean return time in a Markov chain?_](https://math.stackexchange.com/q/5127245/652310).
 
 # Mean hitting time
+
+We now answer the first question.
 
 Let the MC shown in Fig. 1 be represented by the random process
 $\mathcal X = \lbrace X_0, X_1, X_2, \dots \rbrace$, where
@@ -50,11 +59,11 @@ be the hitting time of state $i$ as measured from time $k$. For example, for the
 trajectory $B, C, B, C, D, C, A, \dots$, $T_A(0) = 6, T_A(1) = 5, T_D(0) = 4,$ and
 $T_D(2) = 2$.
 
-More generally, $T_i(k) = d + T_i(k+d)$ for $d \in \lbrace 0, 1, \dots\rbrace$. Moreover,
-$T_i(k) \mid X_k = j$ is the hitting time of state $i$ starting from state $j$ at time
-$k$.
+It can be verified that for each state $i$, if $X_0 \neq i$, $T_i(0) = 1 + T_i(1)$. Moreover,
+$T_i(0) \mid X_0 = j$ is the hitting time of state $i$ starting from state $j$ at time
+$0$. This identity will be useful in later derivatons.
 
-In the special case that $i = D,k = 0,$ and $j = A$, $T_D(0) \mid X_0 = A$ is
+In the special case that $i = D$ and $j = A$, $T_D(0) \mid X_0 = A$ is
 the hitting time of state $D$ starting from state $A$ at time $0$. So, we want to
 compute $\tau_{AD} = E[T_D(0) \mid X_0 = A]$, the average time required to reach
 vertex $D$ from vertex $A$ starting at time $0$. We derive an expression for $\tau_{AD}$
@@ -151,7 +160,8 @@ while the average time required to go from vertex $B$ to $D$ is $4$ seconds.
 
 # Mean return time
 
-We now answer the second question, which was "Starting at vertex $A$, how long does it take, on average, to return to vertex $A$?", using the concept of _mean return time_.
+We now answer the second question, which was "Starting at vertex $A$, how long does it
+take, on average, to return to vertex $A$?", using the concept of _mean return time_.
 
 First, for each state $i$, let
 
@@ -162,9 +172,8 @@ $$
 be the return time of state $i$ as measured from time $k$. For example, for the sample
 trajectory $B, C, B, C, D, C, A, \dots$, $R_B(0) = 2$ and $R_C(1) = 2$.
 
-More generally, $T_i(k) = d + T_i(k+d)$ for $d \in \lbrace 0, 1, \dots\rbrace$. Moreover,
-$R_i(k) \mid X_k = j$ is the return time of state $i$ starting from state $j$ at time
-$k$.
+It can be shown that $R_i(0) = 1 + T_i(1)$ for each state $i$, which will be useful
+for later derivations.
 
 In the special case that $i = A,k = 0,$ and $j = A$, we want to
 compute $r_A = E[R_A(0) \mid X_0 = A]$, the average time required to return to
@@ -173,19 +182,36 @@ as follows.
 
 $$
 \begin{align}
-r_A &= E[R_A(0) \mid X_0 = A] \label{rA-1} \\
-&= E[1 + T_D(1) \mid X_0 = A] \label{tauAD-2} \\
-&= 1 + E[T_D(1) \mid X_0 = A] \label{tauAD-3} \\
-&= 1 + E[E[T_D(1) \mid X_0 = A, X_1]] \label{tauAD-4}
+r_A &= E[R_A(0) \mid X_0 = A] \nonumber \\
+&= E[1 + T_A(1) \mid X_0 = A] \nonumber \\
+&= 1 + E[T_A(1) \mid X_0 = A] \nonumber \\
+&= 1 + E[E[T_A(1) \mid X_0 = A, X_1]] \label{rA-4}
 \end{align}
 $$
 
-where
+Next, using a similar set of steps as the ones shown above, the expression
+$E[E[T_A(1) \mid X_0 = A, X_1]]$ in $\eqref{rA-4}$ expands to $\sum_{s \in \lbrace A, B, C, D\rbrace} p_{As} \cdot \tau_{sA}$ such that
 
-* $\eqref{tauAD-1} \to \eqref{tauAD-2}$ follows from $T_D(0) = 1 + T_D(1)$
-(assuming $X_0 \neq D$).
-* $\eqref{tauAD-2} \to \eqref{tauAD-3}$ by linearity of the conditional expectation.
-* $\eqref{tauAD-3} \to \eqref{tauAD-4}$ follows from the law of total expectation.
+$$
+r_A = 1 + \sum_{s \in \lbrace A, B, C, D\rbrace} p_{As} \cdot \tau_{sA}
+$$
+
+which is the expression for $r_A$ that we wanted to derive. By definition, $\tau_{AA} = 0$,
+and we can compute $\tau_{BA}, \tau_{CA},$ and $\tau_{DA}$ using the method described
+in the previous section to obtain $\tau_{BA} = \tau_{DA} = 3$ and $\tau_{CA} = 4$. Hence,
+
+$$
+\begin{align*}
+r_A &= 1 + p_{AA} \cdot \tau_{AA} + p_{AB} \cdot \tau_{BA} + p_{AC} \cdot \tau_{CA} + p_{AD} \cdot \tau_{DA} \\
+&= 1 + p_{AB} \cdot \tau_{BA} + p_{AD} \cdot \tau_{DA} \\
+&= 1 + \frac{1}{2} \cdot 3 + \frac{1}{2} \cdot 3 \\
+&= 4
+\end{align*}
+$$
+
+That is, the average time required to return to vertex $A$, starting from vertex $A$, is
+$4$ seconds.
+
 
 
 
@@ -213,10 +239,7 @@ from the non-recurrent states (i.e. states 1 and 2). That is, on average, how lo
 it take the MC to enter state 0 or 3 if it starts from state 1 or if it starts from
 state 2?
 
-Unfortunately, most derivations of mean hitting times that I've found (such as the one
-on [this page](https://www.probabilitycourse.com/chapter11/11_2_5_using_the_law_of_total_probability_with_recursion.php))
-tend to be "hand-wavy", where they skip some important steps. In this post, I aim
-to be as clear and precise as possible when deriving the mean hitting time.
+
 
 First, let the MC represented in Fig. 1 correspond to the random process
 $\mathcal X = \lbrace X_0, X_1, X_2, \dots \rbrace$, where
