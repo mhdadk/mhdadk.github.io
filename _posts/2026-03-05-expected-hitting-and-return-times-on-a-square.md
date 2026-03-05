@@ -225,14 +225,24 @@ is no longer the case. Consider the MC shown in Fig. 2.
    scale=50
 %}
 
-If we now try to compute the mean hitting and return times, we face a problem: some of
-these values are no longer finite. For example, the quantity $\tau_{Ds} = E[T_s(0) \mid X_0 = D]$
-is infinite for every $s \in \lbrace A, B, C\rbrace$ because state $D$ is recurrent.
-Similarly, the quantity $\tau_{Cs} = E[T_s(0) \mid X_0 = C]$ is also infinite for every
-$s \in \lbrace A, B, D\rbrace$ because state $C$ is recurrent.
+If we now try to compute the mean hitting and return times, we face a problem: all these
+values are infinite. For example, the quantities $\tau_{Ds} = E[T_s(0) \mid X_0 = D]$
+and $\tau_{Cs} = E[T_s(0) \mid X_0 = C]$ are infinite for every $s \in \lbrace A, B, C\rbrace$
+and $s \in \lbrace A, B, D\rbrace$, respectively, because states $C$ and $D$ are recurrent.
 
-Therefore, any quantity that involves either $\tau_{Ds}$ for $s \in \lbrace A, B, C\rbrace$ or
-$\tau_{Cs}$ for $s \in \lbrace A, B, D\rbrace$ will also be infinite. To avoid these
-infinite values, we can make use of the fact that $\tau_{DD} = \tau_{CC} = 0$ instead compute $\tau_{()}
+Then, if we try to compute $\tau_{ij} = E[T_j(0) \mid X_0 = i]$ for any $i \neq j$, we
+see that $\tau_{ij}$ is infinite because
 
+$$
+\tau_{ij} = 1 + \sum_{s \in \lbrace A, B, C, D\rbrace} p_{is} \cdot \tau_{sj}
+$$
 
+where $\tau_{sj}$ is infinite when $s = C$ or $s = D$ (the cases when $p_{iC}$ = 0 when $s = C$
+or $p_{iD} = 0$ when $s = D$ can also be accounted for). To avoid these infinite values,
+we can make use of the fact that $\tau_{DD} = \tau_{CC} = 0$ and instead compute
+$\tau_{s(CD)} = E[T_{C,D}(0) \mid X_0 = s]$, where $T_{C,D}(0) = \min \lbrace n \ge 0 \mid X_{n} = C \, \textrm{or} \, X_{n} = D \rbrace$. $\tau_{s(CD)}$ will always be finite for each $s \in \lbrace A, B, C, D\rbrace$
+because $X_n$ will reach states $C$ or $D$ for some $n$ with probability $1$.
+
+It is interesting to note that the possibility that mean hitting times can be infinite when
+considering hitting individual recurrent states (rather than all of them collectively) motivates
+the need for classifying states into recurrent and transient classes, as explained [here](https://www.probabilitycourse.com/chapter11/11_2_4_classification_of_states.php).
