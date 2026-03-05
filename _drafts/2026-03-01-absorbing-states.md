@@ -61,7 +61,7 @@ $T_D(2) = 2$.
 
 It can be verified that for each state $i$, if $X_0 \neq i$, $T_i(0) = 1 + T_i(1)$. Moreover,
 $T_i(0) \mid X_0 = j$ is the hitting time of state $i$ starting from state $j$ at time
-$0$. This identity will be useful in later derivatons.
+$0$. This identity will be useful for the derivations that follow.
 
 In the special case that $i = D$ and $j = A$, $T_D(0) \mid X_0 = A$ is
 the hitting time of state $D$ starting from state $A$ at time $0$. So, we want to
@@ -173,7 +173,7 @@ be the return time of state $i$ as measured from time $k$. For example, for the 
 trajectory $B, C, B, C, D, C, A, \dots$, $R_B(0) = 2$ and $R_C(1) = 2$.
 
 It can be shown that $R_i(0) = 1 + T_i(1)$ for each state $i$, which will be useful
-for later derivations.
+for the derivations that follow.
 
 In the special case that $i = A,k = 0,$ and $j = A$, we want to
 compute $r_A = E[R_A(0) \mid X_0 = A]$, the average time required to return to
