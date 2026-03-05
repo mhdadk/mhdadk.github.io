@@ -33,13 +33,13 @@ Two questions naturally arise from this random walk:
 1. Starting at vertex $A$, how long does it take, on average, to reach vertex $D$?
 2. Starting at vertex $A$, how long does it take, on average, to return to vertex $A$?
 
-We answer these questios using the concepts of _mean hitting time_ and _mean return time_.
+We answer these questions using the concepts of _mean hitting time_ and _mean return time_.
 Most explanations of mean hitting and return times found online, such as the one
 on [this page](https://www.probabilitycourse.com/chapter11/11_2_5_using_the_law_of_total_probability_with_recursion.php), tend to be "hand-wavy",
 where they skip some important steps. In this post, I aim to be as clear and precise as
 possible when deriving expressions for the mean hitting and return times.
 
-This post would not have been possible without the help of Misha Lavrov, who answered
+Writing this post would not have been possible without the help of Misha Lavrov, who answered
 my related questions [_Why are these absorption probabilities equal?_](https://math.stackexchange.com/q/5126471/652310) and [_How can I derive a general expression for the mean return time in a Markov chain?_](https://math.stackexchange.com/q/5127245/652310).
 
 # Mean hitting time
@@ -144,7 +144,7 @@ $$
 
 where $\eqref{tauCD-1} \to \eqref{tauCD-2}$ follows because
 $p_{CA} = p_{CC} = \tau_{DD} = 0$. Notice that $\tau_{AD} = \tau_{CD}$. This makes sense
-since both vertices $A$ and $C$ have the exact same possible transitions to vertex $D$ (they
+since both vertices $A$ and $C$ have the exact same transitions to vertex $D$ (they
 are symmetric). Hence, this leaves us with two equations and two unknowns:
 
 $$
@@ -175,7 +175,7 @@ trajectory $B, C, B, C, D, C, A, \dots$, $R_B(0) = 2$ and $R_C(1) = 2$.
 It can be shown that $R_i(0) = 1 + T_i(1)$ for each state $i$, which will be useful
 for the derivations that follow.
 
-In the special case that $i = A,k = 0,$ and $j = A$, we want to
+In the special case that $i = A$ and $k = 0$, we want to
 compute $r_A = E[R_A(0) \mid X_0 = A]$, the average time required to return to
 vertex $A$ from vertex $A$ starting at time $0$. We derive an expression for $r_A$
 as follows.
