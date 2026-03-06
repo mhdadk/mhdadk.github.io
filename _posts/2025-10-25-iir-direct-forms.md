@@ -111,3 +111,133 @@ $$
 Note that the terms $u_b[k - 1],\dots,u_b[k-M],\dots,u_b[k-(N-1)]$ are obtained from memory from a previous iteration.
 
 In contrast to the DF1 structure, which requires memory for $N - 1 + M$ floating-point numbers, the DF2 structure requires memory for only $\max(N-1, M)$ floating-point numbers. Because $\max(N-1, M) < N - 1 + M$ when $N - 1 > 0$ and $M > 0$, then the DF2 structure requires less memory than the DF1 structure.
+
+## Transposed Direct Form I
+
+Because the outputs of the all-zero and all-pole filters in the previous sections are
+polynomial functions of the input and past outputs, we can use [Horner's method](https://en.wikipedia.org/wiki/Horner%27s_method) to speed up the evaluation of this polynomial function. This is exactly
+what the Transposed Direct Forms I and II accomplish: they reduce the number of multiplications,
+additions, and updates of temporary variables.
+
+Recall from $\eqref{iir_allzero_out}$ that the output of the all-zero filter $H_b(z)$ is
+defined as
+
+$$
+\begin{align*}
+H_b(z) = \frac{Y_b(z)}{U_b(z)} &= b_0 + b_1z^{-1} + \cdots + b_{N-1}z^{-(N-1)} \\
+
+Y_b(z) &= U_b(z)\left(b_0 + \cdots + b_{N-3}z^{-(N-3)} + b_{N-2}z^{-(N-2)} + b_{N-1}z^{-(N-1)}\right)
+
+\end{align*}
+$$
+
+$Y_b(z)$ can be evaluated recursively backwards as follows.
+
+$$
+\begin{align*}
+Y_b(z) &= U_b(z)V_0(z) \\
+
+V_0(z) &= b_0 + b_1z^{-1} + b_2z^{-2} + b_3z^{-3} + \cdots + b_{N-1}z^{-(N-1)} \\
+
+&= b_0 + z^{-1}\left(b_1 + b_2z^{-1} + b_3z^{-2} + \cdots + b_{N-1}z^{-(N-2)}\right) \\
+
+&= b_0 + z^{-1}V_1(z) \\
+
+V_1(z) &= b_1 + b_2z^{-1} + b_3z^{-2} + \cdots + b_{N-1}z^{-(N-2)} \\
+
+&= b_1 + z^{-1}\left(b_2 + b_3z^{-1} + \cdots + b_{N-1}z^{-(N-3)}\right) \\
+
+&= b_1 + z^{-1}V_2(z) \\
+
+V_2(z) &= b_2 + b_3z^{-1} + \cdots + b_{N-1}z^{-(N-3)} \\
+
+&= b_2 + z^{-1}\left(b_3 + \cdots + b_{N-1}z^{-(N-4)}\right) \\
+
+&= b_2 + z^{-1}V_3(z) \\
+
+&\vdots
+
+\end{align*}
+$$
+
+More generally,
+
+$$
+\begin{align*}
+Y_b(z) &= U_b(z)V_0(z) \\
+V_\ell(z) &= \begin{cases}b_{N-1},&\ell = N-1 \\ b_{\ell} + z^{-1}V_{\ell+1}(z),&\ell = N-2,N-3,\dots,0\end{cases}
+\end{align*}
+$$
+
+and the corresponding difference equations in the time domain are
+
+$$
+\begin{align*}
+y_b[k] &= (u_b * v_0)[k] \\
+&= \sum_{i=1}^Q u_b[k-i]v_0[i] \\
+v_\ell[k] &= \begin{cases}b_{N-1},&\ell = N-1 \\ b_\ell + v_{\ell+1}[k-1],&\ell = N-2,N-3,\dots,0\end{cases}
+\end{align*}
+$$
+
+Similarly, recall from $\eqref{iir_allpole_out}$ that the output of the all-pole filter
+$H_a(z)$ is defined as
+
+$$
+\begin{align*}
+H_a(z) = \frac{Y_a(z)}{U_a(z)} &= \frac{1}{1 + a_1z^{-1} + \cdots + a_Mz^{-M}} \\
+
+Y_a(z) + a_1Y_a(z)z^{-1} + \cdots + a_MY_a(z)z^{-M} &= U_a(z) \\
+
+Y_a(z) &= U_a(z) + Y_a(z)\left(-a_1z^{-1} - \cdots - a_Mz^{-M}\right)
+\end{align*}
+$$
+
+$Y_a(z)$ can be evaluated recursively backwards as follows.
+
+$$
+\begin{align*}
+Y_a(z) &= U_a(z) + Y_a(z)\left(-a_1z^{-1} - a_2z^{-2} - a_3z^{-3} - \cdots - a_Mz^{-M}\right) \\
+
+&= U_a(z) + z^{-1}Y_a(z)\left(-a_1 - a_2z^{-1} - a_3z^{-2} - \cdots - a_Mz^{-(M-1)}\right) \\
+
+&= U_a(z) + z^{-1}Y_a(z)W_1(z) \\
+
+W_1(z) &= -a_1 - a_2z^{-1} - a_3z^{-2} - \cdots - a_Mz^{-(M-1)} \\
+
+&= -a_1 + z^{-1}\left(- a_2 - a_3z^{-1} - \cdots - a_Mz^{-(M-2)}\right) \\
+
+&= -a_1 + z^{-1}W_2(z) \\
+
+W_2(z) &= - a_2 - a_3z^{-1} - \cdots - a_Mz^{-(M-2)} \\
+
+&= - a_2 + z^{-1}\left(- a_3 - \cdots - a_Mz^{-(M-3)}\right) \\
+
+&= -a_2 + z^{-1}W_3(z) \\
+
+&\vdots
+\end{align*}
+$$
+
+More generally,
+
+$$
+\begin{align*}
+Y_a(z) &= U_a(z) + z^{-1}Y_a(z)W_1(z) \\
+W_\ell(z) &= \begin{cases}-a_{M},&\ell = M \\ -a_\ell + z^{-1}W_{\ell+1}(z),&\ell = M-1,M-2,\dots,1\end{cases}
+\end{align*}
+$$
+
+and the corresponding difference equations in the time domain are
+
+$$
+\begin{align*}
+y_a[k] &= u_a[k] + (y_a * w_1)[k-1] \\
+&= u_a[k] + \sum_{i=1}^Q y_a[k-1-i]w_1[i] \\
+w_\ell[k] &= \begin{cases}-a_{M},&\ell = M \\ -a_\ell + w_{\ell+1}[k-1],&\ell = M-1,M-2,\dots,1\end{cases}
+\end{align*}
+$$
+
+**TODO**: combine the all-pole and all-zero filter outputs and explain how the computational
+savings happen.
+
+## Transposed Direct Form II
