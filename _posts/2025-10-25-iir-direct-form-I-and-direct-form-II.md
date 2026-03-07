@@ -1,11 +1,10 @@
 ---
 title: "Direct Form I and Direct Form II implementations of IIR filters"
 layout: post
-excerpt: "We derive the Direct Form I and Direct Form II implementations of a discrete-time infinite impulse response (IIR) filter."
+excerpt: "We derive the Direct Form I and Direct Form II implementations of a discrete-time infinite impulse response (IIR) filter from first principles."
 tags:
   - signal-processing
 ---
-We derive the Direct Form I and Direct Form II implementations of a discrete-time infinite impulse response (IIR) filter.
 
 When I first encouuntered the Direct Form I (DF1) and Direct Form II (DF2) structures in a signal processing course, I could not find a derivation for where they came from. Moreover, if I did find a derivation, it would often be in graphical form without a mathematical derivation to accompany it.
 
