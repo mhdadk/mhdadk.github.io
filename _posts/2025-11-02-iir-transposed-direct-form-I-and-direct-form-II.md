@@ -1,11 +1,13 @@
 ---
-title: "State space representation of IIR filters"
+title: "Transposed Direct Form I and Direct Form II implementations of IIR filters"
 layout: post
+excerpt: "We derive the Transposed Direct Form I and Direct Form II implementations of a discrete-time infinite impulse response (IIR) filter via linear algebra."
 tags:
   - signal-processing
   - control-theory
 ---
-We show how to express a discrete-time infinite impulse response (IIR) filter in state-space form.
+We derive the Transposed Direct Form I and Direct Form II implementations of a
+discrete-time infinite impulse response (IIR) filter via linear algebra.
 
 Linear and time-invariant (LTI) filters are not often expressed in state-space form since in filtering applications, we have control over the filter and not the input signal, while in control applications, the opposite is true. Nonetheless, expressing LTI filters in state-space form offers another way of analyzing the filter and bridges the fields of signal processing and control theory.
 
