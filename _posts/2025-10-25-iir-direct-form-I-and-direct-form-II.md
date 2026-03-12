@@ -33,13 +33,21 @@ $$
 where
 
 $$
-\begin{align}
-H_b(z) &= b_0 + b_1z^{-1} + \cdots + b_{N-1}z^{-(N-1)} \label{iir_allzero} \\
-H_a(z) &= \frac{1}{1 + a_1z^{-1} + \cdots + a_Mz^{-M}} \label{iir_allpole}
-\end{align}
+\begin{equation}
+H_b(z) = b_0 + b_1z^{-1} + \cdots + b_{N-1}z^{-(N-1)} \label{iir_allzero}
+\end{equation}
 $$
 
-We now map $H_b(z)$ and $H_a(z)$ to their corresponding difference equations in the time domain as follows.
+corresponds to the all-zero IIR filter and
+
+$$
+\begin{equation}
+H_a(z) = \frac{1}{1 + a_1z^{-1} + \cdots + a_Mz^{-M}} \label{iir_allpole}
+\end{equation}
+$$
+
+corresponds to the all-pole IIR filter. We now map $H_b(z)$ and $H_a(z)$ to their
+corresponding difference equations in the time domain as follows.
 
 $$
 \begin{align}
