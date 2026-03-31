@@ -1,5 +1,5 @@
 ---
-title: "Representing Graphs in Python"
+title: "Representing graphs in Python"
 layout: post
 excerpt: "A simple mental model for working with graphs in Python using pointer-like assignments and node references."
 tags:
