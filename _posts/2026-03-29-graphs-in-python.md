@@ -127,8 +127,7 @@ This movement of pointers is shown in Fig. 4.
    scale=25
 %}
 
-We can then change the values of the nodes that the $X$ and $Y$ pointers reference
-as follows:
+We can then change the values of the nodes that the $X$ and $Y$ pointers reference:
 
 ```python
 class Node:
@@ -144,7 +143,7 @@ X.val = 7
 Y.val = 23
 ```
 
-and this new configuration is shown in Fig. 5.
+This new configuration is shown in Fig. 5.
 
 {% include figure.html
    filename="graphs-in-python/graphs-in-python-step5.svg"
@@ -158,7 +157,24 @@ node $0$ again because this would require nodes $7$ and $23$ in Fig. 5 having
 directed edges pointing at node $0$. So, we can only move pointers along the
 direction indicated by the directed edges in a graph.
 
-## A Concrete Example: Reversing a Linked List
+In fact, from the perspective of pointer $X$, only node $7$, the node that pointer
+$X$ is referencing, exists. All other nodes do not exist. This is because there
+are no outgoing directed edges from node $7$.
+
+Similarly, from the perspective of pointer $Y$, only node $23$ exists because
+there are no outgoing directed edges from node $23$.
+
+## A concrete example: reversing a linked list
+
+We can see how this mental model is useful via an example. Consider the linked
+list shown in Fig. 6.
+
+{% include figure.html
+   filename="graphs-in-python/reversing-linked-list-step1.svg"
+   caption="Linked list example."
+   fignum=6
+   scale=60
+%}
 
 A linked list is just a very restricted graph: each node has exactly one outgoing
 edge (traditionally called `next` instead of `children[0]`):
@@ -170,135 +186,122 @@ class Node:
         self.next = None
 ```
 
-Suppose we start with:
+We want to reverse this linked list so that it looks like Fig. 7.
 
-```
-A → B → C → None
-```
+{% include figure.html
+   filename="graphs-in-python/reversing-linked-list-step2.svg"
+   caption="Reverse of linked list shown in Fig. 6."
+   fignum=7
+   scale=60
+%}
 
-and we want:
+We can perform this reversal sequentially as follows. First, we introduce three
+pointers: `prev, curr,` and `next` by writing `prev = None`, `curr = head`, and
+`next = head.next`:
 
-```
-C → B → A → None
-```
+{% include figure.html
+   filename="graphs-in-python/reversing-linked-list-step3.svg"
+   fignum=8
+   scale=60
+%}
 
-### The Code
+Note that we replaced `A` with `head` to keep this implementation
+general: Next, move `curr`'s arrow to point to `prev` instead of `curr.next` by
+writing `curr.next = prev`:
+
+{% include figure.html
+   filename="graphs-in-python/reversing-linked-list-step4.svg"
+   fignum=9
+   scale=60
+%}
+
+Then, move the `prev, curr`, and `next` pointers 1 step forward by writing
+`prev = curr`, `curr = next`, and `next = next.next`:
+
+{% include figure.html
+   filename="graphs-in-python/reversing-linked-list-step5.svg"
+   fignum=10
+   scale=60
+%}
+
+Repeat this process until the `next` pointer references `None`:
+
+{% include figure.html
+   filename="graphs-in-python/reversing-linked-list-step6.svg"
+   fignum=11
+   scale=60
+%}
+
+{% include figure.html
+   filename="graphs-in-python/reversing-linked-list-step7.svg"
+   fignum=12
+   scale=60
+%}
+
+{% include figure.html
+   filename="graphs-in-python/reversing-linked-list-step8.svg"
+   fignum=13
+   scale=60
+%}
+
+Once the `next` pointer references `None`, we are done. In Python, we would
+implement this logic as follows:
 
 ```python
-def reverse(head):
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    # edge case
+    if head is None:
+        return head
+
+    # first iteration
     prev = None
     curr = head
+    nxt = head.next
+    curr.next = prev
 
-    while curr is not None:
-        nxt = curr.next      # remember the next node
-        curr.next = prev     # reverse the arrow
-        prev = curr          # move prev forward
-        curr = nxt           # move curr forward
+    # second iteration onwards
+    while nxt is not None:
+        prev = curr
+        curr = nxt
+        nxt = nxt.next
+        curr.next = prev
+    return curr
 
-    return prev
+# Build A -> B -> C -> None
+head = ListNode("A", ListNode("B", ListNode("C")))
+head_reversed = reverseList(head)
+
+# Print result
+curr = head_reversed
+while curr:
+    print(curr.val, end=" -> ")
+    curr = curr.next
+print("None")
 ```
 
-### Pointer-Level Interpretation
-
-Let’s translate each line into the pointer model:
-
-- `prev = None`
-  → `prev` points to nothing
-
-- `curr = head`
-  → move `curr` to the first node (A)
-
-Now the loop:
-
-#### Step 1 (at node A)
-
-- `nxt = curr.next`
-  → store where A currently points (B)
-
-- `curr.next = prev`
-  → redirect A’s arrow to `None`
-  (this _breaks_ A → B and creates A → None)
-
-- `prev = curr`
-  → move `prev` to A
-
-- `curr = nxt`
-  → move `curr` to B
-
-State now:
-
-```
-A → None      B → C → None
-^
-prev          curr
-```
-
-#### Step 2 (at node B)
-
-- save `C`
-- reverse B → A
-- move pointers
-
-State:
-
-```
-B → A → None      C → None
-^
-prev              curr
-```
-
-#### Step 3 (at node C)
-
-- save `None`
-- reverse C → B
-- move pointers
-
-Final state:
-
-```
-C → B → A → None
-^
-prev
-```
-
-Return `prev`.
-
-### What Actually Happened?
-
-At no point did we “rebuild” the list.
-
-We only performed two kinds of operations:
-
-1. **Moved pointers** (`curr = ...`, `prev = ...`)
-2. **Redirected arrows** (`curr.next = prev`)
-
-This is exactly the same model described earlier:
-
-- `head = X` → move a pointer
-- `head.childN = Y` → redirect an edge
-
-Reversing a linked list is just repeatedly **repointing edges while walking
-through the graph**.
-
-## Why This Mental Model Matters
+## Why this mental model matters
 
 This pointer-style interpretation clarifies several subtle points:
 
-- Assignments (`=`) move references, not data
-- Graph structure lives inside objects, not variables
-- Mutations affect all references to the same node
-- Traversal is just repeatedly “moving the pointer”
-- Algorithms like reversal are just systematic edge rewiring
+- Assignments (`=`) move references, not data.
+- Graph structure lives inside objects, not variables.
+- Mutations affect all references to the same node.
+- Traversal through a graph is just repeatedly "moving the pointer".
+- Algorithms like reversal are just systematic edge rewiring.
 
-Without this model, it’s easy to misunderstand what Python is actually doing.
+Without this model, it’s easy to get lost in the details of what Python is doing.
 
 ## Summary
 
 You can think of graph manipulation in Python as a sequence of pointer operations:
 
-- `head = X` → move pointer to node X
-- `head.childN = Y` → create or update an edge from X to Y
+- `head = X`: move pointer to node `X`
+- `head.childN = Y`: create or update an edge from `X` to `Y`
 
-Everything else—DFS, BFS, cycle detection, even linked list reversal—is built on top of these two ideas.
-
-Once this clicks, graph code becomes much easier to reason about.
+Everything else including DFS, BFS, cycle detection, even linked list reversal,
+is built on top of these two ideas.
