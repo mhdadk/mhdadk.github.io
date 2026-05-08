@@ -7,18 +7,16 @@ tags:
   - puzzle
 ---
 
-Here's a fun question. You're flipping a fair coin and you stop the moment
-you see two heads in a row. Let $N$ be the number of flips that takes. On
-average, how big is $N$? In other words, what is $E[N]$?
+Suppose you're flipping a fair coin and you stop the moment you see two heads in
+a row. Let $N$ be the number of flips that takes. On average, how big is $N$? In
+other words, what is $E[N]$?
 
 In a [previous post](/blog/expected-hitting-and-return-times-on-a-square.html),
 we computed the mean hitting time of a state in a Markov chain by conditioning
 on the first transition $X_1$, a trick we'll call _one-step recursion_. In
-this post, we'll apply the same trick to compute $E[N]$, following the
-alternative solution given in
-[this Math StackExchange answer](https://math.stackexchange.com/a/364257).
-We'll work with a general probability $p$ of heads, and only at the end
-plug in $p = 1/2$ for the fair-coin case.
+this post, we'll apply the same trick to compute $E[N]$. We'll work with a general
+probability $p$ of heads, and only at the end plug in $p = 1/2$ for the fair-coin
+case.
 
 There's one big difference in style between this post and the previous one.
 In the previous post, we were careful to justify each step rigorously, naming
@@ -29,7 +27,7 @@ We won't write the chain $\mathcal{X} = \lbrace X_0, X_1, \dots\rbrace$ out
 explicitly, and we won't invoke the law of total expectation or the Markov
 property by name. Instead, we'll just reason directly about what conditional
 expectations like $E[N \mid HT]$ "should" equal, leaning on the simple
-observation that a tail wipes out any in-progress streak.
+observation that observing a tail wipes out any in-progress streak.
 
 Once we have the answer, we'll go back and look at the problem through the
 rigorous Markov chain lens. We'll see that the intuitive manipulations were
@@ -61,34 +59,18 @@ $E[N]$, the expected number of flips until we see two heads in a row.
 To set up the one-step recursion, we'll introduce a few conditional
 expectations, each one indexed by the prefix of flips we've already observed:
 
-* $E[N \mid H]$: the expected number of flips, given that the first flip has
-already happened and was heads.
-* $E[N \mid T]$: same idea, but the first flip was tails.
-* $E[N \mid HH]$: the expected number of flips, given that the first two
-flips have already happened and were both heads.
-* $E[N \mid HT]$: the expected number of flips, given that the first flip
-was heads and the second was tails.
-
-Here's the key insight: a few of these conditional expectations collapse to
-something we already know.
-
-$$
-\begin{align}
-E[N \mid HH] &= 0 \label{ENHH} \\
-E[N \mid HT] &= E[N] \label{ENHT} \\
-E[N \mid T] &= E[N] \label{ENT}
-\end{align}
-$$
-
-Why?
-
-* $\eqref{ENHH}$ is easy: once we've seen $HH$, we're done. No more flips
-needed.
-* $\eqref{ENHT}$ and $\eqref{ENT}$ are the interesting ones. The moment we
-flip a tail, any in-progress streak of heads is gone, and we're effectively
-back at the start. Coin flips are independent, so the expected number of
-_additional_ flips after a tail is the same as the expected number of flips
-starting from scratch, which is just $E[N]$.
+* $E[N \mid H]$: the expected number of flips until we see two heads in a row
+given that the first flip has already happened and was heads.
+* $E[N \mid T]$: same idea, but the first flip was tails. Because the flips are
+independent, then the random process of flipping the coin is memoryless, such
+that $E[N \mid T] = E[N]$.
+* $E[N \mid HH]$: the expected number of flips until we see two heads in a row
+given that the first two flips have already happened and were both heads. Because
+we've already seen two heads, $E[N \mid HH] = 0$.
+* $E[N \mid HT]$: the expected number of flips until we see two heads in a row
+given that the first flip was heads and the second was tails. Again, because
+the coin flips are indepndent, when we see a tails on the second flip, the streak
+resets, such that $E[N \mid HT] = E[N]$.
 
 ## One-step recursion
 
@@ -96,38 +78,47 @@ Now we condition on the first flip. With probability $p$ it's heads, and
 with probability $1-p$ it's tails:
 
 $$
-E[N] = 1 + p \cdot E[N \mid H] + (1-p) \cdot E[N \mid T] \label{EN-1}
+\begin{equation}
+E[N] = 1 + p \cdot E[N \mid H] + (1-p) \cdot E[N \mid T] \label{EN}
+\end{equation}
 $$
 
 The leading $1$ counts the first flip itself, and the rest counts the
 expected number of _additional_ flips after that first flip.
 
-We still need $E[N \mid H]$, so we condition again, this time on the second
-flip:
+From the previous section, $E[N \mid T] = E[N]$, and we can expand $E[N \mid H]$
+in $\eqref{EN}$:
 
 $$
-E[N \mid H] = 1 + p \cdot E[N \mid HH] + (1-p) \cdot E[N \mid HT] \label{ENH-1}
+\begin{equation}
+E[N \mid H] = 1 + p \cdot E[N \mid HH] + (1-p) \cdot E[N \mid HT] \label{ENH1}
+\end{equation}
 $$
 
-Plugging $\eqref{ENHH}$ and $\eqref{ENHT}$ into $\eqref{ENH-1}$,
+From the previous section, $E[N \mid HH] = 0$ and $E[N \mid HT] = E[N]$. So,
 
 $$
-E[N \mid H] = 1 + (1-p) \cdot E[N] \label{ENH-2}
+\begin{equation}
+E[N \mid H] = 1 + (1-p) \cdot E[N] \label{ENH2}
+\end{equation}
 $$
 
-and plugging $\eqref{ENH-2}$ and $\eqref{ENT}$ into $\eqref{EN-1}$,
+Plugging $\eqref{ENH2}$ into $\eqref{EN}$,
 
 $$
-E[N] = 1 + p \cdot \left[1 + (1-p) \cdot E[N]\right] + (1-p) \cdot E[N] \label{EN-2}
+\begin{equation*}
+E[N] = 1 + p \cdot \left[1 + (1-p) \cdot E[N]\right] + (1-p) \cdot E[N]
+\end{equation*}
 $$
 
-That's one linear equation in one unknown, $E[N]$, which we'll solve in a
-moment.
+That's one linear equation in one unknown, $E[N]$. Solving for $E[N]$ yields
+$E[N] = \frac{1 + p}{p^2}$. For a fair coin with $p = 1/2$, $E[N] = 6$. That is,
+on average, we need to flip the fair coin 6 times to see two heads in a row.
 
 ## Markov chain interpretation
 
-Equations $\eqref{EN-1}$ and $\eqref{ENH-1}$ aren't coincidences. They are
-mean hitting time recursions on a 3-state Markov chain. The states are:
+Equations $\eqref{EN}$ and $\eqref{ENH1}$ are mean hitting time recursions on
+a 3-state Markov chain. The states are:
 
 * $S_0$: "no head pending"; either we haven't flipped yet, or the most
 recent flip was a tail.
@@ -147,7 +138,7 @@ probability $1-p$.
    filename="one-step-recursion-markov-chains/mc-two-heads.svg"
    caption="Discrete-time MC for the two-consecutive-heads problem. State $S_2$ is absorbing."
    fignum=1
-   scale=50
+   scale=85
 %}
 
 Using the $\tau_{ij}$ notation from the previous post, the mean hitting
@@ -160,38 +151,11 @@ E[N \mid H] &= \tau_{S_1 S_2}
 \end{align*}
 $$
 
-and equations $\eqref{EN-1}$ and $\eqref{ENH-1}$ are exactly the mean hitting
-time recursion $\tau_{ij} = 1 + \sum_s p_{is} \cdot \tau_{sj}$ (with
+and equations $\eqref{EN}$ and $\eqref{ENH1}$ are exactly the mean hitting
+time recursion $\tau_{iS_2} = 1 + \sum_k p_{ik} \cdot \tau_{kS_2}$ (with
 $\tau_{S_2 S_2} = 0$) instantiated at $i = S_0$ and $i = S_1$. The
 "memoryless restart" identities $E[N \mid T] = E[N]$ and $E[N \mid HT] = E[N]$
 are just the chain's transitions back into $S_0$.
-
-## Solving for $E[N]$
-
-Expanding $\eqref{EN-2}$,
-
-$$
-\begin{align*}
-E[N] &= 1 + p + p(1-p) \cdot E[N] + (1-p) \cdot E[N] \\
-E[N] \cdot \left[1 - p(1-p) - (1-p)\right] &= 1 + p \\
-E[N] \cdot \left[1 - (1-p)(p + 1)\right] &= 1 + p \\
-E[N] \cdot p^2 &= 1 + p
-\end{align*}
-$$
-
-so
-
-$$
-\boxed{E[N] = \frac{1 + p}{p^2}}
-$$
-
-Specializing to a fair coin, $p = 1/2$,
-
-$$
-E[N] = \frac{3/2}{1/4} = 6
-$$
-
-So on average, you need $6$ flips of a fair coin to see two heads in a row.
 
 ## Conclusion
 
