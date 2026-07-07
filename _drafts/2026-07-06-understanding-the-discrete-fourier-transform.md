@@ -17,5 +17,43 @@ show peaks of 5 and 15 at $0.1\pi$ and $0.3\pi$ respectively. Let's plot this
 magnitude spectrum in MATLAB using the code below.
 
 ```matlab
+% Frequencies (cycles/second)
+F1 = 5;
+F2 = 20;
 
+% Amplitudes
+A1 = F1;
+A2 = F2;
+
+% Sampling frequency (samples/second)
+Fs = 500;
+
+% Normalized frequencies (cycles/sample)
+f1 = F1/Fs;
+f2 = F2/Fs;
+
+% Normalized angular frequencies (radians/sample)
+w1 = 2*pi*f1;
+w2 = 2*pi*f2;
+
+% Sampling indices
+N = 100;
+n = 0:1:N-1;
+
+% Signal
+x = A1 * sin(w1 * n) + A2 * sin(w2 * n);
+
+% dft
+X = fft(x);
+
+% plot
+figure;
+tiledlayout(1,2);
+nexttile;
+k = 0:1:N-1; % cycle number
+wk = 2*pi*k/Fs; % radians/sample
+stem(wk,abs(X));
+
+nexttile;
+stem(wk,2/N * abs(X));
 ```
